@@ -14,8 +14,8 @@ Plataforma web accesible diseñada para estudiantes de ingeniería en sistemas c
 
 ## Requisitos
 
-- Node.js 14 o superior
-- npm o yarn
+- Node.js 18 o superior
+- npm 9 o superior
 
 ## Instalación
 
@@ -128,6 +128,10 @@ PROJECT/
 - ✅ Contenido semántico y estructurado
 - ✅ Text-to-speech configurable
 
+## Deploy
+
+Para instrucciones de deploy, consulta el archivo [DEPLOY.md](DEPLOY.md)
+
 ## Notas Importantes
 
 - La base de datos SQLite se crea automáticamente al iniciar el servidor
@@ -142,7 +146,3 @@ ISC
 ## Soporte
 
 Para problemas, sugerencias o preguntas, por favor abre un issue en el repositorio.
-
-
-
-
