@@ -1,0 +1,1855 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sense-Tech - Plataforma de Lectura Accesible</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="images/logo.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/logo.png">
+    <link rel="shortcut icon" type="image/png" href="images/logo.png">
+    <meta name="theme-color" content="#137fec">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Material Symbols -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    
+    <!-- PDF.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#137fec',
+                        'background-light': '#f6f7f8',
+                        'background-dark': '#101727',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="font-sans antialiased bg-background-light dark:bg-background-dark text-gray-900 dark:text-gray-100">
+    
+    <!-- Header/Navbar -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-white/70 dark:bg-slate-900/70 backdrop-blur-md border-b border-slate-200/60 dark:border-slate-800/60 transition-all duration-300">
+        <nav class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center gap-3">
+                    <img id="logoImg" src="images/logo.png" alt="Sense-Tech" class="h-10 w-auto dark:hidden" onerror="this.style.display='none'">
+                    <img id="logoImgDark" src="images/logo2.png" alt="Sense-Tech" class="h-10 w-auto hidden dark:block" onerror="this.style.display='none'">
+                    <span class="text-2xl font-black text-primary">Sense-Tech</span>
+                </div>
+                
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="#" id="homeLink" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-sm">Inicio</a>
+                    <a href="about.html" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-sm">Acerca de</a>
+                    <a href="#" id="loginLink" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Iniciar Sesión</a>
+                    <a href="#" id="registerLink" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Registrarse</a>
+                    <a href="#" id="dashboardLink" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary transition-colors hidden">Panel</a>
+                    <a href="#" id="adminLink" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary transition-colors hidden">Admin</a>
+                    
+                    <!-- Profile Menu -->
+                    <div class="relative hidden" id="profileMenuContainer">
+                        <button id="profileMenuBtn" class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors">
+                            <img id="profileAvatar" src="https://ui-avatars.com/api/?name=User&background=137fec&color=fff" alt="Avatar" class="w-8 h-8 rounded-full">
+                            <span id="profileUsername" class="text-sm font-medium"></span>
+                            <span class="material-symbols-outlined text-sm">expand_more</span>
+                        </button>
+                        <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white dark:bg-slate-800 rounded-lg shadow-xl border border-gray-200 dark:border-slate-700 py-2 z-50">
+                            <a href="#" id="preferencesLink" class="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors">Preferencias</a>
+                            <a href="#" id="progressLink" class="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors">Mi Progreso</a>
+                            <hr class="my-2 border-gray-200 dark:border-slate-700">
+                            <a href="#" id="logoutLink" class="block px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors">Cerrar Sesión</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Theme Toggle -->
+                    <button id="themeToggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors">
+                        <span class="material-symbols-outlined text-xl">light_mode</span>
+                    </button>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800">
+                    <span class="material-symbols-outlined text-2xl">menu</span>
+                </button>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="hidden md:hidden mt-4 pb-4 border-t border-gray-200 dark:border-slate-700 pt-4">
+                <div class="flex flex-col gap-3">
+                    <a href="#" id="mobileHomeLink" class="nav-link">Inicio</a>
+                    <a href="about.html" class="nav-link">Acerca de</a>
+                    <a href="#" id="mobileLoginLink" class="nav-link">Iniciar Sesión</a>
+                    <a href="#" id="mobileRegisterLink" class="nav-link">Registrarse</a>
+                    <a href="#" id="mobileDashboardLink" class="nav-link hidden">Panel</a>
+                    <a href="#" id="mobileAdminLink" class="nav-link hidden">Admin</a>
+                    <a href="#" id="mobilePreferencesLink" class="nav-link hidden">Preferencias</a>
+                    <a href="#" id="mobileProgressLink" class="nav-link hidden">Mi Progreso</a>
+                    <a href="#" id="mobileLogoutLink" class="nav-link text-red-600 dark:text-red-400 hidden">Cerrar Sesión</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-28 min-h-screen focus:outline-none" id="main-content" tabindex="-1">
+        
+        <!-- ==================== PÁGINA DE INICIO ==================== -->
+        <div id="homePage" class="page">
+            <!-- Skip Link para Accesibilidad -->
+            <a class="skip-link" href="#main-content">Saltar al Contenido Principal</a>
+            
+            <!-- Hero Section -->
+            <section class="container mx-auto px-6 py-20 sm:py-28 relative overflow-hidden">
+                <!-- Elementos decorativos animados -->
+                <div class="absolute top-0 left-0 w-72 h-72 bg-primary/10 rounded-full blur-3xl animate-float"></div>
+                <div class="absolute bottom-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-float" style="animation-delay: 1s;"></div>
+                
+                <div class="max-w-4xl mx-auto text-center relative z-10">
+                    <div class="animate-fade-in-up">
+                        <h1 class="text-4xl sm:text-5xl md:text-6xl font-black leading-tight tracking-[-0.033em] mb-6 hero-gradient">
+                            Educación en Ingeniería, Hecha Accesible
+                        </h1>
+                    </div>
+                    <p class="text-base sm:text-lg font-normal leading-normal max-w-3xl mx-auto text-gray-600 dark:text-gray-300 mb-8 animate-fade-in-up fade-in-on-scroll" style="animation-delay: 0.2s;">
+                        Tu puerta de entrada al aprendizaje sin barreras. Proporcionamos recursos completos en ingeniería de sistemas, diseñados para personas con discapacidad visual.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up fade-in-on-scroll" style="animation-delay: 0.4s;">
+                        <a href="#" id="heroRegisterBtn" class="px-8 py-4 bg-primary text-white rounded-lg font-bold text-base hover:bg-primary/90 transition-all transform hover:scale-105 shadow-lg glow-on-hover focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 animate-bounce-slow">
+                            <span class="truncate">Registrarse</span>
+                        </a>
+                        <a href="#" id="heroLoginBtn" class="px-8 py-4 bg-transparent border-2 border-primary text-primary rounded-lg font-bold text-base hover:bg-primary/10 transition-all transform hover:scale-105 hover-lift focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
+                            <span class="truncate">Iniciar Sesión</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Gráfica de Crecimiento -->
+            <section aria-labelledby="user-growth-heading" class="container mx-auto px-6 py-16">
+                <div class="flex flex-col items-center text-center gap-4 mb-10">
+                    <h2 class="text-3xl font-bold leading-tight tracking-[-0.015em]" id="user-growth-heading">Únete a Nuestra Creciente Comunidad</h2>
+                    <p class="text-base font-normal leading-normal max-w-2xl text-gray-600 dark:text-gray-400">
+                        Miles de estudiantes confían en nuestra plataforma para avanzar en sus habilidades y carreras.
+                    </p>
+                </div>
+                <div aria-label="Estadísticas de la plataforma" class="bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-lg max-w-4xl mx-auto" role="figure">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                        <div class="flex flex-col items-center hover-lift fade-in-on-scroll">
+                            <div class="text-4xl font-black text-primary mb-2 stat-number" id="publicTotalUsers">0</div>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Usuarios Activos</p>
+                        </div>
+                        <div class="flex flex-col items-center hover-lift fade-in-on-scroll" style="animation-delay: 0.1s;">
+                            <div class="text-4xl font-black text-primary mb-2 stat-number" id="publicTotalPdfs">0</div>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">PDFs Disponibles</p>
+                        </div>
+                        <div class="flex flex-col items-center hover-lift fade-in-on-scroll" style="animation-delay: 0.2s;">
+                            <div class="text-4xl font-black text-primary mb-2 stat-number" id="publicTotalViews">0</div>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Lecturas Realizadas</p>
+                        </div>
+                    </div>
+                    <!-- Gráfica de barras animada -->
+                    <div class="flex justify-between items-end h-64 gap-2 md:gap-4 mt-8">
+                        <div class="flex flex-col items-center h-full justify-end w-1/4">
+                            <div class="w-full bg-primary/20 dark:bg-primary/30 rounded-t-lg transition-all duration-1000 ease-out" style="height: 20%" id="bar-2021"></div>
+                            <span class="text-sm mt-2 text-gray-600 dark:text-gray-400">2021</span>
+                        </div>
+                        <div class="flex flex-col items-center h-full justify-end w-1/4">
+                            <div class="w-full bg-primary/40 dark:bg-primary/50 rounded-t-lg transition-all duration-1000 ease-out" style="height: 45%" id="bar-2022"></div>
+                            <span class="text-sm mt-2 text-gray-600 dark:text-gray-400">2022</span>
+                        </div>
+                        <div class="flex flex-col items-center h-full justify-end w-1/4">
+                            <div class="w-full bg-primary/60 dark:bg-primary/70 rounded-t-lg transition-all duration-1000 ease-out" style="height: 70%" id="bar-2023"></div>
+                            <span class="text-sm mt-2 text-gray-600 dark:text-gray-400">2023</span>
+                        </div>
+                        <div class="flex flex-col items-center h-full justify-end w-1/4">
+                            <div class="w-full bg-primary rounded-t-lg transition-all duration-1000 ease-out" style="height: 100%" id="bar-2024"></div>
+                            <span class="text-sm mt-2 font-bold text-primary">2024</span>
+                        </div>
+                    </div>
+                    <p class="sr-only">El gráfico muestra el crecimiento de usuarios a lo largo de los años.</p>
+                </div>
+            </section>
+
+            <!-- Nuestros Libros (PDFs) - Carrusel -->
+            <section class="container mx-auto px-6 py-16 fade-in-on-scroll" id="libros">
+                <div class="flex flex-col items-center text-center gap-4 mb-10">
+                    <h2 class="text-3xl font-bold leading-tight tracking-[-0.015em] fade-in-on-scroll">Nuestros Libros</h2>
+                    <p class="text-base font-normal leading-normal max-w-2xl text-gray-600 dark:text-gray-400 fade-in-on-scroll">
+                        Explora nuestra biblioteca de libros de ingeniería de sistemas, totalmente accesibles y disponibles con tecnología text-to-speech.
+                    </p>
+                </div>
+                
+                <!-- Carrusel de Libros -->
+                <div class="carousel-container max-w-6xl mx-auto">
+                    <div class="carousel-wrapper" id="booksCarousel">
+                        <!-- Slide 1: Introducción a la Ingeniería de Sistemas -->
+                        <div class="carousel-item active">
+                            <div class="flex justify-center items-center px-4">
+                                <div class="flex flex-col gap-3 hover-lift max-w-md w-full">
+                                    <img alt="Una pila de libros de texto de ingeniería de tapa dura con cubiertas azules y blancas sobre una mesa de madera." 
+                                         class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg object-cover shadow-lg" 
+                                         src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&h=500&fit=crop">
+                                    <div>
+                                        <h3 class="text-base font-medium leading-normal">Introducción a la Ingeniería de Sistemas</h3>
+                                        <p class="text-gray-600 dark:text-gray-400 text-sm font-normal leading-normal mt-1">
+                                            Un texto fundamental que cubre los principios y metodologías centrales de la ingeniería de sistemas.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Slide 2: Sistemas Avanzados Basados en Modelos -->
+                        <div class="carousel-item">
+                            <div class="flex justify-center items-center px-4">
+                                <div class="flex flex-col gap-3 hover-lift max-w-md w-full">
+                                    <img alt="Un libro abierto que muestra diagramas complejos de ingeniería de sistemas, con gráficos y anotaciones detalladas." 
+                                         class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg object-cover shadow-lg" 
+                                         src="https://images.unsplash.com/photo-1532012197267-da84d127e765?w=400&h=500&fit=crop">
+                                    <div>
+                                        <h3 class="text-base font-medium leading-normal">Sistemas Avanzados Basados en Modelos</h3>
+                                        <p class="text-gray-600 dark:text-gray-400 text-sm font-normal leading-normal mt-1">
+                                            Sumérgete en el MBSE con ejemplos prácticos y estudios de caso.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Slide 3: Ingeniería de Requisitos -->
+                        <div class="carousel-item">
+                            <div class="flex justify-center items-center px-4">
+                                <div class="flex flex-col gap-3 hover-lift max-w-md w-full">
+                                    <img alt="Un primer plano de un libro de texto con el título 'Ingeniería de Requisitos' en la portada, mostrando texto claro y de alto contraste." 
+                                         class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg object-cover shadow-lg" 
+                                         src="images/gojo.png">
+                                    <div>
+                                        <h3 class="text-base font-medium leading-normal">Ingeniería de Requisitos</h3>
+                                        <p class="text-gray-600 dark:text-gray-400 text-sm font-normal leading-normal mt-1">
+                                            Aprende el arte y la ciencia de definir, documentar y mantener los requisitos del sistema.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Slide 4: Arquitectura de Sistemas -->
+                        <div class="carousel-item">
+                            <div class="flex justify-center items-center px-4">
+                                <div class="flex flex-col gap-3 hover-lift max-w-md w-full">
+                                    <img alt="Un libro abierto sobre arquitectura de sistemas con diagramas y esquemas de diseño de sistemas complejos." 
+                                         class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg object-cover shadow-lg" 
+                                         src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=500&fit=crop">
+                                    <div>
+                                        <h3 class="text-base font-medium leading-normal">Arquitectura de Sistemas</h3>
+                                        <p class="text-gray-600 dark:text-gray-400 text-sm font-normal leading-normal mt-1">
+                                            Domina el diseño y la arquitectura de sistemas complejos con metodologías probadas y mejores prácticas.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Slide 5: Gestión de Proyectos de Sistemas -->
+                        <div class="carousel-item">
+                            <div class="flex justify-center items-center px-4">
+                                <div class="flex flex-col gap-3 hover-lift max-w-md w-full">
+                                    <img alt="Un libro sobre gestión de proyectos de ingeniería de sistemas con herramientas y metodologías de planificación." 
+                                         class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg object-cover shadow-lg" 
+                                         src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&h=500&fit=crop">
+                                    <div>
+                                        <h3 class="text-base font-medium leading-normal">Gestión de Proyectos de Sistemas</h3>
+                                        <p class="text-gray-600 dark:text-gray-400 text-sm font-normal leading-normal mt-1">
+                                            Guía completa para la planificación, ejecución y control de proyectos de ingeniería de sistemas.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Botones de navegación -->
+                    <button class="carousel-btn prev" id="booksCarouselPrev" aria-label="Libro anterior">
+                        <span class="material-symbols-outlined">chevron_left</span>
+                    </button>
+                    <button class="carousel-btn next" id="booksCarouselNext" aria-label="Libro siguiente">
+                        <span class="material-symbols-outlined">chevron_right</span>
+                    </button>
+                    
+                    <!-- Indicadores -->
+                    <div class="carousel-indicators" id="booksCarouselIndicators"></div>
+                </div>
+            </section>
+
+            <!-- Diapositivas -->
+            <section class="container mx-auto px-6 py-16 fade-in-on-scroll parallax" id="diapositivas">
+                <div class="grid md:grid-cols-2 gap-10 items-center">
+                    <div class="flex flex-col gap-4 text-center md:text-left items-center md:items-start fade-in-on-scroll">
+                        <h2 class="text-3xl font-bold leading-tight tracking-[-0.015em]">Nuestras Diapositivas</h2>
+                        <p class="text-base font-normal leading-normal max-w-xl text-gray-600 dark:text-gray-400">
+                            Nuestras presentaciones de diapositivas accesibles están diseñadas pensando en los lectores de pantalla. Cada presentación incluye descripciones de texto detalladas para todos los diagramas, un orden de lectura lógico y visuales de alto contraste para garantizar una experiencia de aprendizaje integral para todos.
+                        </p>
+                    </div>
+                    <div class="fade-in-on-scroll hover-lift">
+                        <img alt="Una pantalla de proyector mostrando una diapositiva de ingeniería con diagramas claros y texto grande, diseñada para una legibilidad óptima." 
+                             class="w-full max-w-md mx-auto rounded-lg object-cover shadow-xl glow-on-hover" 
+                             src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&h=400&fit=crop">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Testimonios - Carrusel -->
+            <section class="container mx-auto px-6 py-16 fade-in-on-scroll" id="testimonios">
+                <div class="flex flex-col items-center text-center gap-4 mb-10">
+                    <h2 class="text-3xl font-bold leading-tight tracking-[-0.015em] fade-in-on-scroll">Lo Que Dicen Nuestros Usuarios</h2>
+                    <p class="text-base font-normal leading-normal max-w-2xl text-gray-600 dark:text-gray-400 fade-in-on-scroll">
+                        Escucha a los ingenieros que han transformado su experiencia de aprendizaje con nuestra plataforma.
+                    </p>
+                </div>
+                
+                <!-- Carrusel de Testimonios -->
+                <div class="carousel-container max-w-5xl mx-auto">
+                    <div class="carousel-wrapper" id="testimonialsCarousel">
+                        <!-- Los testimonios se cargarán dinámicamente -->
+                    </div>
+                    
+                    <!-- Botones de navegación -->
+                    <button class="carousel-btn prev" id="testimonialsCarouselPrev" aria-label="Testimonio anterior">
+                        <span class="material-symbols-outlined">chevron_left</span>
+                    </button>
+                    <button class="carousel-btn next" id="testimonialsCarouselNext" aria-label="Testimonio siguiente">
+                        <span class="material-symbols-outlined">chevron_right</span>
+                    </button>
+                    
+                    <!-- Indicadores -->
+                    <div class="carousel-indicators" id="testimonialsCarouselIndicators"></div>
+                </div>
+                
+                <!-- Formulario de Testimonio (solo si autenticado) -->
+                <div id="testimonialFormContainer" class="max-w-2xl mx-auto mt-12 hidden">
+                    <div class="bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 p-6">
+                        <h3 class="text-xl font-bold mb-4">Agregar Testimonio</h3>
+                        <form id="testimonialForm">
+                            <textarea id="testimonialComment" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-slate-800 mb-4 focus:outline-none focus:ring-2 focus:ring-primary" rows="4" placeholder="Escribe tu comentario..."></textarea>
+                            <div class="mb-4">
+                                <label class="block mb-2 font-medium">Calificación:</label>
+                                <select id="testimonialRating" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-primary">
+                                    <option value="5">5 estrellas</option>
+                                    <option value="4">4 estrellas</option>
+                                    <option value="3">3 estrellas</option>
+                                    <option value="2">2 estrellas</option>
+                                    <option value="1">1 estrella</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="w-full px-6 py-3 bg-primary text-white rounded-lg font-bold hover:bg-primary/90 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
+                                Enviar Testimonio
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Cómo Funciona -->
+            <section class="container mx-auto px-6 py-16 fade-in-on-scroll">
+                <div class="flex flex-col items-center text-center gap-4 mb-12">
+                    <h2 class="text-3xl font-bold leading-tight tracking-[-0.015em] fade-in-on-scroll">Cómo Funciona</h2>
+                    <p class="text-base font-normal leading-normal max-w-2xl text-gray-600 dark:text-gray-400 fade-in-on-scroll">
+                        Comienza tu ruta de aprendizaje en tres sencillos pasos.
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center max-w-4xl mx-auto">
+                    <div class="flex flex-col items-center gap-4 fade-in-on-scroll hover-lift">
+                        <div class="flex items-center justify-center w-16 h-16 rounded-full bg-primary text-white font-bold text-xl shadow-lg glow-on-hover animate-bounce-slow">1</div>
+                        <h3 class="text-lg font-bold">Crea una Cuenta</h3>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm">
+                            Regístrate gratis para tener acceso a nuestra plataforma y materiales introductorios.
+                        </p>
+                    </div>
+                    <div class="flex flex-col items-center gap-4 fade-in-on-scroll hover-lift" style="animation-delay: 0.1s;">
+                        <div class="flex items-center justify-center w-16 h-16 rounded-full bg-primary text-white font-bold text-xl shadow-lg glow-on-hover animate-bounce-slow" style="animation-delay: 0.2s;">2</div>
+                        <h3 class="text-lg font-bold">Explora los Recursos</h3>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm">
+                            Navega por nuestra extensa biblioteca de libros, diapositivas y documentos técnicos.
+                        </p>
+                    </div>
+                    <div class="flex flex-col items-center gap-4 fade-in-on-scroll hover-lift" style="animation-delay: 0.2s;">
+                        <div class="flex items-center justify-center w-16 h-16 rounded-full bg-primary text-white font-bold text-xl shadow-lg glow-on-hover animate-bounce-slow" style="animation-delay: 0.4s;">3</div>
+                        <h3 class="text-lg font-bold">Aprende con Text-to-Speech</h3>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm">
+                            Escucha los documentos con nuestra tecnología de síntesis de voz en español.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CTA Final -->
+            <section class="container mx-auto px-6 py-20 my-16 fade-in-on-scroll">
+                <div class="flex flex-col items-center text-center gap-6 px-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl py-12 relative overflow-hidden hover-lift">
+                    <!-- Efecto shimmer -->
+                    <div class="absolute inset-0 shimmer opacity-30"></div>
+                    <div class="relative z-10">
+                        <h2 class="text-3xl font-bold leading-tight tracking-[-0.015em] mb-4">Comienza Tu Viaje de Aprendizaje Hoy</h2>
+                        <p class="text-base font-normal leading-normal max-w-2xl text-gray-600 dark:text-gray-400 mb-6">
+                            Únete a una comunidad dedicada a hacer que la educación en ingeniería sea accesible para todos.
+                        </p>
+                        <a href="#" id="finalRegisterBtn" class="px-8 py-4 bg-primary text-white rounded-lg font-bold text-base hover:bg-primary/90 transition-all transform hover:scale-110 glow-on-hover shadow-lg animate-pulse-slow focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-blue-50">
+                            <span class="truncate">Regístrate Gratis</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ==================== PÁGINA DE LOGIN ==================== -->
+        <div id="loginPage" class="page hidden login-page-container">
+            <!-- Fondo con gradiente animado -->
+            <div class="login-background">
+                <div class="login-bg-gradient"></div>
+                <div class="login-particles">
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                </div>
+            </div>
+            
+            <div class="container mx-auto px-6 py-20 relative z-10">
+                <div class="max-w-md mx-auto">
+                    <!-- Logo/Título decorativo -->
+                    <div class="text-center mb-8 login-header">
+                        <div class="login-icon-container">
+                            <span class="material-symbols-outlined login-icon">lock</span>
+                        </div>
+                        <h1 class="text-4xl font-black mb-2 bg-gradient-to-r from-primary via-blue-500 to-cyan-400 bg-clip-text text-transparent">
+                            Bienvenido de nuevo
+                        </h1>
+                        <p class="text-gray-600 dark:text-gray-400">Inicia sesión para continuar</p>
+                    </div>
+                    
+                    <!-- Formulario -->
+                    <div class="login-form-card">
+                        <form id="loginForm" class="space-y-6">
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <span class="material-symbols-outlined form-label-icon">person</span>
+                                    Usuario
+                                </label>
+                                <div class="input-wrapper">
+                                    <span class="input-icon">
+                                        <span class="material-symbols-outlined">account_circle</span>
+                                    </span>
+                                    <input 
+                                        type="text" 
+                                        id="loginUsername" 
+                                        class="form-input" 
+                                        placeholder="Ingresa tu usuario"
+                                        required
+                                    >
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <span class="material-symbols-outlined form-label-icon">lock</span>
+                                    Contraseña
+                                </label>
+                                <div class="input-wrapper">
+                                    <span class="input-icon">
+                                        <span class="material-symbols-outlined">lock</span>
+                                    </span>
+                                    <input 
+                                        type="password" 
+                                        id="loginPassword" 
+                                        class="form-input password-input" 
+                                        placeholder="Ingresa tu contraseña"
+                                        required
+                                    >
+                                    <button 
+                                        type="button" 
+                                        class="password-toggle"
+                                        onclick="togglePasswordVisibility('loginPassword', this)"
+                                    >
+                                        <span class="material-symbols-outlined">visibility</span>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="login-submit-btn">
+                                <span>Iniciar Sesión</span>
+                                <span class="material-symbols-outlined">arrow_forward</span>
+                            </button>
+                        </form>
+                        
+                        <!-- Mensajes de error/éxito -->
+                        <div id="loginError" class="auth-message auth-error hidden"></div>
+                        
+                        <!-- Enlace a registro -->
+                        <div class="auth-divider">
+                            <span>¿No tienes una cuenta?</span>
+                        </div>
+                        <a href="#" id="loginToRegisterLink" class="auth-link-btn">
+                            <span class="material-symbols-outlined">person_add</span>
+                            Crear una cuenta
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== PÁGINA DE REGISTRO ==================== -->
+        <div id="registerPage" class="page hidden register-page-container">
+            <!-- Fondo con gradiente animado -->
+            <div class="register-background">
+                <div class="register-bg-gradient"></div>
+                <div class="register-particles">
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                </div>
+            </div>
+            
+            <div class="container mx-auto px-6 py-20 relative z-10">
+                <div class="max-w-md mx-auto">
+                    <!-- Logo/Título decorativo -->
+                    <div class="text-center mb-8 register-header">
+                        <div class="register-icon-container">
+                            <span class="material-symbols-outlined register-icon">person_add</span>
+                        </div>
+                        <h1 class="text-4xl font-black mb-2 bg-gradient-to-r from-primary via-purple-500 to-pink-400 bg-clip-text text-transparent">
+                            Únete a nosotros
+                        </h1>
+                        <p class="text-gray-600 dark:text-gray-400">Crea tu cuenta y comienza a explorar</p>
+                    </div>
+                    
+                    <!-- Formulario -->
+                    <div class="register-form-card">
+                        <form id="registerForm" class="space-y-6">
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <span class="material-symbols-outlined form-label-icon">person</span>
+                                    Usuario
+                                </label>
+                                <div class="input-wrapper">
+                                    <span class="input-icon">
+                                        <span class="material-symbols-outlined">account_circle</span>
+                                    </span>
+                                    <input 
+                                        type="text" 
+                                        id="registerUsername" 
+                                        class="form-input" 
+                                        placeholder="Elige un nombre de usuario"
+                                        required
+                                    >
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <span class="material-symbols-outlined form-label-icon">lock</span>
+                                    Contraseña
+                                </label>
+                                <div class="input-wrapper">
+                                    <span class="input-icon">
+                                        <span class="material-symbols-outlined">lock</span>
+                                    </span>
+                                    <input 
+                                        type="password" 
+                                        id="registerPassword" 
+                                        class="form-input password-input" 
+                                        placeholder="Crea una contraseña segura"
+                                        required
+                                    >
+                                    <button 
+                                        type="button" 
+                                        class="password-toggle"
+                                        onclick="togglePasswordVisibility('registerPassword', this)"
+                                    >
+                                        <span class="material-symbols-outlined">visibility</span>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="register-submit-btn">
+                                <span>Crear Cuenta</span>
+                                <span class="material-symbols-outlined">arrow_forward</span>
+                            </button>
+                        </form>
+                        
+                        <!-- Mensajes de error/éxito -->
+                        <div id="registerError" class="auth-message auth-error hidden"></div>
+                        <div id="registerSuccess" class="auth-message auth-success hidden"></div>
+                        
+                        <!-- Enlace a login -->
+                        <div class="auth-divider">
+                            <span>¿Ya tienes una cuenta?</span>
+                        </div>
+                        <a href="#" id="registerToLoginLink" class="auth-link-btn">
+                            <span class="material-symbols-outlined">login</span>
+                            Iniciar Sesión
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== PÁGINA DASHBOARD ==================== -->
+        <div id="dashboardPage" class="page hidden dashboard-page">
+            <div class="flex">
+                <!-- Sidebar -->
+                <aside id="sidebar" class="dashboard-sidebar hidden lg:block fixed left-0 top-28 bottom-0 w-64 overflow-y-auto">
+                    <div class="sidebar-gradient"></div>
+                    <div class="p-6 relative z-10">
+                        <div class="sidebar-header">
+                            <div class="sidebar-icon-wrapper">
+                                <span class="material-symbols-outlined sidebar-main-icon">menu_book</span>
+                            </div>
+                            <h2 class="sidebar-title">Biblioteca Digital</h2>
+                            <div class="sidebar-divider"></div>
+                        </div>
+                        <nav class="sidebar-nav space-y-2">
+                            <a href="#" data-category="all" class="sidebar-link category-link flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer">
+                                <span class="sidebar-link-icon material-symbols-outlined">folder</span>
+                                <span class="sidebar-link-text">Todos los recursos</span>
+                                <span class="sidebar-link-arrow material-symbols-outlined">chevron_right</span>
+                            </a>
+                            <a href="#" data-category="Software" class="sidebar-link category-link flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer">
+                                <span class="sidebar-link-icon material-symbols-outlined">code</span>
+                                <span class="sidebar-link-text">Software</span>
+                                <span class="sidebar-link-arrow material-symbols-outlined">chevron_right</span>
+                            </a>
+                            <a href="#" data-category="Bases de Datos" class="sidebar-link category-link flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer">
+                                <span class="sidebar-link-icon material-symbols-outlined">storage</span>
+                                <span class="sidebar-link-text">Bases de Datos</span>
+                                <span class="sidebar-link-arrow material-symbols-outlined">chevron_right</span>
+                            </a>
+                            <a href="#" data-category="Frontend" class="sidebar-link category-link flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer">
+                                <span class="sidebar-link-icon material-symbols-outlined">web</span>
+                                <span class="sidebar-link-text">Frontend</span>
+                                <span class="sidebar-link-arrow material-symbols-outlined">chevron_right</span>
+                            </a>
+                            <a href="#" data-category="Backend" class="sidebar-link category-link flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer">
+                                <span class="sidebar-link-icon material-symbols-outlined">settings</span>
+                                <span class="sidebar-link-text">Backend</span>
+                                <span class="sidebar-link-arrow material-symbols-outlined">chevron_right</span>
+                            </a>
+                            <a href="#" data-category="Otros" class="sidebar-link category-link flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer">
+                                <span class="sidebar-link-icon material-symbols-outlined">folder</span>
+                                <span class="sidebar-link-text">Otros</span>
+                                <span class="sidebar-link-arrow material-symbols-outlined">chevron_right</span>
+                            </a>
+                        </nav>
+                    </div>
+                </aside>
+
+                <!-- Mobile Sidebar Toggle -->
+                <button id="mobileSidebarToggle" class="dashboard-mobile-toggle lg:hidden fixed bottom-6 right-6 z-40 p-4 bg-primary text-white rounded-full shadow-lg hover:bg-primary/90">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+
+                <!-- Main Content -->
+                <div class="flex-1 lg:ml-64">
+                    <div class="dashboard-content-container">
+                        <!-- Header -->
+                        <div class="dashboard-header">
+                            <div class="dashboard-header-content">
+                                <div class="dashboard-title-wrapper">
+                                    <h1 id="categoryTitle" class="dashboard-title">Todos los recursos</h1>
+                                    <div class="dashboard-subtitle">
+                                        <span class="material-symbols-outlined dashboard-count-icon">description</span>
+                                        <span id="pdfCount" class="dashboard-count">0</span>
+                                        <span class="dashboard-count-label">documentos</span>
+                                    </div>
+                                </div>
+                                <button id="reloadPdfsBtn" class="dashboard-reload-btn">
+                                    <span class="material-symbols-outlined">refresh</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Filtros -->
+                        <div class="dashboard-filters">
+                            <div class="filter-wrapper">
+                                <span class="filter-icon material-symbols-outlined">tune</span>
+                                <select id="typeFilter" class="dashboard-filter-select">
+                                    <option value="all">Todos</option>
+                                    <option value="PDF">PDFs</option>
+                                    <option value="Libro">Libros</option>
+                                    <option value="Presentación">Presentaciones</option>
+                                </select>
+                            </div>
+                            <div class="filter-wrapper">
+                                <span class="filter-icon material-symbols-outlined">sort</span>
+                                <select id="sortFilter" class="dashboard-filter-select">
+                                    <option value="recent">Más recientes</option>
+                                    <option value="popular">Más populares</option>
+                                    <option value="alphabetical">Alfabético</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- PDF List -->
+                        <div id="pdfList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <!-- PDFs se cargarán dinámicamente -->
+                        </div>
+
+                        <!-- PDF Details Modal -->
+                        <div id="pdfDetailsModal" class="modal hidden">
+                            <div class="modal-content max-w-4xl max-h-[90vh] overflow-y-auto">
+                                <div class="flex justify-between items-start mb-6">
+                                    <h2 class="text-2xl font-bold" id="pdfDetailsTitle">Detalles del Documento</h2>
+                                    <button id="closePdfDetailsBtn" class="p-2 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-lg transition-colors">
+                                        <span class="material-symbols-outlined">close</span>
+                                    </button>
+                                </div>
+                                
+                                <div class="grid md:grid-cols-2 gap-6">
+                                    <!-- Portada -->
+                                    <div class="flex-shrink-0">
+                                        <img id="pdfDetailsCover" src="" alt="Portada del documento" class="w-full aspect-[3/4] object-cover rounded-lg shadow-lg">
+                                    </div>
+                                    
+                                    <!-- Información -->
+                                    <div class="flex flex-col gap-4">
+                                        <div>
+                                            <h3 class="text-xl font-bold mb-2" id="pdfDetailsName"></h3>
+                                            <div class="flex items-center gap-2 mb-3">
+                                                <span class="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium" id="pdfDetailsCategory"></span>
+                                                <span class="text-sm text-gray-600 dark:text-gray-400" id="pdfDetailsViews"></span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div>
+                                            <h4 class="font-semibold mb-2">Descripción</h4>
+                                            <p class="text-gray-700 dark:text-gray-300" id="pdfDetailsDescription"></p>
+                                        </div>
+                                        
+                                        <div class="border-t border-gray-200 dark:border-slate-700 pt-4">
+                                            <h4 class="font-semibold mb-3">Información del Documento</h4>
+                                            <div class="space-y-2 text-sm">
+                                                <div class="flex justify-between">
+                                                    <span class="text-gray-600 dark:text-gray-400">Fecha de subida:</span>
+                                                    <span class="font-medium" id="pdfDetailsDate"></span>
+                                                </div>
+                                                <div class="flex justify-between">
+                                                    <span class="text-gray-600 dark:text-gray-400">Vistas:</span>
+                                                    <span class="font-medium" id="pdfDetailsViewsCount"></span>
+                                                </div>
+                                                <div class="flex justify-between">
+                                                    <span class="text-gray-600 dark:text-gray-400">Categoría:</span>
+                                                    <span class="font-medium" id="pdfDetailsCategoryFull"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="flex gap-3 pt-4">
+                                            <button id="addToFavoritesBtn" class="pdf-details-favorite-btn flex-1 px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-lg font-bold transition-all duration-300 flex items-center justify-center gap-2 relative overflow-hidden group">
+                                                <span class="relative z-10 flex items-center justify-center gap-2">
+                                                    <span class="material-symbols-outlined transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12" id="favoriteIcon">favorite</span>
+                                                    <span id="favoriteText">Agregar a Favoritos</span>
+                                                </span>
+                                                <span class="absolute inset-0 bg-gradient-to-r from-red-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                                            </button>
+                                            <button id="readPdfBtn" class="pdf-details-read-btn flex-1 px-4 py-3 bg-primary text-white rounded-lg font-bold transition-all duration-300 flex items-center justify-center gap-2 relative overflow-hidden group transform hover:scale-105 hover:shadow-lg">
+                                                <span class="relative z-10 flex items-center justify-center gap-2">
+                                                    <span class="material-symbols-outlined transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110">auto_stories</span>
+                                                    <span>Leer</span>
+                                                    <span class="material-symbols-outlined text-sm transition-transform duration-300 group-hover:translate-x-1 opacity-0 group-hover:opacity-100">arrow_forward</span>
+                                                </span>
+                                                <span class="absolute inset-0 bg-gradient-to-r from-primary to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PDF Viewer -->
+                        <div id="pdfViewer" class="hidden fixed inset-0 bg-gradient-to-br from-gray-100 via-gray-50 to-gray-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 z-50 transition-colors duration-300">
+                            <div class="h-full flex flex-col">
+                                <!-- Top Bar - Siempre visible con diseño mejorado -->
+                                <div id="pdfViewerControls" class="bg-gradient-to-r from-white/98 via-gray-50/98 to-white/98 dark:from-slate-800/98 dark:via-slate-800/98 dark:to-slate-800/98 backdrop-blur-xl text-gray-900 dark:text-white shadow-2xl border-b border-gray-300/50 dark:border-slate-700/50 transition-colors duration-300">
+                                    <!-- Header con título y botón cerrar -->
+                                    <div class="flex items-center justify-between px-6 py-4">
+                                        <div class="flex items-center gap-4">
+                                            <div class="p-2 bg-primary/20 rounded-lg">
+                                                <span class="material-symbols-outlined text-primary text-2xl">description</span>
+                                            </div>
+                                            <div>
+                                                <h2 id="pdfViewerTitle" class="text-xl font-bold truncate max-w-md text-gray-900 dark:text-white"></h2>
+                                                <div class="flex items-center gap-3 mt-1">
+                                                    <span class="text-xs text-gray-500 dark:text-slate-400">Página</span>
+                                                    <span id="currentPageSpan" class="text-sm font-semibold text-primary">1</span>
+                                                    <span class="text-xs text-gray-500 dark:text-slate-400">de</span>
+                                                    <span id="totalPagesSpan" class="text-sm font-semibold text-gray-900 dark:text-white">0</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button id="closeViewerBtn" class="p-3 bg-gray-200/50 dark:bg-slate-700/50 hover:bg-red-500/20 hover:text-red-500 dark:hover:text-red-400 rounded-xl transition-all duration-300 group text-gray-700 dark:text-white" aria-label="Cerrar visor">
+                                            <span class="material-symbols-outlined group-hover:rotate-90 transition-transform duration-300">close</span>
+                                        </button>
+                                    </div>
+                                    
+                                    <!-- Barra de progreso -->
+                                    <div class="px-6 pb-2">
+                                        <div class="h-1.5 bg-gray-300/50 dark:bg-slate-700/50 rounded-full overflow-hidden transition-colors duration-300">
+                                            <div id="readingProgressBar" class="h-full bg-gradient-to-r from-primary to-blue-500 rounded-full transition-all duration-300" style="width: 0%"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Navigation Controls - Diseño mejorado -->
+                                    <div class="px-6 py-4 space-y-4">
+                                        <div class="flex flex-wrap items-center gap-3">
+                                            <!-- Navegación de páginas -->
+                                            <div class="flex items-center gap-2 bg-gray-200/30 dark:bg-slate-700/30 backdrop-blur-sm rounded-xl p-1 border border-gray-300/50 dark:border-slate-600/50 transition-colors duration-300">
+                                                <button id="prevPageBtn" class="p-2.5 bg-gray-200/50 dark:bg-slate-700/50 hover:bg-primary/20 hover:text-primary rounded-lg transition-all duration-200 group text-gray-700 dark:text-white" aria-label="Página anterior">
+                                                    <span class="material-symbols-outlined group-hover:-translate-x-0.5 transition-transform">chevron_left</span>
+                                                </button>
+                                                <div class="flex items-center gap-2 px-4 py-2 bg-gray-100/50 dark:bg-slate-700/50 rounded-lg min-w-[120px] justify-center transition-colors duration-300">
+                                                    <input type="number" id="currentPageInput" class="w-12 px-2 py-1 bg-white dark:bg-slate-800/80 rounded text-center text-gray-900 dark:text-white text-sm font-semibold border border-gray-300 dark:border-slate-600 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all" min="1">
+                                                    <span class="text-gray-500 dark:text-slate-400">/</span>
+                                                    <span id="totalPagesSpanDisplay" class="text-sm font-semibold text-gray-900 dark:text-slate-300">0</span>
+                                                </div>
+                                                <button id="nextPageBtn" class="p-2.5 bg-gray-200/50 dark:bg-slate-700/50 hover:bg-primary/20 hover:text-primary rounded-lg transition-all duration-200 group text-gray-700 dark:text-white" aria-label="Página siguiente">
+                                                    <span class="material-symbols-outlined group-hover:translate-x-0.5 transition-transform">chevron_right</span>
+                                                </button>
+                                            </div>
+                                            
+                                            <!-- Controles de zoom -->
+                                            <div class="flex items-center gap-2 bg-gray-200/30 dark:bg-slate-700/30 backdrop-blur-sm rounded-xl p-1 border border-gray-300/50 dark:border-slate-600/50 transition-colors duration-300">
+                                                <button id="zoomOutBtn" class="p-2.5 bg-gray-200/50 dark:bg-slate-700/50 hover:bg-blue-500/20 hover:text-blue-500 dark:hover:text-blue-400 rounded-lg transition-all duration-200 font-bold text-lg text-gray-700 dark:text-white" aria-label="Alejar">−</button>
+                                                <select id="zoomSelect" class="px-3 py-2 bg-white dark:bg-slate-800/80 rounded-lg text-gray-900 dark:text-white text-sm font-medium border border-gray-300 dark:border-slate-600 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all cursor-pointer">
+                                                    <option value="0.25">25%</option>
+                                                    <option value="0.5">50%</option>
+                                                    <option value="0.75">75%</option>
+                                                    <option value="1" selected>100%</option>
+                                                    <option value="1.25">125%</option>
+                                                    <option value="1.5">150%</option>
+                                                    <option value="2">200%</option>
+                                                </select>
+                                                <button id="zoomInBtn" class="p-2.5 bg-gray-200/50 dark:bg-slate-700/50 hover:bg-blue-500/20 hover:text-blue-500 dark:hover:text-blue-400 rounded-lg transition-all duration-200 font-bold text-lg text-gray-700 dark:text-white" aria-label="Acercar">+</button>
+                                            </div>
+                                            
+                                            <!-- Botón pantalla completa -->
+                                            <button id="fullscreenBtn" class="p-2.5 bg-gray-200/50 dark:bg-slate-700/50 hover:bg-purple-500/20 hover:text-purple-500 dark:hover:text-purple-400 rounded-lg transition-all duration-200 border border-gray-300/50 dark:border-slate-600/50 text-gray-700 dark:text-white" aria-label="Pantalla completa">
+                                                <span class="material-symbols-outlined">fullscreen</span>
+                                            </button>
+                                            
+                                            <!-- Botón modo nocturno/claro -->
+                                            <button id="pdfViewerThemeToggle" class="p-2.5 bg-gray-200/50 dark:bg-slate-700/50 hover:bg-yellow-500/20 hover:text-yellow-600 dark:hover:text-yellow-400 rounded-lg transition-all duration-200 border border-gray-300/50 dark:border-slate-600/50 text-gray-700 dark:text-white" aria-label="Alternar modo nocturno">
+                                                <span class="material-symbols-outlined" id="pdfViewerThemeIcon">dark_mode</span>
+                                            </button>
+                                        </div>
+
+                                        <!-- Audio Controls - Diseño mejorado -->
+                                        <div class="flex flex-wrap items-center gap-3 pt-3 border-t border-gray-300/50 dark:border-slate-700/50 transition-colors duration-300">
+                                            <button id="playPauseBtn" class="p-3.5 bg-gradient-to-br from-primary to-blue-600 hover:from-primary/90 hover:to-blue-600/90 rounded-xl transition-all duration-300 shadow-lg shadow-primary/20 hover:shadow-primary/40 hover:scale-105 group" aria-label="Reproducir/Pausar">
+                                                <span class="material-symbols-outlined text-xl group-hover:scale-110 transition-transform text-white">play_arrow</span>
+                                            </button>
+                                            <div class="flex-1 min-w-[200px] bg-gray-200/30 dark:bg-slate-700/30 backdrop-blur-sm rounded-xl p-2 border border-gray-300/50 dark:border-slate-600/50 transition-colors duration-300">
+                                                <select id="voiceSelect" class="w-full px-3 py-2 bg-white dark:bg-slate-800/80 rounded-lg text-gray-900 dark:text-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 cursor-pointer border border-gray-300 dark:border-slate-600/50 transition-colors duration-300">
+                                                    <option class="bg-white dark:bg-slate-800 text-gray-900 dark:text-slate-200" value="">Cargando voces...</option>
+                                                </select>
+                                            </div>
+                                            <div class="flex items-center gap-3 bg-gray-200/30 dark:bg-slate-700/30 backdrop-blur-sm rounded-xl px-4 py-2 border border-gray-300/50 dark:border-slate-600/50 transition-colors duration-300">
+                                                <span class="material-symbols-outlined text-sm text-gray-600 dark:text-slate-400">speed</span>
+                                                <label class="text-sm text-gray-700 dark:text-slate-300 font-medium">Velocidad:</label>
+                                                <input type="range" id="speedRange" min="0.5" max="2" step="0.1" value="1" class="w-24 accent-primary cursor-pointer">
+                                                <span id="speedValue" class="text-sm font-semibold text-primary w-12 text-center bg-gray-100 dark:bg-slate-800/50 rounded px-2 py-1 text-gray-900 dark:text-white transition-colors duration-300">1.0x</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- PDF Canvas - Área de lectura mejorada -->
+                                <div class="flex-1 overflow-auto bg-gradient-to-br from-gray-200 via-gray-100 to-gray-200 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 p-6 md:p-8 transition-colors duration-300">
+                                    <div class="flex justify-center min-h-full items-start">
+                                        <div class="pdf-page-container relative">
+                                            <canvas id="pdfCanvas" class="shadow-2xl max-w-full rounded-lg border border-gray-300 dark:border-slate-700/30 bg-white transition-colors duration-300"></canvas>
+                                            <!-- Overlay de carga -->
+                                            <div id="pdfLoadingOverlay" class="absolute inset-0 bg-gray-900/80 dark:bg-slate-900/80 backdrop-blur-sm flex items-center justify-center rounded-lg hidden transition-colors duration-300">
+                                                <div class="text-center">
+                                                    <div class="inline-block animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent mb-4"></div>
+                                                    <p class="text-white font-medium">Cargando página...</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Barra inferior flotante con atajos -->
+                                <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl rounded-full px-4 py-2 shadow-2xl border border-gray-300/50 dark:border-slate-700/50 hidden md:flex items-center gap-4 text-xs text-gray-600 dark:text-slate-400 transition-colors duration-300">
+                                    <div class="flex items-center gap-2">
+                                        <kbd class="px-2 py-1 bg-gray-200 dark:bg-slate-700 rounded text-gray-700 dark:text-slate-300 transition-colors duration-300">←</kbd>
+                                        <span>Anterior</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <kbd class="px-2 py-1 bg-gray-200 dark:bg-slate-700 rounded text-gray-700 dark:text-slate-300 transition-colors duration-300">→</kbd>
+                                        <span>Siguiente</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <kbd class="px-2 py-1 bg-gray-200 dark:bg-slate-700 rounded text-gray-700 dark:text-slate-300 transition-colors duration-300">Esc</kbd>
+                                        <span>Cerrar</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== PÁGINA ADMIN ==================== -->
+        <div id="adminPage" class="page hidden">
+            <div class="container mx-auto px-6 py-8">
+                <h1 class="text-4xl font-black mb-8">Panel de Administración</h1>
+
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                    <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg">
+                        <div class="text-3xl font-black text-primary mb-2" id="totalUsers">0</div>
+                        <p class="text-gray-600 dark:text-gray-400">Usuarios Totales</p>
+                    </div>
+                    <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg">
+                        <div class="text-3xl font-black text-primary mb-2" id="totalPdfs">0</div>
+                        <p class="text-gray-600 dark:text-gray-400">PDFs Totales</p>
+                    </div>
+                    <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg">
+                        <div class="text-3xl font-black text-primary mb-2" id="totalViews">0</div>
+                        <p class="text-gray-600 dark:text-gray-400">Vistas Totales</p>
+                    </div>
+                </div>
+
+                <!-- Upload PDFs -->
+                <div class="upload-form-container bg-gradient-to-br from-white to-slate-50 dark:from-slate-800 dark:to-slate-900 rounded-2xl p-8 shadow-2xl mb-8 border border-slate-200 dark:border-slate-700 relative overflow-hidden">
+                    <!-- Decorative background elements -->
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+                    <div class="absolute bottom-0 left-0 w-48 h-48 bg-blue-400/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+                    
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-3 mb-8">
+                            <div class="p-3 bg-gradient-to-br from-primary to-blue-600 rounded-xl shadow-lg">
+                                <span class="material-symbols-outlined text-white text-2xl">upload_file</span>
+                            </div>
+                            <div>
+                                <h2 class="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
+                                    Subir Nuevos PDFs
+                                </h2>
+                                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Sube uno o varios archivos PDF a la biblioteca</p>
+                            </div>
+                        </div>
+                        
+                        <form id="uploadForm" enctype="multipart/form-data" class="space-y-6">
+                            <!-- File Upload Area -->
+                            <div class="upload-file-area">
+                                <label class="block mb-3 font-semibold text-gray-700 dark:text-gray-200 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary">description</span>
+                                    Archivos PDF (múltiple)
+                                </label>
+                                <div class="relative">
+                                    <div id="fileDropZone" class="file-drop-zone border-2 border-dashed border-gray-300 dark:border-slate-600 rounded-xl p-8 text-center transition-all duration-300 hover:border-primary hover:bg-primary/5 dark:hover:bg-primary/10 cursor-pointer group">
+                                        <input type="file" id="pdfFiles" name="pdf" multiple accept=".pdf" class="hidden">
+                                        <div class="flex flex-col items-center justify-center gap-3">
+                                            <div class="p-4 bg-gradient-to-br from-primary/10 to-blue-500/10 rounded-full group-hover:scale-110 transition-transform duration-300">
+                                                <span class="material-symbols-outlined text-4xl text-primary">cloud_upload</span>
+                                            </div>
+                                            <div>
+                                                <p class="text-gray-700 dark:text-gray-300 font-medium mb-1">
+                                                    <span class="text-primary hover:underline">Haz clic para seleccionar</span> o arrastra archivos aquí
+                                                </p>
+                                                <p class="text-sm text-gray-500 dark:text-gray-400">PDF, máximo 10 archivos</p>
+                                            </div>
+                                        </div>
+                                        <div id="fileList" class="mt-4 text-sm text-gray-600 dark:text-gray-400 hidden"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Category Select -->
+                            <div class="form-field-group">
+                                <label class="block mb-3 font-semibold text-gray-700 dark:text-gray-200 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary">category</span>
+                                    Categoría
+                                </label>
+                                <div class="relative">
+                                    <select id="uploadCategory" name="category" class="form-select w-full px-4 py-3.5 pl-11 border-2 border-gray-200 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all duration-300 appearance-none cursor-pointer hover:border-primary/60">
+                                        <option value="Otros">Otros</option>
+                                        <option value="Software">Software</option>
+                                        <option value="Bases de Datos">Bases de Datos</option>
+                                        <option value="Frontend">Frontend</option>
+                                        <option value="Backend">Backend</option>
+                                    </select>
+                                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">label</span>
+                                    <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">arrow_drop_down</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Cover Image URL -->
+                            <div class="form-field-group">
+                                <label class="block mb-3 font-semibold text-gray-700 dark:text-gray-200 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary">image</span>
+                                    URL de Imagen de Portada
+                                </label>
+                                <div class="relative">
+                                    <input type="url" id="uploadCoverImage" name="cover_image" placeholder="https://ejemplo.com/imagen.jpg" class="form-input w-full px-4 py-3.5 pl-11 border-2 border-gray-200 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all duration-300 hover:border-primary/60">
+                                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">link</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Description -->
+                            <div class="form-field-group">
+                                <label class="block mb-3 font-semibold text-gray-700 dark:text-gray-200 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary">notes</span>
+                                    Descripción
+                                </label>
+                                <div class="relative">
+                                    <textarea id="uploadDescription" name="description" rows="4" placeholder="Describe el contenido del PDF..." class="form-textarea w-full px-4 py-3.5 pl-11 border-2 border-gray-200 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all duration-300 resize-none hover:border-primary/60"></textarea>
+                                    <span class="material-symbols-outlined absolute left-3 top-4 text-gray-400 pointer-events-none">description</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Submit Button -->
+                            <button type="submit" class="upload-submit-btn w-full py-4 bg-gradient-to-r from-primary to-blue-600 text-white rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-2 group">
+                                <span class="material-symbols-outlined group-hover:rotate-12 transition-transform duration-300">cloud_upload</span>
+                                <span>Subir PDF(s)</span>
+                                <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform duration-300">arrow_forward</span>
+                            </button>
+                        </form>
+                        
+                        <!-- Progress Bar -->
+                        <div id="uploadProgress" class="mt-6 hidden">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Subiendo archivos...</span>
+                                <span id="uploadProgressText" class="text-sm text-gray-500 dark:text-gray-400">0%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden shadow-inner">
+                                <div id="uploadProgressBar" class="bg-gradient-to-r from-primary to-blue-600 h-3 rounded-full transition-all duration-500 ease-out shadow-lg" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Message -->
+                        <div id="uploadMessage" class="hidden mt-4 p-4 rounded-xl flex items-center gap-3"></div>
+                    </div>
+                </div>
+
+                <!-- Connected Users -->
+                <div class="admin-section bg-white dark:bg-slate-800 rounded-xl p-8 shadow-lg mb-8">
+                    <h2 class="text-2xl font-bold mb-6">Usuarios Conectados</h2>
+                    <div id="connectedUsersList" class="space-y-3">
+                        <!-- Usuarios conectados se cargarán dinámicamente -->
+                    </div>
+                </div>
+
+                <!-- Users Table -->
+                <div class="admin-section bg-white dark:bg-slate-800 rounded-xl p-8 shadow-lg mb-8 overflow-x-auto">
+                    <h2 class="text-2xl font-bold mb-6">Usuarios Registrados</h2>
+                    <table class="w-full">
+                        <thead>
+                            <tr class="border-b border-gray-300 dark:border-gray-700">
+                                <th class="py-3 px-4 text-left">ID</th>
+                                <th class="py-3 px-4 text-left">Usuario</th>
+                                <th class="py-3 px-4 text-left">Admin</th>
+                                <th class="py-3 px-4 text-left">Fecha Registro</th>
+                                <th class="py-3 px-4 text-left">Última Conexión</th>
+                                <th class="py-3 px-4 text-left">Tiempo de Uso</th>
+                                <th class="py-3 px-4 text-left">Libros Leídos</th>
+                                <th class="py-3 px-4 text-left">Progreso Promedio</th>
+                                <th class="py-3 px-4 text-left">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <!-- Filas se cargarán dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- PDFs Table -->
+                <div class="admin-section bg-white dark:bg-slate-800 rounded-xl p-8 shadow-lg mb-8 overflow-x-auto">
+                    <h2 class="text-2xl font-bold mb-6">PDFs Subidos</h2>
+                    <table class="w-full">
+                        <thead>
+                            <tr class="border-b border-gray-300 dark:border-gray-700">
+                                <th class="py-3 px-4 text-left">ID</th>
+                                <th class="py-3 px-4 text-left">Nombre</th>
+                                <th class="py-3 px-4 text-left">Categoría</th>
+                                <th class="py-3 px-4 text-left">Fecha</th>
+                                <th class="py-3 px-4 text-left">Vistas</th>
+                                <th class="py-3 px-4 text-left">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pdfsTableBody">
+                            <!-- Filas se cargarán dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Modal de Edición de PDF -->
+                <div id="editPdfModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden p-4" style="display: none;">
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Editar PDF</h2>
+                            <button onclick="closeEditPdfModal()" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition-colors">
+                                <span class="material-symbols-outlined text-3xl">close</span>
+                            </button>
+                        </div>
+                        
+                        <form id="editPdfForm" class="space-y-6">
+                            <input type="hidden" id="editPdfId">
+                            
+                            <div>
+                                <label class="block mb-2 font-semibold text-gray-700 dark:text-gray-200">
+                                    Nombre del PDF
+                                </label>
+                                <input type="text" id="editPdfName" 
+                                       class="w-full px-4 py-3 border-2 border-gray-200 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-700 text-gray-900 dark:text-gray-100 focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all duration-300"
+                                       required>
+                            </div>
+                            
+                            <div>
+                                <label class="block mb-2 font-semibold text-gray-700 dark:text-gray-200">
+                                    Categoría
+                                </label>
+                                <select id="editPdfCategory" 
+                                        class="w-full px-4 py-3 border-2 border-gray-200 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-700 text-gray-900 dark:text-gray-100 focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all duration-300">
+                                    <option value="Otros">Otros</option>
+                                    <option value="Software">Software</option>
+                                    <option value="Bases de Datos">Bases de Datos</option>
+                                    <option value="Frontend">Frontend</option>
+                                    <option value="Backend">Backend</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block mb-2 font-semibold text-gray-700 dark:text-gray-200">
+                                    URL de Imagen de Portada
+                                </label>
+                                <input type="url" id="editPdfCoverImage" 
+                                       class="w-full px-4 py-3 border-2 border-gray-200 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-700 text-gray-900 dark:text-gray-100 focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all duration-300"
+                                       placeholder="https://ejemplo.com/imagen.jpg">
+                            </div>
+                            
+                            <div>
+                                <label class="block mb-2 font-semibold text-gray-700 dark:text-gray-200">
+                                    Descripción
+                                </label>
+                                <textarea id="editPdfDescription" rows="4" 
+                                          class="w-full px-4 py-3 border-2 border-gray-200 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-700 text-gray-900 dark:text-gray-100 focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all duration-300 resize-none"
+                                          placeholder="Describe el contenido del PDF..."></textarea>
+                            </div>
+                            
+                            <div class="flex gap-4 pt-4">
+                                <button type="submit" 
+                                        class="flex-1 py-3 bg-gradient-to-r from-primary to-blue-600 text-white rounded-xl font-bold hover:shadow-lg transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-2">
+                                    <span class="material-symbols-outlined">save</span>
+                                    <span>Guardar Cambios</span>
+                                </button>
+                                <button type="button" onclick="closeEditPdfModal()" 
+                                        class="px-6 py-3 bg-gray-200 dark:bg-slate-700 text-gray-700 dark:text-gray-300 rounded-xl font-medium hover:bg-gray-300 dark:hover:bg-slate-600 transition-colors">
+                                    Cancelar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Popular PDFs -->
+                <div class="bg-white dark:bg-slate-800 rounded-xl p-8 shadow-lg">
+                    <h2 class="text-2xl font-bold mb-6">PDFs Más Populares</h2>
+                    <table class="w-full">
+                        <thead>
+                            <tr class="border-b border-gray-300 dark:border-gray-700">
+                                <th class="py-3 px-4 text-left">ID</th>
+                                <th class="py-3 px-4 text-left">Nombre</th>
+                                <th class="py-3 px-4 text-left">Vistas</th>
+                                <th class="py-3 px-4 text-left">Fecha</th>
+                            </tr>
+                        </thead>
+                        <tbody id="popularPdfsTableBody">
+                            <!-- Filas se cargarán dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== PÁGINA PREFERENCIAS ==================== -->
+        <div id="preferencesPage" class="page hidden">
+            <div class="container mx-auto px-6 py-8 max-w-4xl">
+                <h1 class="text-4xl font-black mb-8 preferences-title">Preferencias</h1>
+
+                <!-- Accesibilidad -->
+                <div class="preferences-card bg-white dark:bg-slate-800 rounded-xl p-8 shadow-lg mb-8">
+                    <h2 class="text-2xl font-bold mb-6 preferences-section-title flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">accessibility</span>
+                        Accesibilidad - Para Personas con Poca Visión
+                    </h2>
+                    <div class="space-y-6">
+                        <div class="preferences-option-item flex items-center justify-between p-3 rounded-lg transition-all duration-300 hover:bg-gray-50 dark:hover:bg-slate-700/50">
+                            <div>
+                                <h3 class="font-medium mb-1 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary text-lg">text_fields</span>
+                                    Tamaño del Texto
+                                </h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Ajusta el tamaño de la fuente (hasta 2.5x)</p>
+                            </div>
+                            <button id="fontSizeBtn" class="preferences-btn px-4 py-2 bg-gray-100 dark:bg-slate-700 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:bg-primary hover:text-white dark:hover:bg-primary">
+                                Mediano
+                            </button>
+                        </div>
+                        <div class="preferences-option-item flex items-center justify-between p-3 rounded-lg transition-all duration-300 hover:bg-gray-50 dark:hover:bg-slate-700/50">
+                            <div>
+                                <h3 class="font-medium mb-1 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary text-lg">contrast</span>
+                                    Alto Contraste
+                                </h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Aumenta el contraste de la interfaz</p>
+                            </div>
+                            <label class="preferences-toggle relative inline-block w-14 h-8 cursor-pointer">
+                                <input type="checkbox" id="highContrastToggle" class="sr-only peer">
+                                <div class="w-14 h-8 bg-gray-300 dark:bg-gray-600 rounded-full peer peer-checked:bg-primary transition-all duration-300 shadow-inner peer-checked:shadow-lg"></div>
+                                <div class="absolute top-1 left-1 w-6 h-6 bg-white rounded-full transition-all duration-300 shadow-md peer-checked:translate-x-6 peer-checked:shadow-lg transform hover:scale-110"></div>
+                            </label>
+                        </div>
+                        <div class="preferences-option-item flex items-center justify-between p-3 rounded-lg transition-all duration-300 hover:bg-gray-50 dark:hover:bg-slate-700/50">
+                            <div>
+                                <h3 class="font-medium mb-1 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary text-lg">format_letter_spacing</span>
+                                    Espaciado entre Letras
+                                </h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Aumenta el espacio entre caracteres para mejor legibilidad</p>
+                            </div>
+                            <button id="letterSpacingBtn" class="preferences-btn px-4 py-2 bg-gray-100 dark:bg-slate-700 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:bg-primary hover:text-white dark:hover:bg-primary">
+                                Normal
+                            </button>
+                        </div>
+                        <div class="preferences-option-item flex items-center justify-between p-3 rounded-lg transition-all duration-300 hover:bg-gray-50 dark:hover:bg-slate-700/50">
+                            <div>
+                                <h3 class="font-medium mb-1 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary text-lg">line_weight</span>
+                                    Espaciado entre Líneas
+                                </h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Aumenta el espacio entre líneas de texto</p>
+                            </div>
+                            <button id="lineHeightBtn" class="preferences-btn px-4 py-2 bg-gray-100 dark:bg-slate-700 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:bg-primary hover:text-white dark:hover:bg-primary">
+                                Normal
+                            </button>
+                        </div>
+                        <div class="preferences-option-item flex items-center justify-between p-3 rounded-lg transition-all duration-300 hover:bg-gray-50 dark:hover:bg-slate-700/50">
+                            <div>
+                                <h3 class="font-medium mb-1 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary text-lg">format_bold</span>
+                                    Texto en Negrita
+                                </h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Hace todo el texto más grueso para mejor visibilidad</p>
+                            </div>
+                            <label class="preferences-toggle relative inline-block w-14 h-8 cursor-pointer">
+                                <input type="checkbox" id="fontWeightBoldToggle" class="sr-only peer">
+                                <div class="w-14 h-8 bg-gray-300 dark:bg-gray-600 rounded-full peer peer-checked:bg-primary transition-all duration-300 shadow-inner peer-checked:shadow-lg"></div>
+                                <div class="absolute top-1 left-1 w-6 h-6 bg-white rounded-full transition-all duration-300 shadow-md peer-checked:translate-x-6 peer-checked:shadow-lg transform hover:scale-110"></div>
+                            </label>
+                        </div>
+                        <div class="preferences-option-item flex items-center justify-between p-3 rounded-lg transition-all duration-300 hover:bg-gray-50 dark:hover:bg-slate-700/50">
+                            <div>
+                                <h3 class="font-medium mb-1 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary text-lg">touch_app</span>
+                                    Áreas de Clic Más Grandes
+                                </h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Aumenta el tamaño de botones y enlaces</p>
+                            </div>
+                            <label class="preferences-toggle relative inline-block w-14 h-8 cursor-pointer">
+                                <input type="checkbox" id="largerClickAreasToggle" class="sr-only peer">
+                                <div class="w-14 h-8 bg-gray-300 dark:bg-gray-600 rounded-full peer peer-checked:bg-primary transition-all duration-300 shadow-inner peer-checked:shadow-lg"></div>
+                                <div class="absolute top-1 left-1 w-6 h-6 bg-white rounded-full transition-all duration-300 shadow-md peer-checked:translate-x-6 peer-checked:shadow-lg transform hover:scale-110"></div>
+                            </label>
+                        </div>
+                        <div class="preferences-option-item flex items-center justify-between p-3 rounded-lg transition-all duration-300 hover:bg-gray-50 dark:hover:bg-slate-700/50">
+                            <div>
+                                <h3 class="font-medium mb-1 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary text-lg">ads_click</span>
+                                    Cursor Grande
+                                </h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Muestra un cursor más grande y visible</p>
+                            </div>
+                            <label class="preferences-toggle relative inline-block w-14 h-8 cursor-pointer">
+                                <input type="checkbox" id="largeCursorToggle" class="sr-only peer">
+                                <div class="w-14 h-8 bg-gray-300 dark:bg-gray-600 rounded-full peer peer-checked:bg-primary transition-all duration-300 shadow-inner peer-checked:shadow-lg"></div>
+                                <div class="absolute top-1 left-1 w-6 h-6 bg-white rounded-full transition-all duration-300 shadow-md peer-checked:translate-x-6 peer-checked:shadow-lg transform hover:scale-110"></div>
+                            </label>
+                        </div>
+                        <div class="preferences-option-item flex items-center justify-between p-3 rounded-lg transition-all duration-300 hover:bg-gray-50 dark:hover:bg-slate-700/50">
+                            <div>
+                                <h3 class="font-medium mb-1 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary text-lg">keyboard_focus</span>
+                                    Foco Mejorado
+                                </h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Resalta más los elementos al navegar con teclado</p>
+                            </div>
+                            <label class="preferences-toggle relative inline-block w-14 h-8 cursor-pointer">
+                                <input type="checkbox" id="enhancedFocusToggle" class="sr-only peer">
+                                <div class="w-14 h-8 bg-gray-300 dark:bg-gray-600 rounded-full peer peer-checked:bg-primary transition-all duration-300 shadow-inner peer-checked:shadow-lg"></div>
+                                <div class="absolute top-1 left-1 w-6 h-6 bg-white rounded-full transition-all duration-300 shadow-md peer-checked:translate-x-6 peer-checked:shadow-lg transform hover:scale-110"></div>
+                            </label>
+                        </div>
+                        <div class="preferences-option-item flex items-center justify-between p-3 rounded-lg transition-all duration-300 hover:bg-gray-50 dark:hover:bg-slate-700/50">
+                            <div>
+                                <h3 class="font-medium mb-1 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary text-lg">motion_photos_off</span>
+                                    Desactivar Animaciones
+                                </h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Reduce el movimiento en la interfaz</p>
+                            </div>
+                            <label class="preferences-toggle relative inline-block w-14 h-8 cursor-pointer">
+                                <input type="checkbox" id="disableAnimationsToggle" class="sr-only peer">
+                                <div class="w-14 h-8 bg-gray-300 dark:bg-gray-600 rounded-full peer peer-checked:bg-primary transition-all duration-300 shadow-inner peer-checked:shadow-lg"></div>
+                                <div class="absolute top-1 left-1 w-6 h-6 bg-white rounded-full transition-all duration-300 shadow-md peer-checked:translate-x-6 peer-checked:shadow-lg transform hover:scale-110"></div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Asistente de Voz -->
+                <div class="preferences-card bg-white dark:bg-slate-800 rounded-xl p-8 shadow-lg mb-8">
+                    <h2 class="text-2xl font-bold mb-6 preferences-section-title flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">volume_up</span>
+                        Asistente de Voz
+                    </h2>
+                    <div class="space-y-6">
+                        <!-- Velocidad de Lectura -->
+                        <div class="preferences-option-item flex items-center justify-between p-3 rounded-lg transition-all duration-300 hover:bg-gray-50 dark:hover:bg-slate-700/50">
+                            <div>
+                                <h3 class="font-medium mb-1 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary text-lg">speed</span>
+                                    Velocidad de Lectura
+                                </h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Controla la velocidad de reproducción (0.5x - 2.0x)</p>
+                            </div>
+                            <button id="speedBtn" class="preferences-btn px-4 py-2 bg-gray-100 dark:bg-slate-700 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:bg-primary hover:text-white dark:hover:bg-primary">
+                                1.0x
+                            </button>
+                        </div>
+                        
+                        <!-- Voz -->
+                        <div class="preferences-option-item flex items-center justify-between p-3 rounded-lg transition-all duration-300 hover:bg-gray-50 dark:hover:bg-slate-700/50">
+                            <div>
+                                <h3 class="font-medium mb-1 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary text-lg">record_voice_over</span>
+                                    Voz
+                                </h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Selecciona la voz del asistente</p>
+                            </div>
+                            <button id="voiceBtn" class="preferences-btn px-4 py-2 bg-gray-100 dark:bg-slate-700 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:bg-primary hover:text-white dark:hover:bg-primary">
+                                Predeterminada
+                            </button>
+                        </div>
+                        
+                        <!-- Volumen -->
+                        <div class="preferences-option-item flex items-center justify-between p-3 rounded-lg transition-all duration-300 hover:bg-gray-50 dark:hover:bg-slate-700/50">
+                            <div>
+                                <h3 class="font-medium mb-1 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary text-lg">volume_up</span>
+                                    Volumen
+                                </h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Ajusta el volumen de la voz (0% - 100%)</p>
+                            </div>
+                            <button id="volumeBtn" class="preferences-btn px-4 py-2 bg-gray-100 dark:bg-slate-700 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:bg-primary hover:text-white dark:hover:bg-primary">
+                                100%
+                            </button>
+                        </div>
+                        
+                        <!-- Tono (Pitch) -->
+                        <div class="preferences-option-item flex items-center justify-between p-3 rounded-lg transition-all duration-300 hover:bg-gray-50 dark:hover:bg-slate-700/50">
+                            <div>
+                                <h3 class="font-medium mb-1 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary text-lg">tune</span>
+                                    Tono
+                                </h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Ajusta el tono de la voz (0.5 - 2.0)</p>
+                            </div>
+                            <button id="pitchBtn" class="preferences-btn px-4 py-2 bg-gray-100 dark:bg-slate-700 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:bg-primary hover:text-white dark:hover:bg-primary">
+                                1.0
+                            </button>
+                        </div>
+                        
+                        <!-- Pausa entre Oraciones -->
+                        <div class="preferences-option-item flex items-center justify-between p-3 rounded-lg transition-all duration-300 hover:bg-gray-50 dark:hover:bg-slate-700/50">
+                            <div>
+                                <h3 class="font-medium mb-1 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary text-lg">pause_circle</span>
+                                    Pausa entre Oraciones
+                                </h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Tiempo de pausa entre oraciones (0s - 2s)</p>
+                            </div>
+                            <button id="pauseBtn" class="preferences-btn px-4 py-2 bg-gray-100 dark:bg-slate-700 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:bg-primary hover:text-white dark:hover:bg-primary">
+                                0.5s
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Foto de Perfil -->
+                <div class="preferences-card bg-white dark:bg-slate-800 rounded-xl p-8 shadow-lg mb-8">
+                    <h2 class="text-2xl font-bold mb-6 preferences-section-title flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">account_circle</span>
+                        Foto de Perfil
+                    </h2>
+                    <div class="flex flex-col items-center gap-6">
+                        <div class="relative preferences-profile-picture">
+                            <img id="currentProfilePicture" src="https://ui-avatars.com/api/?name=User&background=137fec&color=fff" alt="Foto de perfil" class="w-32 h-32 rounded-full object-cover border-4 border-primary shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-xl">
+                            <div class="absolute inset-0 rounded-full bg-primary/20 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-white text-3xl">photo_camera</span>
+                            </div>
+                            <div id="profilePictureLoading" class="hidden absolute inset-0 bg-black/50 rounded-full flex items-center justify-center">
+                                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <label for="profilePictureInput" class="preferences-profile-btn cursor-pointer inline-flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-lg font-bold relative overflow-hidden transition-all duration-300 transform hover:scale-105 hover:shadow-lg group">
+                                <span class="relative z-10 flex items-center gap-2">
+                                    <span class="material-symbols-outlined transition-transform duration-300 group-hover:rotate-12">photo_camera</span>
+                                    <span>Cambiar Foto</span>
+                                </span>
+                                <span class="absolute inset-0 bg-gradient-to-r from-primary to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                            </label>
+                            <input type="file" id="profilePictureInput" accept="image/*" class="hidden">
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">Formatos: JPG, PNG, GIF (máx. 5MB)</p>
+                        </div>
+                        <div id="profilePictureMessage" class="hidden text-sm font-medium"></div>
+                    </div>
+                </div>
+
+                <!-- Apariencia -->
+                <div class="preferences-card bg-white dark:bg-slate-800 rounded-xl p-8 shadow-lg">
+                    <h2 class="text-2xl font-bold mb-6 preferences-section-title flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">palette</span>
+                        Apariencia
+                    </h2>
+                    <div class="space-y-6">
+                        <!-- Modo Nocturno -->
+                        <div class="preferences-option-item flex items-center justify-between p-3 rounded-lg transition-all duration-300 hover:bg-gray-50 dark:hover:bg-slate-700/50">
+                            <div>
+                                <h3 class="font-medium mb-1 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary text-lg">dark_mode</span>
+                                    Modo Nocturno
+                                </h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Alterna entre modo claro y oscuro</p>
+                            </div>
+                            <label class="preferences-toggle relative inline-block w-14 h-8 cursor-pointer">
+                                <input type="checkbox" id="nightModeToggle" class="sr-only peer">
+                                <div class="w-14 h-8 bg-gray-300 dark:bg-gray-600 rounded-full peer peer-checked:bg-primary transition-all duration-300 shadow-inner peer-checked:shadow-lg"></div>
+                                <div class="absolute top-1 left-1 w-6 h-6 bg-white rounded-full transition-all duration-300 shadow-md peer-checked:translate-x-6 peer-checked:shadow-lg transform hover:scale-110"></div>
+                            </label>
+                        </div>
+                        
+                        <!-- Densidad de Interfaz -->
+                        <div class="preferences-option-item flex items-center justify-between p-3 rounded-lg transition-all duration-300 hover:bg-gray-50 dark:hover:bg-slate-700/50">
+                            <div>
+                                <h3 class="font-medium mb-1 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary text-lg">view_compact</span>
+                                    Densidad de Interfaz
+                                </h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Ajusta el espaciado de los elementos</p>
+                            </div>
+                            <button id="densityBtn" class="preferences-btn px-4 py-2 bg-gray-100 dark:bg-slate-700 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:bg-primary hover:text-white dark:hover:bg-primary">
+                                Cómoda
+                            </button>
+                        </div>
+                        
+                        <!-- Estilo de Bordes -->
+                        <div class="preferences-option-item flex items-center justify-between p-3 rounded-lg transition-all duration-300 hover:bg-gray-50 dark:hover:bg-slate-700/50">
+                            <div>
+                                <h3 class="font-medium mb-1 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary text-lg">border_style</span>
+                                    Estilo de Bordes
+                                </h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Redondeado o cuadrado</p>
+                            </div>
+                            <button id="borderStyleBtn" class="preferences-btn px-4 py-2 bg-gray-100 dark:bg-slate-700 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:bg-primary hover:text-white dark:hover:bg-primary">
+                                Redondeado
+                            </button>
+                        </div>
+                        
+                        <!-- Reducir Movimiento -->
+                        <div class="preferences-option-item flex items-center justify-between p-3 rounded-lg transition-all duration-300 hover:bg-gray-50 dark:hover:bg-slate-700/50">
+                            <div>
+                                <h3 class="font-medium mb-1 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary text-lg">pause</span>
+                                    Reducir Movimiento
+                                </h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Desactiva animaciones y transiciones</p>
+                            </div>
+                            <label class="preferences-toggle relative inline-block w-14 h-8 cursor-pointer">
+                                <input type="checkbox" id="reduceMotionToggle" class="sr-only peer">
+                                <div class="w-14 h-8 bg-gray-300 dark:bg-gray-600 rounded-full peer peer-checked:bg-primary transition-all duration-300 shadow-inner peer-checked:shadow-lg"></div>
+                                <div class="absolute top-1 left-1 w-6 h-6 bg-white rounded-full transition-all duration-300 shadow-md peer-checked:translate-x-6 peer-checked:shadow-lg transform hover:scale-110"></div>
+                            </label>
+                        </div>
+                        
+                        <!-- Velocidad de Transiciones -->
+                        <div class="preferences-option-item flex items-center justify-between p-3 rounded-lg transition-all duration-300 hover:bg-gray-50 dark:hover:bg-slate-700/50">
+                            <div>
+                                <h3 class="font-medium mb-1 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary text-lg">speed</span>
+                                    Velocidad de Transiciones
+                                </h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Controla la velocidad de las animaciones</p>
+                            </div>
+                            <button id="transitionSpeedBtn" class="preferences-btn px-4 py-2 bg-gray-100 dark:bg-slate-700 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:bg-primary hover:text-white dark:hover:bg-primary">
+                                Normal
+                            </button>
+                        </div>
+                        
+                        <!-- Opacidad de Fondos -->
+                        <div class="preferences-option-item flex items-center justify-between p-3 rounded-lg transition-all duration-300 hover:bg-gray-50 dark:hover:bg-slate-700/50">
+                            <div>
+                                <h3 class="font-medium mb-1 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary text-lg">opacity</span>
+                                    Opacidad de Fondos
+                                </h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Ajusta la transparencia de los elementos</p>
+                            </div>
+                            <button id="opacityBtn" class="preferences-btn px-4 py-2 bg-gray-100 dark:bg-slate-700 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:bg-primary hover:text-white dark:hover:bg-primary">
+                                100%
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== PÁGINA PROGRESO ==================== -->
+        <div id="progressPage" class="page hidden">
+            <div class="container mx-auto px-6 py-8 max-w-6xl">
+                <h1 class="text-4xl font-black mb-8">Mi Progreso</h1>
+
+                <!-- Stats -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                    <div class="progress-stat-card bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg relative overflow-hidden group cursor-pointer">
+                        <div class="absolute top-0 right-0 w-20 h-20 bg-primary/10 rounded-full -translate-y-10 translate-x-10 group-hover:scale-150 transition-transform duration-500"></div>
+                        <div class="relative z-10">
+                            <div class="flex items-center gap-3 mb-3">
+                                <span class="material-symbols-outlined text-primary text-3xl transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110">schedule</span>
+                                <div class="text-3xl font-black text-primary mb-2 transition-all duration-300 group-hover:scale-110" id="totalTime">0h 0m</div>
+                            </div>
+                            <p class="text-gray-600 dark:text-gray-400 transition-colors duration-300 group-hover:text-primary">Tiempo Total de Lectura</p>
+                        </div>
+                    </div>
+                    <div class="progress-stat-card bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg relative overflow-hidden group cursor-pointer">
+                        <div class="absolute top-0 right-0 w-20 h-20 bg-blue-500/10 rounded-full -translate-y-10 translate-x-10 group-hover:scale-150 transition-transform duration-500"></div>
+                        <div class="relative z-10">
+                            <div class="flex items-center gap-3 mb-3">
+                                <span class="material-symbols-outlined text-primary text-3xl transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110">menu_book</span>
+                                <div class="text-3xl font-black text-primary mb-2 transition-all duration-300 group-hover:scale-110" id="totalBooks">0</div>
+                            </div>
+                            <p class="text-gray-600 dark:text-gray-400 transition-colors duration-300 group-hover:text-primary">Libros Leídos</p>
+                        </div>
+                    </div>
+                    <div class="progress-stat-card bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg relative overflow-hidden group cursor-pointer">
+                        <div class="absolute top-0 right-0 w-20 h-20 bg-green-500/10 rounded-full -translate-y-10 translate-x-10 group-hover:scale-150 transition-transform duration-500"></div>
+                        <div class="relative z-10">
+                            <div class="flex items-center gap-3 mb-3">
+                                <span class="material-symbols-outlined text-primary text-3xl transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110">trending_up</span>
+                                <div class="text-3xl font-black text-primary mb-2 transition-all duration-300 group-hover:scale-110" id="avgProgress">0%</div>
+                            </div>
+                            <p class="text-gray-600 dark:text-gray-400 transition-colors duration-300 group-hover:text-primary">Progreso Promedio</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gráfica de Actividad -->
+                <div class="progress-chart-container bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg mb-12 group">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
+                        <h2 class="text-2xl font-bold mb-4 md:mb-0 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary transition-transform duration-300 group-hover:rotate-12">show_chart</span>
+                            Actividad de Lectura
+                        </h2>
+                        <div class="flex gap-2">
+                            <button id="activityPeriod7Days" class="activity-period-btn px-4 py-2 bg-primary text-white rounded-lg font-medium transition-all duration-300 text-sm transform hover:scale-105 hover:shadow-lg">
+                                7 Días
+                            </button>
+                            <button id="activityPeriod1Week" class="activity-period-btn px-4 py-2 bg-gray-200 dark:bg-slate-700 text-gray-700 dark:text-gray-300 rounded-lg font-medium transition-all duration-300 text-sm transform hover:scale-105 hover:shadow-lg hover:bg-gray-300 dark:hover:bg-slate-600">
+                                1 Semana
+                            </button>
+                            <button id="activityPeriod1Month" class="activity-period-btn px-4 py-2 bg-gray-200 dark:bg-slate-700 text-gray-700 dark:text-gray-300 rounded-lg font-medium transition-all duration-300 text-sm transform hover:scale-105 hover:shadow-lg hover:bg-gray-300 dark:hover:bg-slate-600">
+                                1 Mes
+                            </button>
+                        </div>
+                    </div>
+                    <div class="relative h-64 md:h-80 progress-chart-canvas">
+                        <canvas id="activityChart"></canvas>
+                    </div>
+                    <div id="noActivityData" class="text-center py-12 hidden">
+                        <span class="material-symbols-outlined text-6xl text-gray-400 mb-4 animate-bounce">bar_chart</span>
+                        <p class="text-gray-600 dark:text-gray-400 mb-2">No hay datos de actividad para el período seleccionado.</p>
+                        <p class="text-sm text-gray-500 dark:text-gray-500">Comienza a leer algunos PDFs para ver tu actividad aquí.</p>
+                    </div>
+                </div>
+
+                <!-- Favoritos Section -->
+                <div class="mb-12">
+                    <h2 class="text-2xl font-bold mb-6">Mis Favoritos</h2>
+                    <div id="favoritesList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Favoritos se cargarán dinámicamente -->
+                    </div>
+                    <div id="noFavorites" class="text-center py-12 bg-white dark:bg-slate-800 rounded-xl shadow-lg hidden">
+                        <span class="material-symbols-outlined text-6xl text-gray-400 mb-4">favorite_border</span>
+                        <p class="text-gray-600 dark:text-gray-400">No tienes favoritos todavía. Agrega libros a tus favoritos para verlos aquí.</p>
+                    </div>
+                </div>
+
+                <!-- Progress List -->
+                <div>
+                    <h2 class="text-2xl font-bold mb-6">Mi Progreso de Lectura</h2>
+                    <div id="progressList" class="space-y-6">
+                        <!-- Progresos se cargarán dinámicamente -->
+                    </div>
+                    <div id="noProgress" class="text-center py-12 bg-white dark:bg-slate-800 rounded-xl shadow-lg hidden">
+                        <span class="material-symbols-outlined text-6xl text-gray-400 mb-4">auto_stories</span>
+                        <p class="text-gray-600 dark:text-gray-400">Aún no has comenzado a leer ningún documento. ¡Comienza ahora!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modales -->
+        <div id="fontSizeModal" class="modal hidden">
+            <div class="modal-content">
+                <h3 class="text-2xl font-bold mb-4">Tamaño del Texto</h3>
+                <div class="space-y-3">
+                    <button class="font-size-option w-full px-4 py-3 bg-gray-100 dark:bg-slate-700 rounded-lg hover:bg-gray-200 dark:hover:bg-slate-600" data-size="0.8">Pequeño</button>
+                    <button class="font-size-option w-full px-4 py-3 bg-gray-100 dark:bg-slate-700 rounded-lg hover:bg-gray-200 dark:hover:bg-slate-600" data-size="1.0">Mediano</button>
+                    <button class="font-size-option w-full px-4 py-3 bg-gray-100 dark:bg-slate-700 rounded-lg hover:bg-gray-200 dark:hover:bg-slate-600" data-size="1.2">Grande</button>
+                    <button class="font-size-option w-full px-4 py-3 bg-gray-100 dark:bg-slate-700 rounded-lg hover:bg-gray-200 dark:hover:bg-slate-600" data-size="1.5">Extra Grande</button>
+                    <button class="font-size-option w-full px-4 py-3 bg-gray-100 dark:bg-slate-700 rounded-lg hover:bg-gray-200 dark:hover:bg-slate-600" data-size="2.0">Muy Grande</button>
+                    <button class="font-size-option w-full px-4 py-3 bg-gray-100 dark:bg-slate-700 rounded-lg hover:bg-gray-200 dark:hover:bg-slate-600" data-size="2.5">Extremo</button>
+                </div>
+                <div class="mt-6 flex gap-4">
+                    <button id="fontSizeSave" class="flex-1 px-4 py-3 bg-primary text-white rounded-lg font-bold hover:bg-primary/90">Guardar</button>
+                    <button id="fontSizeCancel" class="flex-1 px-4 py-3 bg-gray-200 dark:bg-slate-700 rounded-lg font-bold hover:bg-gray-300 dark:hover:bg-slate-600">Cancelar</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="letterSpacingModal" class="modal hidden">
+            <div class="modal-content">
+                <h3 class="text-2xl font-bold mb-4">Espaciado entre Letras</h3>
+                <div class="space-y-3">
+                    <button class="letter-spacing-option w-full px-4 py-3 bg-gray-100 dark:bg-slate-700 rounded-lg hover:bg-gray-200 dark:hover:bg-slate-600" data-spacing="0">Normal</button>
+                    <button class="letter-spacing-option w-full px-4 py-3 bg-gray-100 dark:bg-slate-700 rounded-lg hover:bg-gray-200 dark:hover:bg-slate-600" data-spacing="0.05">Pequeño</button>
+                    <button class="letter-spacing-option w-full px-4 py-3 bg-gray-100 dark:bg-slate-700 rounded-lg hover:bg-gray-200 dark:hover:bg-slate-600" data-spacing="0.1">Mediano</button>
+                    <button class="letter-spacing-option w-full px-4 py-3 bg-gray-100 dark:bg-slate-700 rounded-lg hover:bg-gray-200 dark:hover:bg-slate-600" data-spacing="0.15">Grande</button>
+                    <button class="letter-spacing-option w-full px-4 py-3 bg-gray-100 dark:bg-slate-700 rounded-lg hover:bg-gray-200 dark:hover:bg-slate-600" data-spacing="0.2">Muy Grande</button>
+                </div>
+                <div class="mt-6 flex gap-4">
+                    <button id="letterSpacingSave" class="flex-1 px-4 py-3 bg-primary text-white rounded-lg font-bold hover:bg-primary/90">Guardar</button>
+                    <button id="letterSpacingCancel" class="flex-1 px-4 py-3 bg-gray-200 dark:bg-slate-700 rounded-lg font-bold hover:bg-gray-300 dark:hover:bg-slate-600">Cancelar</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="lineHeightModal" class="modal hidden">
+            <div class="modal-content">
+                <h3 class="text-2xl font-bold mb-4">Espaciado entre Líneas</h3>
+                <div class="space-y-3">
+                    <button class="line-height-option w-full px-4 py-3 bg-gray-100 dark:bg-slate-700 rounded-lg hover:bg-gray-200 dark:hover:bg-slate-600" data-height="1.5">Normal</button>
+                    <button class="line-height-option w-full px-4 py-3 bg-gray-100 dark:bg-slate-700 rounded-lg hover:bg-gray-200 dark:hover:bg-slate-600" data-height="1.8">Pequeño</button>
+                    <button class="line-height-option w-full px-4 py-3 bg-gray-100 dark:bg-slate-700 rounded-lg hover:bg-gray-200 dark:hover:bg-slate-600" data-height="2.0">Mediano</button>
+                    <button class="line-height-option w-full px-4 py-3 bg-gray-100 dark:bg-slate-700 rounded-lg hover:bg-gray-200 dark:hover:bg-slate-600" data-height="2.5">Grande</button>
+                    <button class="line-height-option w-full px-4 py-3 bg-gray-100 dark:bg-slate-700 rounded-lg hover:bg-gray-200 dark:hover:bg-slate-600" data-height="3.0">Muy Grande</button>
+                </div>
+                <div class="mt-6 flex gap-4">
+                    <button id="lineHeightSave" class="flex-1 px-4 py-3 bg-primary text-white rounded-lg font-bold hover:bg-primary/90">Guardar</button>
+                    <button id="lineHeightCancel" class="flex-1 px-4 py-3 bg-gray-200 dark:bg-slate-700 rounded-lg font-bold hover:bg-gray-300 dark:hover:bg-slate-600">Cancelar</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="speedModal" class="modal hidden">
+            <div class="modal-content">
+                <h3 class="text-2xl font-bold mb-4">Velocidad de Lectura</h3>
+                <div class="mb-6">
+                    <input type="range" id="speedModalRange" min="0.5" max="2" step="0.1" value="1" class="w-full">
+                    <div class="text-center mt-2">
+                        <span id="speedModalValue" class="text-2xl font-bold">1.0x</span>
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <button id="speedSave" class="flex-1 px-4 py-3 bg-primary text-white rounded-lg font-bold hover:bg-primary/90">Guardar</button>
+                    <button id="speedCancel" class="flex-1 px-4 py-3 bg-gray-200 dark:bg-slate-700 rounded-lg font-bold hover:bg-gray-300 dark:hover:bg-slate-600">Cancelar</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="voiceModal" class="modal hidden">
+            <div class="modal-content">
+                <h3 class="text-2xl font-bold mb-4">Seleccionar Voz</h3>
+                <div class="space-y-3 mb-6">
+                    <select id="voiceModalSelect" class="w-full px-4 py-3 bg-gray-100 dark:bg-slate-700 rounded-lg border-2 border-gray-200 dark:border-slate-600">
+                        <option>Cargando voces...</option>
+                    </select>
+                </div>
+                <div class="flex gap-4">
+                    <button id="voiceSave" class="flex-1 px-4 py-3 bg-primary text-white rounded-lg font-bold hover:bg-primary/90">Guardar</button>
+                    <button id="voiceCancel" class="flex-1 px-4 py-3 bg-gray-200 dark:bg-slate-700 rounded-lg font-bold hover:bg-gray-300 dark:hover:bg-slate-600">Cancelar</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="volumeModal" class="modal hidden">
+            <div class="modal-content">
+                <h3 class="text-2xl font-bold mb-4">Volumen</h3>
+                <div class="mb-6">
+                    <input type="range" id="volumeModalRange" min="0" max="100" step="1" value="100" class="w-full">
+                    <div class="text-center mt-2">
+                        <span id="volumeModalValue" class="text-2xl font-bold">100%</span>
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <button id="volumeSave" class="flex-1 px-4 py-3 bg-primary text-white rounded-lg font-bold hover:bg-primary/90">Guardar</button>
+                    <button id="volumeCancel" class="flex-1 px-4 py-3 bg-gray-200 dark:bg-slate-700 rounded-lg font-bold hover:bg-gray-300 dark:hover:bg-slate-600">Cancelar</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="pitchModal" class="modal hidden">
+            <div class="modal-content">
+                <h3 class="text-2xl font-bold mb-4">Tono</h3>
+                <div class="mb-6">
+                    <input type="range" id="pitchModalRange" min="0.5" max="2" step="0.1" value="1" class="w-full">
+                    <div class="text-center mt-2">
+                        <span id="pitchModalValue" class="text-2xl font-bold">1.0</span>
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <button id="pitchSave" class="flex-1 px-4 py-3 bg-primary text-white rounded-lg font-bold hover:bg-primary/90">Guardar</button>
+                    <button id="pitchCancel" class="flex-1 px-4 py-3 bg-gray-200 dark:bg-slate-700 rounded-lg font-bold hover:bg-gray-300 dark:hover:bg-slate-600">Cancelar</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="pauseModal" class="modal hidden">
+            <div class="modal-content">
+                <h3 class="text-2xl font-bold mb-4">Pausa entre Oraciones</h3>
+                <div class="mb-6">
+                    <input type="range" id="pauseModalRange" min="0" max="2" step="0.1" value="0.5" class="w-full">
+                    <div class="text-center mt-2">
+                        <span id="pauseModalValue" class="text-2xl font-bold">0.5s</span>
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <button id="pauseSave" class="flex-1 px-4 py-3 bg-primary text-white rounded-lg font-bold hover:bg-primary/90">Guardar</button>
+                    <button id="pauseCancel" class="flex-1 px-4 py-3 bg-gray-200 dark:bg-slate-700 rounded-lg font-bold hover:bg-gray-300 dark:hover:bg-slate-600">Cancelar</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="densityModal" class="modal hidden">
+            <div class="modal-content">
+                <h3 class="text-2xl font-bold mb-4">Densidad de Interfaz</h3>
+                <div class="space-y-3">
+                    <button class="density-option w-full px-4 py-3 bg-gray-100 dark:bg-slate-700 rounded-lg hover:bg-gray-200 dark:hover:bg-slate-600" data-density="compact">Compacta</button>
+                    <button class="density-option w-full px-4 py-3 bg-gray-100 dark:bg-slate-700 rounded-lg hover:bg-gray-200 dark:hover:bg-slate-600" data-density="comfortable">Cómoda</button>
+                    <button class="density-option w-full px-4 py-3 bg-gray-100 dark:bg-slate-700 rounded-lg hover:bg-gray-200 dark:hover:bg-slate-600" data-density="spacious">Espaciosa</button>
+                </div>
+                <div class="mt-6 flex gap-4">
+                    <button id="densitySave" class="flex-1 px-4 py-3 bg-primary text-white rounded-lg font-bold hover:bg-primary/90">Guardar</button>
+                    <button id="densityCancel" class="flex-1 px-4 py-3 bg-gray-200 dark:bg-slate-700 rounded-lg font-bold hover:bg-gray-300 dark:hover:bg-slate-600">Cancelar</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="borderStyleModal" class="modal hidden">
+            <div class="modal-content">
+                <h3 class="text-2xl font-bold mb-4">Estilo de Bordes</h3>
+                <div class="space-y-3">
+                    <button class="border-style-option w-full px-4 py-3 bg-gray-100 dark:bg-slate-700 rounded-lg hover:bg-gray-200 dark:hover:bg-slate-600" data-style="rounded">Redondeado</button>
+                    <button class="border-style-option w-full px-4 py-3 bg-gray-100 dark:bg-slate-700 rounded-lg hover:bg-gray-200 dark:hover:bg-slate-600" data-style="square">Cuadrado</button>
+                </div>
+                <div class="mt-6 flex gap-4">
+                    <button id="borderStyleSave" class="flex-1 px-4 py-3 bg-primary text-white rounded-lg font-bold hover:bg-primary/90">Guardar</button>
+                    <button id="borderStyleCancel" class="flex-1 px-4 py-3 bg-gray-200 dark:bg-slate-700 rounded-lg font-bold hover:bg-gray-300 dark:hover:bg-slate-600">Cancelar</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="transitionSpeedModal" class="modal hidden">
+            <div class="modal-content">
+                <h3 class="text-2xl font-bold mb-4">Velocidad de Transiciones</h3>
+                <div class="space-y-3">
+                    <button class="transition-speed-option w-full px-4 py-3 bg-gray-100 dark:bg-slate-700 rounded-lg hover:bg-gray-200 dark:hover:bg-slate-600" data-speed="fast">Rápida</button>
+                    <button class="transition-speed-option w-full px-4 py-3 bg-gray-100 dark:bg-slate-700 rounded-lg hover:bg-gray-200 dark:hover:bg-slate-600" data-speed="normal">Normal</button>
+                    <button class="transition-speed-option w-full px-4 py-3 bg-gray-100 dark:bg-slate-700 rounded-lg hover:bg-gray-200 dark:hover:bg-slate-600" data-speed="slow">Lenta</button>
+                </div>
+                <div class="mt-6 flex gap-4">
+                    <button id="transitionSpeedSave" class="flex-1 px-4 py-3 bg-primary text-white rounded-lg font-bold hover:bg-primary/90">Guardar</button>
+                    <button id="transitionSpeedCancel" class="flex-1 px-4 py-3 bg-gray-200 dark:bg-slate-700 rounded-lg font-bold hover:bg-gray-300 dark:hover:bg-slate-600">Cancelar</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="opacityModal" class="modal hidden">
+            <div class="modal-content">
+                <h3 class="text-2xl font-bold mb-4">Opacidad de Fondos</h3>
+                <div class="mb-6">
+                    <input type="range" id="opacityModalRange" min="0.5" max="1" step="0.1" value="1" class="w-full">
+                    <div class="text-center mt-2">
+                        <span id="opacityModalValue" class="text-2xl font-bold">100%</span>
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <button id="opacitySave" class="flex-1 px-4 py-3 bg-primary text-white rounded-lg font-bold hover:bg-primary/90">Guardar</button>
+                    <button id="opacityCancel" class="flex-1 px-4 py-3 bg-gray-200 dark:bg-slate-700 rounded-lg font-bold hover:bg-gray-300 dark:hover:bg-slate-600">Cancelar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- User Details Modal -->
+        <div id="userDetailsModal" class="modal hidden">
+            <div class="modal-content max-w-4xl">
+                <h3 class="text-2xl font-bold mb-4">Detalles del Usuario</h3>
+                <div id="userDetailsContent">
+                    <!-- Contenido se cargará dinámicamente -->
+                </div>
+                <button id="closeUserDetailsModal" class="mt-6 px-6 py-3 bg-gray-200 dark:bg-slate-700 rounded-lg font-bold hover:bg-gray-300 dark:hover:bg-slate-600">Cerrar</button>
+            </div>
+        </div>
+        
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-slate-900 border-t border-gray-200 dark:border-slate-800 py-8 mt-20">
+        <div class="container mx-auto px-6 text-center text-gray-600 dark:text-gray-400">
+            <p>© 2024 Sense-Tech. Plataforma de lectura accesible.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="app.js"></script>
+</body>
+</html>
+

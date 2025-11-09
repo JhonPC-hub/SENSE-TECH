@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: sense-tech
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: SESSION_SECRET
+        generateValue: true
+    disk:
+      name: sense-tech-disk
+      mountPath: /opt/render/project/src
+      sizeGB: 1
+

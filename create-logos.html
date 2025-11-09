@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Logos - Sense-Tech</title>
+</head>
+<body>
+    <h1>Generador de Logos para Sense-Tech</h1>
+    <p>Este script genera logos simples para Sense-Tech. Abre la consola del navegador para descargarlos.</p>
+    
+    <canvas id="logoLight" width="200" height="80" style="border: 1px solid #ccc; margin: 10px;"></canvas>
+    <canvas id="logoDark" width="200" height="80" style="border: 1px solid #ccc; margin: 10px; background: #101727;"></canvas>
+    
+    <br>
+    <button onclick="downloadLogos()">Descargar Logos</button>
+    
+    <script>
+        function createLogo(canvasId, isDark) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            
+            // Fondo transparente o oscuro
+            if (isDark) {
+                ctx.fillStyle = '#101727';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+            
+            // Texto
+            ctx.fillStyle = isDark ? '#ffffff' : '#137fec';
+            ctx.font = 'bold 32px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('Sense-Tech', canvas.width / 2, canvas.height / 2);
+            
+            // Línea decorativa
+            ctx.strokeStyle = isDark ? '#137fec' : '#137fec';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(20, canvas.height - 10);
+            ctx.lineTo(canvas.width - 20, canvas.height - 10);
+            ctx.stroke();
+        }
+        
+        function downloadLogos() {
+            // Crear logos
+            createLogo('logoLight', false);
+            createLogo('logoDark', true);
+            
+            // Descargar
+            const lightLink = document.createElement('a');
+            lightLink.download = 'logo.png';
+            lightLink.href = document.getElementById('logoLight').toDataURL('image/png');
+            lightLink.click();
+            
+            setTimeout(() => {
+                const darkLink = document.createElement('a');
+                darkLink.download = 'logo2.png';
+                darkLink.href = document.getElementById('logoDark').toDataURL('image/png');
+                darkLink.click();
+            }, 500);
+        }
+        
+        // Crear logos al cargar
+        window.onload = () => {
+            createLogo('logoLight', false);
+            createLogo('logoDark', true);
+        };
+    </script>
+</body>
+</html>
+
+
+
+

@@ -1,0 +1,4026 @@
+/* Estilos personalizados para Sense-Tech */
+
+/* Variables CSS */
+:root {
+    --primary: #137fec;
+    --background-light: #f6f7f8;
+    --background-dark: #101727;
+}
+
+/* Skip Link para Accesibilidad */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--primary);
+    color: white;
+    padding: 8px;
+    z-index: 100;
+    transition: top 0.3s;
+    text-decoration: none;
+    border-radius: 0 0 4px 0;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+/* Configuración de páginas */
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+/* Animaciones */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.animate-fade-in-up {
+    animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.4s ease-in forwards;
+}
+
+/* Modales */
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    backdrop-filter: blur(4px);
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 1rem;
+    padding: 2rem;
+    max-width: 28rem;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.dark .modal-content {
+    background: #1e293b;
+    color: #f1f5f9;
+}
+
+/* High Contrast Mode */
+body.high-contrast {
+    --primary: #0066cc;
+}
+
+body.high-contrast .text-gray-600 {
+    color: #000 !important;
+}
+
+.dark body.high-contrast .text-gray-400 {
+    color: #fff !important;
+}
+
+body.high-contrast .border-gray-300 {
+    border-color: #000 !important;
+}
+
+.dark body.high-contrast .border-gray-700 {
+    border-color: #fff !important;
+}
+
+/* Font Size Multipliers */
+body.font-size-small {
+    font-size: 0.8em;
+}
+
+body.font-size-medium {
+    font-size: 1em;
+}
+
+body.font-size-large {
+    font-size: 1.2em;
+}
+
+body.font-size-extra-large {
+    font-size: 1.5em;
+}
+
+body.font-size-very-large {
+    font-size: 2em;
+}
+
+body.font-size-extreme {
+    font-size: 2.5em;
+}
+
+/* Opciones de Apariencia */
+
+/* Densidad de Interfaz */
+body.ui-density-compact .container,
+body.ui-density-compact .space-y-6 > *,
+body.ui-density-compact .space-y-4 > *,
+body.ui-density-compact .space-y-3 > * {
+    margin-bottom: 0.5rem;
+}
+
+body.ui-density-compact .p-8 {
+    padding: 1rem;
+}
+
+body.ui-density-compact .p-6 {
+    padding: 0.75rem;
+}
+
+body.ui-density-spacious .container,
+body.ui-density-spacious .space-y-6 > * {
+    margin-bottom: 2rem;
+}
+
+body.ui-density-spacious .p-8 {
+    padding: 2.5rem;
+}
+
+body.ui-density-spacious .p-6 {
+    padding: 2rem;
+}
+
+/* Estilo de Bordes */
+body.border-style-square .rounded-xl,
+body.border-style-square .rounded-lg,
+body.border-style-square .rounded-md,
+body.border-style-square .rounded {
+    border-radius: 0 !important;
+}
+
+body.border-style-square button,
+body.border-style-square input,
+body.border-style-square select,
+body.border-style-square textarea {
+    border-radius: 0 !important;
+}
+
+/* Reducir Movimiento */
+body.reduce-motion *,
+body.reduce-motion *::before,
+body.reduce-motion *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body.reduce-motion *,
+    body.reduce-motion *::before,
+    body.reduce-motion *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Velocidad de Transiciones */
+body.transition-speed-fast * {
+    transition-duration: 0.1s !important;
+}
+
+body.transition-speed-normal * {
+    transition-duration: 0.3s !important;
+}
+
+body.transition-speed-slow * {
+    transition-duration: 0.6s !important;
+}
+
+/* Opacidad de Fondos */
+:root {
+    --background-opacity: 1;
+}
+
+body[style*="--background-opacity"] .bg-white,
+body[style*="--background-opacity"] .bg-slate-800,
+body[style*="--background-opacity"] .bg-gray-100,
+body[style*="--background-opacity"] .bg-slate-700 {
+    opacity: var(--background-opacity);
+}
+
+/* Letter Spacing */
+:root {
+    --letter-spacing: 0em;
+    --line-height: 1.5;
+}
+
+body.letter-spacing-active *:not(.material-symbols-outlined):not(svg):not(path) {
+    letter-spacing: var(--letter-spacing) !important;
+}
+
+/* Line Height */
+body.line-height-active *:not(.material-symbols-outlined):not(svg):not(path) {
+    line-height: var(--line-height) !important;
+}
+
+/* Font Weight Bold */
+body.font-weight-bold *:not(.material-symbols-outlined):not(svg):not(path):not(img):not(canvas) {
+    font-weight: 700 !important;
+}
+
+body.font-weight-bold h1:not(.material-symbols-outlined),
+body.font-weight-bold h2:not(.material-symbols-outlined),
+body.font-weight-bold h3:not(.material-symbols-outlined),
+body.font-weight-bold h4:not(.material-symbols-outlined),
+body.font-weight-bold h5:not(.material-symbols-outlined),
+body.font-weight-bold h6:not(.material-symbols-outlined) {
+    font-weight: 900 !important;
+}
+
+/* No aplicar negrita a iconos y elementos especiales */
+body.font-weight-bold .material-symbols-outlined,
+body.font-weight-bold svg,
+body.font-weight-bold path,
+body.font-weight-bold img,
+body.font-weight-bold canvas {
+    font-weight: normal !important;
+}
+
+/* Larger Click Areas */
+body.larger-click-areas button,
+body.larger-click-areas a,
+body.larger-click-areas input[type="button"],
+body.larger-click-areas input[type="submit"] {
+    min-height: 44px !important;
+    min-width: 44px !important;
+    padding: 12px 24px !important;
+    font-size: 1.1em !important;
+}
+
+body.larger-click-areas .material-symbols-outlined {
+    font-size: 32px !important;
+    width: 44px !important;
+    height: 44px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* Large Cursor - Usar CSS nativo para mejor compatibilidad */
+body.large-cursor,
+body.large-cursor * {
+    cursor: crosshair !important;
+}
+
+body.large-cursor button,
+body.large-cursor a,
+body.large-cursor input[type="button"],
+body.large-cursor input[type="submit"],
+body.large-cursor input[type="checkbox"],
+body.large-cursor input[type="radio"],
+body.large-cursor label {
+    cursor: help !important;
+}
+
+/* Hacer el cursor más visible con un pseudo-elemento cuando sea posible */
+body.large-cursor::before {
+    content: '';
+    position: fixed;
+    width: 24px;
+    height: 24px;
+    border: 3px solid #137fec;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    display: none;
+}
+
+/* Enhanced Focus */
+body.enhanced-focus *:focus-visible {
+    outline: 4px solid #137fec !important;
+    outline-offset: 4px !important;
+    box-shadow: 0 0 0 8px rgba(19, 127, 236, 0.3) !important;
+}
+
+body.enhanced-focus button:focus-visible,
+body.enhanced-focus a:focus-visible,
+body.enhanced-focus input:focus-visible {
+    outline: 5px solid #137fec !important;
+    outline-offset: 5px !important;
+    box-shadow: 0 0 0 10px rgba(19, 127, 236, 0.4) !important;
+}
+
+/* Disable Animations */
+body.disable-animations *,
+body.disable-animations *::before,
+body.disable-animations *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+}
+
+body.disable-animations .animate-fade-in,
+body.disable-animations .animate-fade-in-up {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+}
+
+/* Selected option style */
+.font-size-option.selected,
+.letter-spacing-option.selected,
+.line-height-option.selected {
+    background: #137fec !important;
+    color: white !important;
+}
+
+.dark .font-size-option.selected,
+.dark .letter-spacing-option.selected,
+.dark .line-height-option.selected {
+    background: #137fec !important;
+    color: white !important;
+}
+
+/* PDF Viewer Fullscreen */
+#pdfViewer:fullscreen {
+    background: black;
+}
+
+#pdfViewer:-webkit-full-screen {
+    background: black;
+}
+
+#pdfViewer:-ms-fullscreen {
+    background: black;
+}
+
+#pdfViewer:fullscreen #pdfViewerControls,
+#pdfViewer:-webkit-full-screen #pdfViewerControls,
+#pdfViewer:-ms-fullscreen #pdfViewerControls {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+/* Category Link Active */
+.category-link.active {
+    background: rgba(19, 127, 236, 0.1);
+    color: var(--primary);
+}
+
+.dark .category-link.active {
+    background: rgba(19, 127, 236, 0.2);
+}
+
+/* Loading Spinner */
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-left-color: var(--primary);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* PDF Card - Animaciones mejoradas */
+.pdf-card {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.pdf-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.pdf-card:hover::before {
+    left: 100%;
+}
+
+.pdf-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15), 0 0 20px rgba(19, 127, 236, 0.2);
+}
+
+.dark .pdf-card:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(19, 127, 236, 0.3);
+}
+
+/* Contenedor de imagen de la tarjeta - formato vertical compacto */
+.pdf-card-image-container {
+    height: 240px;
+    min-height: 240px;
+    width: 100%;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    aspect-ratio: 2 / 3;
+}
+
+@media (min-width: 768px) {
+    .pdf-card-image-container {
+        height: 260px;
+        min-height: 260px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .pdf-card-image-container {
+        height: 280px;
+        min-height: 280px;
+    }
+}
+
+/* Animación de la imagen de la tarjeta */
+.pdf-card-image {
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.pdf-card:hover .pdf-card-image {
+    transform: scale(1.1);
+}
+
+/* Animación del contenido */
+.pdf-card-content {
+    position: relative;
+    z-index: 2;
+}
+
+.pdf-card-title {
+    transition: color 0.3s ease;
+}
+
+.pdf-card:hover .pdf-card-title {
+    color: var(--primary);
+}
+
+/* Animación del botón */
+.pdf-card-button {
+    position: relative;
+    overflow: hidden;
+}
+
+.pdf-card-button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.pdf-card-button:hover::after {
+    width: 300px;
+    height: 300px;
+}
+
+.pdf-card-button:active {
+    transform: scale(0.95);
+}
+
+/* Animación de entrada para las tarjetas */
+@keyframes cardSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.stagger-item {
+    animation: cardSlideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Animación de pulso para el favorito */
+@keyframes pulse-once {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+.animate-pulse-once {
+    animation: pulse-once 2s ease-in-out infinite;
+}
+
+/* Animación para los iconos de metadata */
+.pdf-card-meta span {
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.pdf-card:hover .pdf-card-meta span {
+    transform: translateY(-2px);
+}
+
+.pdf-card:hover .pdf-card-meta .material-symbols-outlined {
+    color: var(--primary);
+}
+
+/* Animación para la categoría */
+.pdf-card-category {
+    transition: transform 0.3s ease;
+}
+
+.pdf-card:hover .pdf-card-category {
+    transform: translateX(4px);
+}
+
+/* Efecto de brillo al hacer hover */
+.pdf-card::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.5s;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.pdf-card:hover::after {
+    opacity: 1;
+}
+
+/* Stagger Animation - Ya definida arriba con cardSlideIn */
+
+/* Scrollbar Styles */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.dark ::-webkit-scrollbar-track {
+    background: #1e293b;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Focus Styles */
+*:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+/* Mobile Sidebar */
+@media (max-width: 1024px) {
+    #sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+
+    #sidebar.mobile-open {
+        transform: translateX(0);
+    }
+}
+
+/* Smooth Transitions */
+* {
+    transition-property: background-color, border-color, color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+}
+
+/* Testimonial Card */
+.testimonial-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.dark .testimonial-card {
+    background: #1e293b;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* Progress Bar */
+.progress-bar {
+    width: 100%;
+    height: 0.5rem;
+    background: #e2e8f0;
+    border-radius: 9999px;
+    overflow: hidden;
+}
+
+.dark .progress-bar {
+    background: #334155;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: var(--primary);
+    transition: width 0.3s ease;
+}
+
+/* Profile Dropdown */
+#profileDropdown {
+    animation: fadeIn 0.2s ease;
+}
+
+/* Nav Link Active */
+.nav-link.active {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+/* ==================== CARRUSELES Y ANIMACIONES ==================== */
+
+/* Carrusel Container */
+.carousel-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+
+.carousel-wrapper {
+    display: flex;
+    transition: transform 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform;
+    transform: translateX(0);
+}
+
+.carousel-item {
+    min-width: 100%;
+    flex-shrink: 0;
+    width: 100%;
+}
+
+/* Botones de navegación del carrusel */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.carousel-btn:hover {
+    background: white;
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 8px 12px -2px rgba(0, 0, 0, 0.15);
+}
+
+.carousel-btn.prev {
+    left: 16px;
+}
+
+.carousel-btn.next {
+    right: 16px;
+}
+
+.dark .carousel-btn {
+    background: rgba(30, 41, 59, 0.9);
+    color: white;
+}
+
+.dark .carousel-btn:hover {
+    background: #1e293b;
+}
+
+/* Indicadores del carrusel */
+.carousel-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 24px;
+}
+
+.carousel-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(19, 127, 236, 0.3);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+}
+
+.carousel-indicator.active {
+    background: var(--primary);
+    transform: scale(1.2);
+}
+
+.carousel-indicator:hover {
+    background: rgba(19, 127, 236, 0.6);
+}
+
+/* Animaciones adicionales */
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.animate-slide-in-left {
+    animation: slideInLeft 0.6s ease-out forwards;
+}
+
+.animate-slide-in-right {
+    animation: slideInRight 0.6s ease-out forwards;
+}
+
+.animate-scale-in {
+    animation: scaleIn 0.5s ease-out forwards;
+}
+
+.animate-float {
+    animation: float 3s ease-in-out infinite;
+}
+
+.animate-pulse-slow {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+/* Hero Section Animations */
+.hero-gradient {
+    background: linear-gradient(-45deg, #137fec, #0ea5e9, #06b6d4, #137fec);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Parallax Effect */
+.parallax {
+    transition: transform 0.3s ease-out;
+}
+
+/* Estadísticas animadas */
+.stat-number {
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.stat-number.animate {
+    animation: scaleIn 0.5s ease-out;
+}
+
+/* Efectos de hover mejorados */
+.hover-lift {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-lift:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Glow effect */
+.glow-on-hover {
+    transition: all 0.3s ease;
+}
+
+.glow-on-hover:hover {
+    box-shadow: 0 0 20px rgba(19, 127, 236, 0.5);
+}
+
+/* Shimmer effect */
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+.shimmer {
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite;
+}
+
+/* Fade in on scroll */
+.fade-in-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Rotating elements */
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.animate-rotate {
+    animation: rotate 20s linear infinite;
+}
+
+/* Bounce animation */
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.animate-bounce-slow {
+    animation: bounce 2s ease-in-out infinite;
+}
+
+/* Responsive carrusel */
+@media (max-width: 768px) {
+    .carousel-btn {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .carousel-btn.prev {
+        left: 8px;
+    }
+    
+    .carousel-btn.next {
+        right: 8px;
+    }
+}
+
+/* ==================== ESTILOS PARA FORMULARIO DE SUBIDA ==================== */
+
+/* Upload Form Container */
+.upload-form-container {
+    position: relative;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* File Drop Zone */
+.file-drop-zone {
+    position: relative;
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.file-drop-zone.dragover {
+    border-color: var(--primary);
+    background: rgba(19, 127, 236, 0.1);
+    transform: scale(1.02);
+}
+
+.file-drop-zone.dragover .material-symbols-outlined {
+    transform: scale(1.2) rotate(5deg);
+    color: var(--primary);
+}
+
+/* File List Display */
+#fileList {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    margin-top: 16px;
+}
+
+.file-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px;
+    background: rgba(19, 127, 236, 0.05);
+    border: 1px solid rgba(19, 127, 236, 0.2);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.file-item:hover {
+    background: rgba(19, 127, 236, 0.1);
+    border-color: rgba(19, 127, 236, 0.4);
+}
+
+.file-item-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+}
+
+.file-item-name {
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.file-item-size {
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.file-item-remove {
+    background: transparent;
+    border: none;
+    color: #ef4444;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.file-item-remove:hover {
+    background: rgba(239, 68, 68, 0.1);
+    transform: scale(1.1);
+}
+
+/* Form Inputs */
+.form-input,
+.form-select,
+.form-textarea {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+    outline: none;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(19, 127, 236, 0.15);
+}
+
+.form-input:hover,
+.form-select:hover,
+.form-textarea:hover {
+    border-color: rgba(19, 127, 236, 0.4);
+}
+
+/* Submit Button */
+.upload-submit-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.upload-submit-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.upload-submit-btn:hover::before {
+    left: 100%;
+}
+
+.upload-submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+/* Progress Bar Animation */
+@keyframes progressPulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.8;
+    }
+}
+
+#uploadProgressBar {
+    animation: progressPulse 2s ease-in-out infinite;
+    position: relative;
+    overflow: hidden;
+}
+
+#uploadProgressBar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+/* Message Styles */
+#uploadMessage {
+    animation: slideDown 0.3s ease-out;
+}
+
+#uploadMessage.success {
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(34, 197, 94, 0.05));
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    color: #16a34a;
+}
+
+#uploadMessage.error {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(239, 68, 68, 0.05));
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #dc2626;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Form Field Group */
+.form-field-group {
+    animation: fadeInUp 0.4s ease-out;
+}
+
+.form-field-group:nth-child(1) { animation-delay: 0.1s; }
+.form-field-group:nth-child(2) { animation-delay: 0.2s; }
+.form-field-group:nth-child(3) { animation-delay: 0.3s; }
+.form-field-group:nth-child(4) { animation-delay: 0.4s; }
+
+/* Dark Mode Adjustments */
+.dark .file-drop-zone.dragover {
+    background: rgba(19, 127, 236, 0.15);
+}
+
+.dark .file-item {
+    background: rgba(19, 127, 236, 0.1);
+    border-color: rgba(19, 127, 236, 0.3);
+}
+
+.dark .file-item:hover {
+    background: rgba(19, 127, 236, 0.2);
+    border-color: rgba(19, 127, 236, 0.5);
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+    .upload-form-container {
+        padding: 1.5rem;
+    }
+    
+    .file-drop-zone {
+        min-height: 150px;
+        padding: 1.5rem;
+    }
+    
+    .file-drop-zone .material-symbols-outlined {
+        font-size: 2.5rem;
+    }
+}
+
+/* Loading State */
+.upload-submit-btn.loading {
+    position: relative;
+    color: transparent;
+}
+
+.upload-submit-btn.loading::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 50%;
+    left: 50%;
+    margin-left: -10px;
+    margin-top: -10px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ==================== ESTILOS PARA EL VISOR DE PDF MEJORADO ==================== */
+
+#pdfViewer {
+    transition: opacity 0.3s ease-in-out;
+}
+
+#pdfViewer.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.pdf-page-container {
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.pdf-page-container:hover {
+    transform: scale(1.01);
+}
+
+#pdfCanvas {
+    transition: all 0.3s ease;
+    animation: fadeIn 0.5s ease-in;
+}
+
+#readingProgressBar {
+    box-shadow: 0 0 10px rgba(19, 127, 236, 0.5);
+    transition: width 0.3s ease;
+}
+
+/* Mejoras para los controles del visor */
+#pdfViewerControls button {
+    position: relative;
+    overflow: hidden;
+}
+
+#pdfViewerControls button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s;
+}
+
+#pdfViewerControls button:hover::before {
+    width: 100px;
+    height: 100px;
+}
+
+/* Animación para el overlay de carga */
+#pdfLoadingOverlay {
+    animation: fadeIn 0.3s ease-in;
+    z-index: 10;
+}
+
+/* Estilos para el selector de voz - asegurar visibilidad */
+#voiceSelect {
+    /* Los colores se manejan con clases Tailwind en el HTML */
+}
+
+/* Estilos para opciones del selector en modo claro y oscuro */
+#voiceSelect option {
+    padding: 8px;
+}
+
+/* En modo oscuro, las opciones tienen fondo oscuro */
+.dark #voiceSelect option {
+    background-color: rgb(30 41 59) !important; /* bg-slate-800 */
+    color: rgb(226 232 240) !important; /* text-slate-200 */
+}
+
+/* En modo claro, las opciones tienen fondo claro */
+#voiceSelect option:not(.dark) {
+    background-color: rgb(255 255 255) !important;
+    color: rgb(17 24 39) !important; /* text-gray-900 */
+}
+
+/* Estilos para el rango de velocidad mejorado */
+#speedRange {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    border-radius: 3px;
+    background: linear-gradient(to right, #137fec, #3b82f6);
+    outline: none;
+}
+
+#speedRange::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #137fec;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s;
+}
+
+#speedRange::-webkit-slider-thumb:hover {
+    background: #3b82f6;
+    transform: scale(1.2);
+    box-shadow: 0 4px 8px rgba(19, 127, 236, 0.5);
+}
+
+#speedRange::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #137fec;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s;
+}
+
+#speedRange::-moz-range-thumb:hover {
+    background: #3b82f6;
+    transform: scale(1.2);
+    box-shadow: 0 4px 8px rgba(19, 127, 236, 0.5);
+}
+
+/* Efecto de hover para los botones de navegación */
+#prevPageBtn:hover,
+#nextPageBtn:hover {
+    transform: translateX(0);
+}
+
+#prevPageBtn:hover {
+    transform: translateX(-2px);
+}
+
+#nextPageBtn:hover {
+    transform: translateX(2px);
+}
+
+/* Animación para la barra de progreso */
+@keyframes progressPulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.8;
+    }
+}
+
+#readingProgressBar {
+    animation: progressPulse 2s ease-in-out infinite;
+}
+
+/* Mejoras para el canvas del PDF */
+#pdfCanvas {
+    filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.3));
+}
+
+/* Estilos para la barra inferior de atajos */
+#pdfViewer kbd {
+    font-family: monospace;
+    font-size: 0.75rem;
+    font-weight: 600;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Efecto de transición suave al cambiar de página */
+.pdf-page-transition {
+    animation: pageFlip 0.3s ease-in-out;
+}
+
+@keyframes pageFlip {
+    0% {
+        opacity: 0.7;
+        transform: scale(0.98);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Efecto de brillo en el botón de reproducir */
+#playPauseBtn {
+    position: relative;
+}
+
+#playPauseBtn::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    padding: 2px;
+    background: linear-gradient(45deg, rgba(19, 127, 236, 0.3), rgba(59, 130, 246, 0.3));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+#playPauseBtn:hover::after {
+    opacity: 1;
+}
+
+/* ==================== ANIMACIONES PARA BOTONES DEL MODAL DE DETALLES ==================== */
+
+/* Botón de Favoritos */
+.pdf-details-favorite-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.pdf-details-favorite-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(239, 68, 68, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.pdf-details-favorite-btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.pdf-details-favorite-btn:hover {
+    background-color: rgba(239, 68, 68, 0.1);
+    border-color: rgba(239, 68, 68, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+}
+
+.dark .pdf-details-favorite-btn:hover {
+    background-color: rgba(239, 68, 68, 0.15);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.pdf-details-favorite-btn:active {
+    transform: translateY(0) scale(0.98);
+}
+
+/* Estilo cuando el favorito está activo */
+.pdf-details-favorite-btn.active {
+    background-color: rgba(239, 68, 68, 0.1);
+    border-color: rgba(239, 68, 68, 0.5);
+}
+
+.dark .pdf-details-favorite-btn.active {
+    background-color: rgba(239, 68, 68, 0.15);
+}
+
+.pdf-details-favorite-btn.active #favoriteIcon {
+    color: rgb(239, 68, 68);
+}
+
+/* Botón de Leer */
+.pdf-details-read-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.pdf-details-read-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.pdf-details-read-btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.pdf-details-read-btn:hover {
+    box-shadow: 0 8px 20px rgba(19, 127, 236, 0.4);
+}
+
+.pdf-details-read-btn:active {
+    transform: scale(0.95);
+}
+
+/* Animación de entrada para el modal */
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+#pdfDetailsModal:not(.hidden) > div {
+    animation: modalFadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Animación para la imagen de portada en el modal */
+#pdfDetailsCover {
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#pdfDetailsModal:hover #pdfDetailsCover {
+    transform: scale(1.02);
+}
+
+/* Animación para el botón de cerrar */
+#closePdfDetailsBtn {
+    transition: all 0.3s ease;
+}
+
+#closePdfDetailsBtn:hover {
+    transform: rotate(90deg);
+    background-color: rgba(239, 68, 68, 0.1);
+}
+
+.dark #closePdfDetailsBtn:hover {
+    background-color: rgba(239, 68, 68, 0.2);
+}
+
+/* ==================== ANIMACIONES PARA LA PÁGINA DE PROGRESO ==================== */
+
+/* Tarjetas de estadísticas */
+.progress-stat-card {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-stat-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(19, 127, 236, 0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.5s;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.progress-stat-card:hover::before {
+    opacity: 1;
+}
+
+.progress-stat-card:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15), 0 0 20px rgba(19, 127, 236, 0.2);
+}
+
+.dark .progress-stat-card:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(19, 127, 236, 0.3);
+}
+
+/* Animación de entrada para las tarjetas de estadísticas */
+.progress-stat-card {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: progressStatSlideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.progress-stat-card:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.progress-stat-card:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.progress-stat-card:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+@keyframes progressStatSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Tarjetas de favoritos */
+.progress-favorite-card {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-favorite-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.progress-favorite-card:hover::before {
+    left: 100%;
+}
+
+.progress-favorite-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15), 0 0 20px rgba(19, 127, 236, 0.2);
+}
+
+.dark .progress-favorite-card:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(19, 127, 236, 0.3);
+}
+
+.progress-favorite-image {
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.progress-favorite-card:hover .progress-favorite-image {
+    transform: scale(1.1);
+}
+
+.progress-favorite-title {
+    transition: color 0.3s ease;
+}
+
+.progress-favorite-card:hover .progress-favorite-title {
+    color: var(--primary);
+}
+
+.progress-favorite-button {
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-favorite-button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.progress-favorite-button:hover::after {
+    width: 300px;
+    height: 300px;
+}
+
+.progress-favorite-button:active {
+    transform: scale(0.95);
+}
+
+/* Tarjetas de progreso de lectura */
+.progress-reading-card {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-reading-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(19, 127, 236, 0.05), transparent);
+    transition: left 0.5s;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.progress-reading-card:hover::before {
+    left: 100%;
+}
+
+.progress-reading-card:hover {
+    transform: translateX(8px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 0 15px rgba(19, 127, 236, 0.2);
+}
+
+.dark .progress-reading-card:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 15px rgba(19, 127, 236, 0.3);
+}
+
+.progress-reading-image {
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 3px solid transparent;
+}
+
+.progress-reading-card:hover .progress-reading-image {
+    border-color: rgba(19, 127, 236, 0.3);
+    box-shadow: 0 8px 20px rgba(19, 127, 236, 0.3);
+}
+
+.progress-reading-content {
+    position: relative;
+    z-index: 1;
+}
+
+.progress-reading-title {
+    transition: color 0.3s ease;
+}
+
+.progress-reading-card:hover .progress-reading-title {
+    color: var(--primary);
+}
+
+.progress-continue-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-continue-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.progress-continue-btn:hover::after {
+    width: 300px;
+    height: 300px;
+}
+
+.progress-continue-btn:active {
+    transform: scale(0.95);
+}
+
+/* Animación para la barra de progreso */
+.progress-bar-fill {
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-bar-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: progressBarShimmer 2s infinite;
+}
+
+@keyframes progressBarShimmer {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+/* Animación para los elementos de metadata */
+.progress-reading-meta span {
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.progress-reading-card:hover .progress-reading-meta span {
+    color: var(--primary);
+}
+
+.progress-reading-card:hover .progress-reading-meta .material-symbols-outlined {
+    color: var(--primary);
+}
+
+/* Animación de entrada para la página de progreso */
+#progressPage.page:not(.hidden) {
+    animation: pageFadeIn 0.4s ease-out;
+}
+
+@keyframes pageFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animación para el título de la página */
+#progressPage h1 {
+    opacity: 0;
+    animation: titleSlideIn 0.6s ease-out 0.2s forwards;
+}
+
+@keyframes titleSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Animación para las secciones */
+#progressPage > div > div > h2 {
+    opacity: 0;
+    animation: sectionTitleSlideIn 0.5s ease-out forwards;
+}
+
+@keyframes sectionTitleSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animaciones para la gráfica de actividad */
+.progress-chart-container {
+    transition: all 0.3s ease;
+}
+
+.progress-chart-container:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1), 0 0 15px rgba(19, 127, 236, 0.15);
+}
+
+.dark .progress-chart-container:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 15px rgba(19, 127, 236, 0.25);
+}
+
+.activity-period-btn {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.activity-period-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.4s, height 0.4s;
+}
+
+.activity-period-btn:hover::before {
+    width: 200px;
+    height: 200px;
+}
+
+.activity-period-btn:active {
+    transform: scale(0.95);
+}
+
+.progress-chart-canvas {
+    transition: opacity 0.3s ease;
+}
+
+/* Animación para el evento listener de continuar lectura */
+.progress-reading-card button.continue-reading-btn {
+    position: relative;
+}
+
+.progress-reading-card button.continue-reading-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.progress-reading-card button.continue-reading-btn:hover::before {
+    left: 100%;
+}
+
+/* ==================== ANIMACIONES PARA LA PÁGINA DE ADMINISTRACIÓN ==================== */
+
+/* Respetar preferencias de accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+    #adminPage *,
+    #adminPage *::before,
+    #adminPage *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+body.reduce-motion #adminPage *,
+body.reduce-motion #adminPage *::before,
+body.reduce-motion #adminPage *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+}
+
+body.disable-animations #adminPage *,
+body.disable-animations #adminPage *::before,
+body.disable-animations #adminPage *::after {
+    animation: none !important;
+    transition: none !important;
+}
+
+/* Animación de entrada para la página de administración */
+#adminPage.page:not(.hidden) {
+    animation: adminPageFadeIn 0.5s ease-out;
+}
+
+@keyframes adminPageFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animación para el título de administración */
+#adminPage h1 {
+    opacity: 0;
+    animation: adminTitleSlideIn 0.8s ease-out 0.2s forwards;
+}
+
+@keyframes adminTitleSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Tarjetas de estadísticas - Animación de entrada */
+#adminPage .grid > div {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+    animation: adminStatCardSlideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+#adminPage .grid > div::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(19, 127, 236, 0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.5s;
+    pointer-events: none;
+    z-index: 0;
+}
+
+#adminPage .grid > div:hover::before {
+    opacity: 1;
+}
+
+#adminPage .grid > div:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+#adminPage .grid > div:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+#adminPage .grid > div:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+@keyframes adminStatCardSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Efecto hover en tarjetas de estadísticas */
+#adminPage .grid > div:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15), 0 0 20px rgba(19, 127, 236, 0.2);
+}
+
+.dark #adminPage .grid > div:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(19, 127, 236, 0.3);
+}
+
+/* Animación de conteo de números */
+@keyframes numberCount {
+    from {
+        transform: scale(1.2);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.admin-stat-number {
+    display: inline-block;
+    animation: numberCount 0.5s ease-out;
+}
+
+/* Pulso animado para números */
+@keyframes statPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+#adminPage .grid > div:hover .text-3xl {
+    animation: statPulse 0.6s ease-in-out;
+}
+
+/* Formulario de subida - Animación mejorada */
+.upload-form-container {
+    opacity: 0;
+    animation: adminUploadFormSlideIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.4s forwards;
+    position: relative;
+}
+
+@keyframes adminUploadFormSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Animación para elementos decorativos del formulario */
+.upload-form-container::before {
+    animation: float 6s ease-in-out infinite;
+}
+
+/* File drop zone - Animación mejorada */
+.file-drop-zone {
+    position: relative;
+}
+
+.file-drop-zone::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(19, 127, 236, 0.1), transparent);
+    transition: left 0.6s ease;
+    pointer-events: none;
+}
+
+.file-drop-zone:hover::after {
+    left: 100%;
+}
+
+/* Icono de carga en el drop zone */
+.file-drop-zone .material-symbols-outlined {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.file-drop-zone:hover .material-symbols-outlined {
+    transform: translateY(-5px) scale(1.1);
+    animation: bounce 1s ease-in-out infinite;
+}
+
+/* Sección de usuarios conectados */
+#connectedUsersList {
+    animation: fadeInUp 0.6s ease-out 0.6s forwards;
+    opacity: 0;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Items de usuarios conectados - Animación escalonada */
+/* Las animaciones se manejan con JavaScript para elementos dinámicos */
+#connectedUsersList > div {
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+#connectedUsersList > div::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(19, 127, 236, 0.05), transparent);
+    transition: left 0.5s;
+    pointer-events: none;
+}
+
+#connectedUsersList > div:hover::before {
+    left: 100%;
+}
+
+#connectedUsersList > div:hover {
+    transform: translateX(8px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), 0 0 8px rgba(19, 127, 236, 0.2);
+}
+
+.dark #connectedUsersList > div:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 0 8px rgba(19, 127, 236, 0.3);
+}
+
+@keyframes connectedUserSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Indicador de estado en línea - Animación de pulso */
+#connectedUsersList > div .w-3 {
+    animation: greenPulse 2s ease-in-out infinite;
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+}
+
+@keyframes greenPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 8px rgba(34, 197, 94, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+    }
+}
+
+/* Tablas - Animación de entrada */
+.admin-section {
+    opacity: 0;
+    animation: adminTableContainerSlideIn 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.admin-section:nth-of-type(1) {
+    animation-delay: 0.5s;
+}
+
+.admin-section:nth-of-type(2) {
+    animation-delay: 0.6s;
+}
+
+.admin-section:nth-of-type(3) {
+    animation-delay: 0.7s;
+}
+
+@keyframes adminTableContainerSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Títulos de tablas */
+.admin-section h2 {
+    opacity: 0;
+    animation: adminTableTitleFadeIn 0.6s ease-out 0.3s forwards;
+}
+
+@keyframes adminTableTitleFadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Filas de tabla - Animación escalonada */
+/* Las animaciones de filas se manejan con JavaScript para elementos dinámicos */
+#usersTableBody tr,
+#pdfsTableBody tr {
+    transition: all 0.3s ease;
+}
+
+@keyframes adminTableRowSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Hover en filas de tabla */
+#usersTableBody tr:hover,
+#pdfsTableBody tr:hover {
+    background-color: rgba(19, 127, 236, 0.05);
+    transform: translateX(4px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dark #usersTableBody tr:hover,
+.dark #pdfsTableBody tr:hover {
+    background-color: rgba(19, 127, 236, 0.1);
+}
+
+/* Botones de acción - Animaciones mejoradas */
+#adminPage button {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#adminPage button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.5s, height 0.5s;
+}
+
+#adminPage button:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+#adminPage button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+#adminPage button:active {
+    transform: translateY(0) scale(0.98);
+}
+
+/* Botones de acción específicos */
+#adminPage button.bg-primary:hover {
+    box-shadow: 0 8px 16px rgba(19, 127, 236, 0.4);
+}
+
+#adminPage button.bg-red-600:hover {
+    box-shadow: 0 8px 16px rgba(239, 68, 68, 0.4);
+}
+
+#adminPage button.bg-blue-600:hover {
+    box-shadow: 0 8px 16px rgba(37, 99, 235, 0.4);
+}
+
+/* Animación para iconos en botones */
+#adminPage button .material-symbols-outlined {
+    transition: transform 0.3s ease;
+}
+
+#adminPage button:hover .material-symbols-outlined {
+    transform: scale(1.1) rotate(5deg);
+}
+
+/* Efecto de brillo en las tarjetas */
+#adminPage .grid > div::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s;
+    pointer-events: none;
+    z-index: 1;
+}
+
+#adminPage .grid > div:hover::after {
+    left: 100%;
+}
+
+.dark #adminPage .grid > div::after {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+}
+
+
+@keyframes adminSectionSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animación para elementos decorativos del formulario */
+.upload-form-container > div:first-child {
+    animation: float 8s ease-in-out infinite;
+}
+
+/* Shimmer effect en elementos de carga */
+.admin-loading-shimmer {
+    background: linear-gradient(
+        90deg,
+        rgba(19, 127, 236, 0.1) 0%,
+        rgba(19, 127, 236, 0.2) 50%,
+        rgba(19, 127, 236, 0.1) 100%
+    );
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite;
+}
+
+/* Animación para el modal de edición */
+#editPdfModal:not(.hidden) {
+    animation: modalFadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#editPdfModal:not(.hidden) > div {
+    animation: modalContentSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes modalContentSlideIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* ==================== ESTILOS PARA LOGIN Y REGISTRO ==================== */
+
+/* Contenedores de páginas */
+.login-page-container,
+.register-page-container {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+/* Fondos animados */
+.login-background,
+.register-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.login-bg-gradient,
+.register-bg-gradient {
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
+    background: linear-gradient(
+        45deg,
+        #137fec 0%,
+        #0ea5e9 25%,
+        #06b6d4 50%,
+        #8b5cf6 75%,
+        #ec4899 100%
+    );
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+    opacity: 0.1;
+}
+
+.login-bg-gradient {
+    background: linear-gradient(
+        45deg,
+        #137fec 0%,
+        #0ea5e9 25%,
+        #06b6d4 50%,
+        #3b82f6 75%,
+        #137fec 100%
+    );
+}
+
+.register-bg-gradient {
+    background: linear-gradient(
+        45deg,
+        #137fec 0%,
+        #8b5cf6 25%,
+        #ec4899 50%,
+        #f59e0b 75%,
+        #137fec 100%
+    );
+}
+
+@keyframes gradientShift {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+.dark .login-bg-gradient,
+.dark .register-bg-gradient {
+    opacity: 0.15;
+}
+
+/* Partículas flotantes */
+.login-particles,
+.register-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(19, 127, 236, 0.5);
+    border-radius: 50%;
+    animation: floatParticle 20s infinite ease-in-out;
+}
+
+.particle:nth-child(1) {
+    left: 10%;
+    animation-delay: 0s;
+    animation-duration: 15s;
+}
+
+.particle:nth-child(2) {
+    left: 30%;
+    animation-delay: 2s;
+    animation-duration: 20s;
+}
+
+.particle:nth-child(3) {
+    left: 50%;
+    animation-delay: 4s;
+    animation-duration: 18s;
+}
+
+.particle:nth-child(4) {
+    left: 70%;
+    animation-delay: 1s;
+    animation-duration: 22s;
+}
+
+.particle:nth-child(5) {
+    left: 90%;
+    animation-delay: 3s;
+    animation-duration: 16s;
+}
+
+.particle:nth-child(6) {
+    left: 60%;
+    animation-delay: 5s;
+    animation-duration: 19s;
+}
+
+@keyframes floatParticle {
+    0% {
+        transform: translateY(100vh) translateX(0) scale(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100px) translateX(100px) scale(1);
+        opacity: 0;
+    }
+}
+
+/* Headers */
+.login-header,
+.register-header {
+    animation: slideInDown 0.8s ease-out;
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.login-icon-container,
+.register-icon-container {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    background: linear-gradient(135deg, #137fec, #0ea5e9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 30px rgba(19, 127, 236, 0.3);
+    animation: iconFloat 3s ease-in-out infinite;
+    position: relative;
+}
+
+.register-icon-container {
+    background: linear-gradient(135deg, #8b5cf6, #ec4899);
+    box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
+}
+
+.login-icon-container::before,
+.register-icon-container::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: inherit;
+    opacity: 0.3;
+    animation: pulseRing 2s ease-out infinite;
+}
+
+@keyframes iconFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes pulseRing {
+    0% {
+        transform: scale(1);
+        opacity: 0.3;
+    }
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}
+
+.login-icon,
+.register-icon {
+    font-size: 40px;
+    color: white;
+    z-index: 1;
+}
+
+/* Tarjetas de formulario */
+.login-form-card,
+.register-form-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1), 
+                0 0 0 1px rgba(255, 255, 255, 0.2);
+    animation: cardSlideUp 0.8s ease-out 0.2s both;
+    position: relative;
+    overflow: hidden;
+}
+
+.login-form-card::before,
+.register-form-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    animation: shimmer 3s infinite;
+}
+
+.dark .login-form-card,
+.dark .register-form-card {
+    background: rgba(30, 41, 59, 0.95);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 
+                0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+@keyframes cardSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Grupos de formulario */
+.form-group {
+    position: relative;
+    animation: fadeInUp 0.6s ease-out both;
+}
+
+.form-group:nth-child(1) {
+    animation-delay: 0.3s;
+}
+
+.form-group:nth-child(2) {
+    animation-delay: 0.4s;
+}
+
+.form-group:nth-child(3) {
+    animation-delay: 0.5s;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.dark .form-label {
+    color: #e5e7eb;
+}
+
+.form-label-icon {
+    font-size: 18px;
+    color: #137fec;
+}
+
+/* Input wrapper */
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon {
+    position: absolute;
+    left: 16px;
+    color: #6b7280;
+    z-index: 1;
+    transition: all 0.3s ease;
+}
+
+.dark .input-icon {
+    color: #9ca3af;
+}
+
+.form-input {
+    width: 100%;
+    padding: 14px 48px 14px 48px;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    background: white;
+    font-size: 16px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+}
+
+/* Input con botón de toggle (password) - aplicado directamente en el HTML con clase */
+.form-input[type="password"],
+.form-input.password-input {
+    padding-right: 56px;
+}
+
+.dark .form-input {
+    background: #1e293b;
+    border-color: #334155;
+    color: #f1f5f9;
+}
+
+.form-input:focus {
+    border-color: #137fec;
+    box-shadow: 0 0 0 4px rgba(19, 127, 236, 0.1);
+    transform: translateY(-2px);
+}
+
+.form-input:focus + .input-icon,
+.input-wrapper:focus-within .input-icon {
+    color: #137fec;
+    transform: scale(1.1);
+}
+
+.form-input::placeholder {
+    color: #9ca3af;
+}
+
+.dark .form-input::placeholder {
+    color: #64748b;
+}
+
+/* Password toggle */
+.password-toggle {
+    position: absolute;
+    right: 12px;
+    background: none;
+    border: none;
+    color: #6b7280;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.password-toggle:hover {
+    background: rgba(19, 127, 236, 0.1);
+    color: #137fec;
+    transform: scale(1.1);
+}
+
+.dark .password-toggle {
+    color: #9ca3af;
+}
+
+.dark .password-toggle:hover {
+    background: rgba(19, 127, 236, 0.2);
+}
+
+/* Botones de submit */
+.login-submit-btn,
+.register-submit-btn {
+    width: 100%;
+    padding: 16px 24px;
+    background: linear-gradient(135deg, #137fec, #0ea5e9);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(19, 127, 236, 0.3);
+    animation: fadeInUp 0.6s ease-out 0.6s both;
+}
+
+.register-submit-btn {
+    background: linear-gradient(135deg, #8b5cf6, #ec4899);
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+}
+
+.login-submit-btn::before,
+.register-submit-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.login-submit-btn:hover::before,
+.register-submit-btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.login-submit-btn:hover,
+.register-submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(19, 127, 236, 0.4);
+}
+
+.register-submit-btn:hover {
+    box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
+}
+
+.login-submit-btn:active,
+.register-submit-btn:active {
+    transform: translateY(0);
+}
+
+.login-submit-btn .material-symbols-outlined,
+.register-submit-btn .material-symbols-outlined {
+    transition: transform 0.3s ease;
+}
+
+.login-submit-btn:hover .material-symbols-outlined,
+.register-submit-btn:hover .material-symbols-outlined {
+    transform: translateX(5px);
+}
+
+/* Mensajes de error/éxito */
+.auth-message {
+    padding: 12px 16px;
+    border-radius: 10px;
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    animation: slideDown 0.3s ease-out;
+    font-weight: 500;
+}
+
+.auth-error {
+    background: rgba(239, 68, 68, 0.1);
+    color: #dc2626;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.dark .auth-error {
+    background: rgba(239, 68, 68, 0.2);
+    color: #f87171;
+}
+
+.auth-success {
+    background: rgba(34, 197, 94, 0.1);
+    color: #16a34a;
+    border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.dark .auth-success {
+    background: rgba(34, 197, 94, 0.2);
+    color: #4ade80;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Divisor */
+.auth-divider {
+    margin: 24px 0;
+    text-align: center;
+    position: relative;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.dark .auth-divider {
+    color: #9ca3af;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 40%;
+    height: 1px;
+    background: #e5e7eb;
+}
+
+.dark .auth-divider::before,
+.dark .auth-divider::after {
+    background: #334155;
+}
+
+.auth-divider::before {
+    left: 0;
+}
+
+.auth-divider::after {
+    right: 0;
+}
+
+/* Enlace de cambio de página */
+.auth-link-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 12px 24px;
+    background: transparent;
+    border: 2px solid #137fec;
+    color: #137fec;
+    border-radius: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: fadeInUp 0.6s ease-out 0.7s both;
+}
+
+.dark .auth-link-btn {
+    border-color: #3b82f6;
+    color: #3b82f6;
+}
+
+.auth-link-btn:hover {
+    background: #137fec;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(19, 127, 236, 0.3);
+}
+
+.dark .auth-link-btn:hover {
+    background: #3b82f6;
+    border-color: #3b82f6;
+}
+
+.auth-link-btn .material-symbols-outlined {
+    transition: transform 0.3s ease;
+}
+
+.auth-link-btn:hover .material-symbols-outlined {
+    transform: scale(1.1) rotate(5deg);
+}
+
+/* Respetar preferencias de accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+    .login-page-container *,
+    .register-page-container *,
+    .login-page-container *::before,
+    .register-page-container *::before,
+    .login-page-container *::after,
+    .register-page-container *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+body.reduce-motion .login-page-container *,
+body.reduce-motion .register-page-container *,
+body.reduce-motion .login-page-container *::before,
+body.reduce-motion .register-page-container *::before,
+body.reduce-motion .login-page-container *::after,
+body.reduce-motion .register-page-container *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+}
+
+body.disable-animations .login-page-container *,
+body.disable-animations .register-page-container *,
+body.disable-animations .login-page-container *::before,
+body.disable-animations .register-page-container *::before,
+body.disable-animations .login-page-container *::after,
+body.disable-animations .register-page-container *::after {
+    animation: none !important;
+    transition: none !important;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .login-form-card,
+    .register-form-card {
+        padding: 30px 20px;
+        border-radius: 20px;
+    }
+    
+    .login-icon-container,
+    .register-icon-container {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .login-icon,
+    .register-icon {
+        font-size: 30px;
+    }
+}
+
+/* ==================== ESTILOS PARA EL DASHBOARD ==================== */
+
+/* Contenedor de la página del dashboard */
+.dashboard-page {
+    position: relative;
+    min-height: 100vh;
+}
+
+/* Sidebar mejorado */
+.dashboard-sidebar {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(246, 247, 248, 0.98) 100%);
+    border-right: 1px solid rgba(19, 127, 236, 0.1);
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+.dark .dashboard-sidebar {
+    background: linear-gradient(180deg, rgba(30, 41, 59, 0.98) 0%, rgba(15, 23, 42, 0.98) 100%);
+    border-right-color: rgba(19, 127, 236, 0.2);
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.sidebar-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 200px;
+    background: linear-gradient(135deg, rgba(19, 127, 236, 0.05) 0%, rgba(14, 165, 233, 0.05) 100%);
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.dark .sidebar-gradient {
+    background: linear-gradient(135deg, rgba(19, 127, 236, 0.1) 0%, rgba(14, 165, 233, 0.1) 100%);
+}
+
+/* Header del sidebar */
+.sidebar-header {
+    margin-bottom: 24px;
+    animation: slideInLeft 0.6s ease-out;
+}
+
+.sidebar-icon-wrapper {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, #137fec, #0ea5e9);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    box-shadow: 0 8px 20px rgba(19, 127, 236, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.sidebar-icon-wrapper::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent);
+    animation: shimmer 3s infinite;
+}
+
+.sidebar-main-icon {
+    font-size: 28px;
+    color: white;
+    z-index: 1;
+    animation: iconPulse 2s ease-in-out infinite;
+}
+
+@keyframes iconPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+.sidebar-title {
+    font-size: 20px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #137fec, #0ea5e9);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+}
+
+.dark .sidebar-title {
+    background: linear-gradient(135deg, #3b82f6, #60a5fa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.sidebar-divider {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(19, 127, 236, 0.3), transparent);
+    border-radius: 2px;
+}
+
+/* Navegación del sidebar */
+.sidebar-nav {
+    animation: fadeInUp 0.6s ease-out 0.2s both;
+}
+
+.sidebar-link {
+    position: relative;
+    margin-bottom: 8px;
+    background: transparent;
+    border: 2px solid transparent;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    opacity: 0;
+    animation: slideInLeft 0.5s ease-out both;
+}
+
+.sidebar-link:nth-child(1) { animation-delay: 0.3s; }
+.sidebar-link:nth-child(2) { animation-delay: 0.35s; }
+.sidebar-link:nth-child(3) { animation-delay: 0.4s; }
+.sidebar-link:nth-child(4) { animation-delay: 0.45s; }
+.sidebar-link:nth-child(5) { animation-delay: 0.5s; }
+.sidebar-link:nth-child(6) { animation-delay: 0.55s; }
+
+.sidebar-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(19, 127, 236, 0.1), transparent);
+    transition: left 0.5s;
+}
+
+.sidebar-link:hover::before {
+    left: 100%;
+}
+
+.sidebar-link:hover {
+    background: rgba(19, 127, 236, 0.08);
+    border-color: rgba(19, 127, 236, 0.2);
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(19, 127, 236, 0.15);
+}
+
+.dark .sidebar-link:hover {
+    background: rgba(19, 127, 236, 0.15);
+    border-color: rgba(19, 127, 236, 0.3);
+}
+
+.sidebar-link.active,
+.category-link.active {
+    background: linear-gradient(135deg, rgba(19, 127, 236, 0.15), rgba(14, 165, 233, 0.15));
+    border-color: rgba(19, 127, 236, 0.3);
+    box-shadow: 0 4px 12px rgba(19, 127, 236, 0.2);
+}
+
+.dark .sidebar-link.active,
+.dark .category-link.active {
+    background: linear-gradient(135deg, rgba(19, 127, 236, 0.25), rgba(14, 165, 233, 0.25));
+    border-color: rgba(19, 127, 236, 0.4);
+}
+
+.sidebar-link-icon {
+    color: #6b7280;
+    font-size: 22px;
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+.dark .sidebar-link-icon {
+    color: #9ca3af;
+}
+
+.sidebar-link:hover .sidebar-link-icon,
+.sidebar-link.active .sidebar-link-icon {
+    color: #137fec;
+    transform: scale(1.1) rotate(5deg);
+}
+
+.sidebar-link-text {
+    flex: 1;
+    font-weight: 600;
+    color: #374151;
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+.dark .sidebar-link-text {
+    color: #e5e7eb;
+}
+
+.sidebar-link:hover .sidebar-link-text,
+.sidebar-link.active .sidebar-link-text {
+    color: #137fec;
+}
+
+.sidebar-link-arrow {
+    font-size: 18px;
+    color: transparent;
+    transition: all 0.3s ease;
+    transform: translateX(-10px);
+    z-index: 1;
+}
+
+.sidebar-link:hover .sidebar-link-arrow,
+.sidebar-link.active .sidebar-link-arrow {
+    color: #137fec;
+    transform: translateX(0);
+}
+
+/* Contenedor de contenido principal */
+.dashboard-content-container {
+    padding: 32px;
+    animation: fadeIn 0.6s ease-out;
+}
+
+/* Header del dashboard */
+.dashboard-header {
+    margin-bottom: 32px;
+    animation: slideInDown 0.6s ease-out;
+}
+
+.dashboard-header-content {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.dashboard-title-wrapper {
+    flex: 1;
+}
+
+.dashboard-title {
+    font-size: 36px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #1f2937, #137fec);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+    line-height: 1.2;
+}
+
+.dark .dashboard-title {
+    background: linear-gradient(135deg, #f9fafb, #60a5fa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.dashboard-subtitle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #6b7280;
+    font-size: 16px;
+}
+
+.dark .dashboard-subtitle {
+    color: #9ca3af;
+}
+
+.dashboard-count-icon {
+    font-size: 20px;
+    color: #137fec;
+    animation: iconBounce 2s ease-in-out infinite;
+}
+
+@keyframes iconBounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-3px);
+    }
+}
+
+.dashboard-count {
+    font-weight: 700;
+    font-size: 18px;
+    color: #137fec;
+}
+
+.dashboard-count-label {
+    font-weight: 500;
+}
+
+/* Botón de recargar */
+.dashboard-reload-btn {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #137fec, #0ea5e9);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(19, 127, 236, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.dashboard-reload-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.5s, height 0.5s;
+}
+
+.dashboard-reload-btn:hover::before {
+    width: 200px;
+    height: 200px;
+}
+
+.dashboard-reload-btn:hover {
+    transform: translateY(-2px) rotate(180deg);
+    box-shadow: 0 8px 20px rgba(19, 127, 236, 0.4);
+}
+
+.dashboard-reload-btn:active {
+    transform: translateY(0) rotate(180deg) scale(0.95);
+}
+
+.dashboard-reload-btn .material-symbols-outlined {
+    font-size: 24px;
+    z-index: 1;
+}
+
+/* Filtros mejorados */
+.dashboard-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 32px;
+    animation: fadeInUp 0.6s ease-out 0.3s both;
+}
+
+.filter-wrapper {
+    position: relative;
+    flex: 1;
+    min-width: 200px;
+}
+
+.filter-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6b7280;
+    font-size: 20px;
+    z-index: 1;
+    pointer-events: none;
+    transition: color 0.3s ease;
+}
+
+.dark .filter-icon {
+    color: #9ca3af;
+}
+
+.filter-wrapper:focus-within .filter-icon {
+    color: #137fec;
+}
+
+.dashboard-filter-select {
+    width: 100%;
+    padding: 14px 16px 14px 48px;
+    background: white;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #374151;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 20px;
+}
+
+.dark .dashboard-filter-select {
+    background: #1e293b;
+    border-color: #334155;
+    color: #e5e7eb;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 20px;
+}
+
+.dashboard-filter-select:hover {
+    border-color: #137fec;
+    box-shadow: 0 0 0 4px rgba(19, 127, 236, 0.1);
+    transform: translateY(-2px);
+}
+
+.dashboard-filter-select:focus {
+    outline: none;
+    border-color: #137fec;
+    box-shadow: 0 0 0 4px rgba(19, 127, 236, 0.15);
+    transform: translateY(-2px);
+}
+
+.dashboard-filter-select option {
+    padding: 12px;
+    background: white;
+    color: #374151;
+}
+
+.dark .dashboard-filter-select option {
+    background: #1e293b;
+    color: #e5e7eb;
+}
+
+/* Botón móvil del sidebar */
+.dashboard-mobile-toggle {
+    animation: fadeInUp 0.6s ease-out 0.5s both;
+    box-shadow: 0 8px 24px rgba(19, 127, 236, 0.4);
+}
+
+.dashboard-mobile-toggle:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 12px 32px rgba(19, 127, 236, 0.5);
+}
+
+/* Animaciones de entrada */
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Respetar preferencias de accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+    .dashboard-page *,
+    .dashboard-page *::before,
+    .dashboard-page *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+body.reduce-motion .dashboard-page *,
+body.reduce-motion .dashboard-page *::before,
+body.reduce-motion .dashboard-page *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+}
+
+body.disable-animations .dashboard-page *,
+body.disable-animations .dashboard-page *::before,
+body.disable-animations .dashboard-page *::after {
+    animation: none !important;
+    transition: none !important;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .dashboard-content-container {
+        padding: 24px 16px;
+    }
+    
+    .dashboard-title {
+        font-size: 28px;
+    }
+    
+    .dashboard-filters {
+        flex-direction: column;
+    }
+    
+    .filter-wrapper {
+        min-width: 100%;
+    }
+}
+
+@media (max-width: 640px) {
+    .dashboard-header-content {
+        flex-direction: column;
+        gap: 16px;
+    }
+    
+    .dashboard-title {
+        font-size: 24px;
+    }
+    
+    .dashboard-reload-btn {
+        align-self: flex-end;
+    }
+}
+
+/* ==================== ANIMACIONES PARA LA PÁGINA DE PREFERENCIAS ==================== */
+
+/* Animación de entrada para la página de preferencias */
+#preferencesPage.page:not(.hidden) {
+    animation: preferencesPageFadeIn 0.5s ease-out;
+}
+
+@keyframes preferencesPageFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animación para el título */
+.preferences-title {
+    opacity: 0;
+    animation: preferencesTitleSlideIn 0.6s ease-out 0.2s forwards;
+}
+
+@keyframes preferencesTitleSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Tarjetas de preferencias */
+.preferences-card {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: preferencesCardSlideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.preferences-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(19, 127, 236, 0.05), transparent);
+    transition: left 0.5s;
+    pointer-events: none;
+}
+
+.preferences-card:hover::before {
+    left: 100%;
+}
+
+.preferences-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 0 0 20px rgba(19, 127, 236, 0.15);
+}
+
+.dark .preferences-card:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 20px rgba(19, 127, 236, 0.25);
+}
+
+.preferences-card:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.preferences-card:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.preferences-card:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.preferences-card:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+@keyframes preferencesCardSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Títulos de sección */
+.preferences-section-title {
+    opacity: 0;
+    animation: preferencesSectionTitleFadeIn 0.5s ease-out forwards;
+}
+
+.preferences-card:nth-child(1) .preferences-section-title {
+    animation-delay: 0.3s;
+}
+
+.preferences-card:nth-child(2) .preferences-section-title {
+    animation-delay: 0.4s;
+}
+
+.preferences-card:nth-child(3) .preferences-section-title {
+    animation-delay: 0.5s;
+}
+
+.preferences-card:nth-child(4) .preferences-section-title {
+    animation-delay: 0.6s;
+}
+
+@keyframes preferencesSectionTitleFadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.preferences-section-title .material-symbols-outlined {
+    transition: transform 0.3s ease;
+}
+
+.preferences-card:hover .preferences-section-title .material-symbols-outlined {
+    transform: rotate(12deg) scale(1.1);
+}
+
+/* Items de opciones */
+.preferences-option-item {
+    opacity: 0;
+    animation: preferencesOptionFadeIn 0.4s ease-out forwards;
+    position: relative;
+}
+
+.preferences-option-item:nth-child(1) {
+    animation-delay: 0.2s;
+}
+
+.preferences-option-item:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.preferences-option-item:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+.preferences-option-item:nth-child(4) {
+    animation-delay: 0.5s;
+}
+
+.preferences-option-item:nth-child(5) {
+    animation-delay: 0.6s;
+}
+
+.preferences-option-item:nth-child(6) {
+    animation-delay: 0.7s;
+}
+
+.preferences-option-item:nth-child(7) {
+    animation-delay: 0.8s;
+}
+
+.preferences-option-item:nth-child(8) {
+    animation-delay: 0.9s;
+}
+
+.preferences-option-item:nth-child(9) {
+    animation-delay: 1.0s;
+}
+
+@keyframes preferencesOptionFadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.preferences-option-item h3 .material-symbols-outlined {
+    transition: transform 0.3s ease;
+}
+
+.preferences-option-item:hover h3 .material-symbols-outlined {
+    transform: rotate(12deg) scale(1.2);
+}
+
+/* Botones de preferencias */
+.preferences-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.preferences-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.4s, height 0.4s;
+}
+
+.preferences-btn:hover::before {
+    width: 200px;
+    height: 200px;
+}
+
+.preferences-btn:active {
+    transform: scale(0.95);
+}
+
+/* Toggles de preferencias */
+.preferences-toggle {
+    transition: transform 0.2s ease;
+}
+
+.preferences-toggle:hover {
+    transform: scale(1.1);
+}
+
+.preferences-toggle div:last-child {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.preferences-toggle input:checked ~ div:last-child {
+    box-shadow: 0 2px 8px rgba(19, 127, 236, 0.4);
+}
+
+/* Foto de perfil */
+.preferences-profile-picture {
+    transition: transform 0.3s ease;
+}
+
+.preferences-profile-picture:hover {
+    transform: scale(1.05);
+}
+
+.preferences-profile-picture img {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.preferences-profile-picture:hover img {
+    border-color: rgba(19, 127, 236, 0.8);
+    box-shadow: 0 10px 30px rgba(19, 127, 236, 0.4);
+}
+
+.preferences-profile-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.preferences-profile-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.5s, height 0.5s;
+}
+
+.preferences-profile-btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.preferences-profile-btn:active {
+    transform: scale(0.95);
+}
+
+/* Animación de pulso para la foto de perfil */
+@keyframes profilePicturePulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(19, 127, 236, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 0 10px rgba(19, 127, 236, 0);
+    }
+}
+
+.preferences-profile-picture:hover img {
+    animation: profilePicturePulse 2s infinite;
+}
+
+/* Efecto shimmer en las tarjetas */
+@keyframes preferencesShimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+.preferences-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    background-size: 1000px 100%;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+}
+
+.preferences-card:hover::after {
+    opacity: 1;
+    animation: preferencesShimmer 2s infinite;
+}
+
+/* Animación para iconos en las opciones */
+.preferences-option-item h3 {
+    transition: color 0.3s ease;
+}
+
+.preferences-option-item:hover h3 {
+    color: var(--primary);
+}
+
+/* Animación de bounce para valores cambiantes */
+@keyframes valueBounce {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+.preferences-btn.value-changed {
+    animation: valueBounce 0.5s ease;
+}
+

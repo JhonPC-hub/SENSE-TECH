@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acerca de - Sense-Tech</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="images/logo.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/logo.png">
+    <link rel="shortcut icon" type="image/png" href="images/logo.png">
+    <meta name="theme-color" content="#137fec">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Material Symbols -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#137fec',
+                        'background-light': '#f6f7f8',
+                        'background-dark': '#101727',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            overflow-x: hidden;
+        }
+        
+        /* Animaciones */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(5deg); }
+        }
+        
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+        
+        .fade-in {
+            animation: fadeIn 1s ease-out forwards;
+        }
+        
+        .slide-up {
+            animation: slideUp 0.8s ease-out forwards;
+            opacity: 0;
+        }
+        
+        .slide-down {
+            animation: slideDown 0.8s ease-out forwards;
+            opacity: 0;
+        }
+        
+        .scale-in {
+            animation: scaleIn 0.6s ease-out forwards;
+            opacity: 0;
+        }
+        
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
+        .delay-500 { animation-delay: 0.5s; }
+        .delay-600 { animation-delay: 0.6s; }
+        .delay-700 { animation-delay: 0.7s; }
+        .delay-800 { animation-delay: 0.8s; }
+        .delay-900 { animation-delay: 0.9s; }
+        .delay-1000 { animation-delay: 1s; }
+        
+        /* Efectos hover */
+        .hover-effect {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .hover-effect:hover {
+            transform: translateY(-5px);
+        }
+        
+        /* Cards con borde animado */
+        .card-border {
+            position: relative;
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+        }
+        
+        .dark .card-border {
+            background: #1e293b;
+        }
+        
+        .card-border::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            padding: 2px;
+            background: linear-gradient(135deg, #137fec, #3b82f6, #60a5fa, #137fec);
+            background-size: 200% 200%;
+            animation: gradient-shift 3s ease infinite;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .card-border:hover::before {
+            opacity: 1;
+        }
+        
+        /* Texto con gradiente */
+        .gradient-text {
+            background: linear-gradient(135deg, #137fec 0%, #3b82f6 50%, #60a5fa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .dark .gradient-text {
+            background: linear-gradient(135deg, #60a5fa 0%, #93c5fd 50%, #bfdbfe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Líneas decorativas */
+        .decorative-line {
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #137fec, transparent);
+            margin: 2rem 0;
+        }
+        
+        .dark .decorative-line {
+            background: linear-gradient(90deg, transparent, #60a5fa, transparent);
+        }
+        
+        /* Scroll reveal */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Background pattern */
+        .bg-pattern {
+            background-image: 
+                radial-gradient(circle at 1px 1px, rgba(19, 127, 236, 0.15) 1px, transparent 0);
+            background-size: 40px 40px;
+        }
+        
+        .dark .bg-pattern {
+            background-image: 
+                radial-gradient(circle at 1px 1px, rgba(96, 165, 250, 0.1) 1px, transparent 0);
+        }
+        
+        /* Iconos con efecto */
+        .icon-wrapper {
+            width: 64px;
+            height: 64px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .icon-wrapper:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        /* Números decorativos */
+        .number-badge {
+            position: absolute;
+            top: -12px;
+            left: -12px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #137fec, #3b82f6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.25rem;
+            box-shadow: 0 4px 12px rgba(19, 127, 236, 0.4);
+        }
+        
+        .dark .number-badge {
+            background: linear-gradient(135deg, #3b82f6, #60a5fa);
+        }
+    </style>
+</head>
+<body class="font-sans antialiased bg-white dark:bg-slate-900 text-gray-900 dark:text-gray-100 transition-colors duration-500">
+    
+    <!-- Header Minimalista -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-lg border-b border-gray-200 dark:border-slate-800 transition-all duration-300 fade-in">
+        <nav class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="index.html" class="flex items-center gap-3 group">
+                    <img src="images/logo.png" alt="Sense-Tech" class="h-8 w-auto dark:hidden transition-transform duration-300 group-hover:rotate-12" onerror="this.style.display='none'">
+                    <img src="images/logo2.png" alt="Sense-Tech" class="h-8 w-auto hidden dark:block transition-transform duration-300 group-hover:rotate-12" onerror="this.style.display='none'">
+                    <span class="text-xl font-bold text-primary">Sense-Tech</span>
+                </a>
+                <a href="index.html" class="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-colors duration-300 flex items-center gap-2 group">
+                    <span class="material-symbols-outlined text-lg group-hover:-translate-x-1 transition-transform duration-300">arrow_back</span>
+                    <span>Volver</span>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-20">
+        <!-- Hero Section - Estilo Minimalista -->
+        <section class="relative py-24 bg-pattern">
+            <div class="container mx-auto px-6 max-w-5xl">
+                <div class="text-center slide-down">
+                    <h1 class="text-5xl md:text-6xl font-black mb-6 gradient-text">
+                        Acerca de Sense-Tech
+                    </h1>
+                    <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed slide-up delay-200">
+                        Una plataforma diseñada para hacer la educación en ingeniería accesible para todos
+                    </p>
+                    <div class="decorative-line max-w-md mx-auto slide-up delay-400"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Misión Section - Diseño Lateral -->
+        <section class="py-16 bg-gray-50 dark:bg-slate-800/50">
+            <div class="container mx-auto px-6 max-w-6xl">
+                <div class="grid md:grid-cols-2 gap-12 items-center scroll-reveal">
+                    <div>
+                        <div class="inline-flex items-center gap-3 mb-6">
+                            <div class="icon-wrapper bg-blue-100 dark:bg-blue-900/30">
+                                <span class="material-symbols-outlined text-primary text-3xl">target</span>
+                            </div>
+                            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">Nuestra Misión</h2>
+                        </div>
+                        <div class="space-y-4 text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+                            <p>
+                                <strong class="text-primary">Sense-Tech</strong> es una plataforma web accesible diseñada específicamente para estudiantes de ingeniería en sistemas con baja visión. Nuestro objetivo principal es eliminar las barreras de accesibilidad visual y facilitar el acceso a materiales educativos técnicos.
+                            </p>
+                            <p>
+                                Creemos firmemente que el conocimiento debe ser accesible para todos, independientemente de las limitaciones visuales. Por eso, hemos desarrollado una plataforma que permite leer documentos PDF mediante síntesis de voz, con controles personalizables y una interfaz completamente accesible.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <div class="card-border hover-effect">
+                            <div class="space-y-6">
+                                <div class="flex items-start gap-4">
+                                    <span class="material-symbols-outlined text-primary text-2xl">visibility</span>
+                                    <div>
+                                        <h3 class="font-bold text-lg mb-2">Accesibilidad Visual</h3>
+                                        <p class="text-gray-600 dark:text-gray-400">Diseñado para usuarios con baja visión</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-4">
+                                    <span class="material-symbols-outlined text-primary text-2xl">school</span>
+                                    <div>
+                                        <h3 class="font-bold text-lg mb-2">Educación Técnica</h3>
+                                        <p class="text-gray-600 dark:text-gray-400">Contenido especializado en ingeniería</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-4">
+                                    <span class="material-symbols-outlined text-primary text-2xl">favorite</span>
+                                    <div>
+                                        <h3 class="font-bold text-lg mb-2">Compromiso Social</h3>
+                                        <p class="text-gray-600 dark:text-gray-400">Inclusión y equidad educativa</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Características Section - Grid Moderno -->
+        <section class="py-16">
+            <div class="container mx-auto px-6 max-w-6xl">
+                <div class="text-center mb-16 scroll-reveal">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4 gradient-text">Características Principales</h2>
+                    <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                        Herramientas y funcionalidades diseñadas para mejorar tu experiencia de aprendizaje
+                    </p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="scroll-reveal card-border hover-effect">
+                        <div class="icon-wrapper bg-blue-100 dark:bg-blue-900/30 mb-4">
+                            <span class="material-symbols-outlined text-primary text-2xl">volume_up</span>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2">Text-to-Speech</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Síntesis de voz en español de alta calidad</p>
+                    </div>
+                    
+                    <div class="scroll-reveal card-border hover-effect delay-100">
+                        <div class="icon-wrapper bg-green-100 dark:bg-green-900/30 mb-4">
+                            <span class="material-symbols-outlined text-green-600 dark:text-green-400 text-2xl">keyboard</span>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2">Navegación por Teclado</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Control completo sin mouse</p>
+                    </div>
+                    
+                    <div class="scroll-reveal card-border hover-effect delay-200">
+                        <div class="icon-wrapper bg-purple-100 dark:bg-purple-900/30 mb-4">
+                            <span class="material-symbols-outlined text-purple-600 dark:text-purple-400 text-2xl">contrast</span>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2">Alto Contraste</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Modo configurable</p>
+                    </div>
+                    
+                    <div class="scroll-reveal card-border hover-effect delay-300">
+                        <div class="icon-wrapper bg-orange-100 dark:bg-orange-900/30 mb-4">
+                            <span class="material-symbols-outlined text-orange-600 dark:text-orange-400 text-2xl">text_fields</span>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2">Tamaño de Fuente</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Ajuste personalizable</p>
+                    </div>
+                    
+                    <div class="scroll-reveal card-border hover-effect delay-400">
+                        <div class="icon-wrapper bg-red-100 dark:bg-red-900/30 mb-4">
+                            <span class="material-symbols-outlined text-red-600 dark:text-red-400 text-2xl">speed</span>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2">Control de Velocidad</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Ajuste de velocidad de lectura</p>
+                    </div>
+                    
+                    <div class="scroll-reveal card-border hover-effect delay-500">
+                        <div class="icon-wrapper bg-cyan-100 dark:bg-cyan-900/30 mb-4">
+                            <span class="material-symbols-outlined text-cyan-600 dark:text-cyan-400 text-2xl">devices</span>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2">Responsive</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Todos los dispositivos</p>
+                    </div>
+                    
+                    <div class="scroll-reveal card-border hover-effect delay-600">
+                        <div class="icon-wrapper bg-pink-100 dark:bg-pink-900/30 mb-4">
+                            <span class="material-symbols-outlined text-pink-600 dark:text-pink-400 text-2xl">trending_up</span>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2">Seguimiento</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Monitorea tu progreso</p>
+                    </div>
+                    
+                    <div class="scroll-reveal card-border hover-effect delay-700">
+                        <div class="icon-wrapper bg-indigo-100 dark:bg-indigo-900/30 mb-4">
+                            <span class="material-symbols-outlined text-indigo-600 dark:text-indigo-400 text-2xl">folder</span>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2">Biblioteca</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Organizada por categorías</p>
+                    </div>
+                </div>
+            </div>
+                </section>
+
+        <!-- Tecnología Section - Lista Estilizada -->
+        <section class="py-16 bg-gray-50 dark:bg-slate-800/50">
+            <div class="container mx-auto px-6 max-w-6xl">
+                <div class="text-center mb-16 scroll-reveal">
+                    <div class="inline-flex items-center gap-3 mb-4">
+                        <div class="icon-wrapper bg-blue-100 dark:bg-blue-900/30">
+                            <span class="material-symbols-outlined text-primary text-3xl">code</span>
+                        </div>
+                        <h2 class="text-4xl md:text-5xl font-bold gradient-text">Tecnología</h2>
+                    </div>
+                    <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                        Construido con las mejores tecnologías web modernas
+                    </p>
+                </div>
+                
+                <div class="max-w-4xl mx-auto">
+                    <div class="space-y-4">
+                        <div class="scroll-reveal card-border hover-effect">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-4">
+                                    <span class="material-symbols-outlined text-primary text-2xl">bolt</span>
+                                    <div>
+                                        <h3 class="font-bold text-lg">Node.js y Express.js</h3>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400">Backend robusto y escalable</p>
+                                    </div>
+                                </div>
+                                <span class="text-xs px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-primary rounded-full">Backend</span>
+                            </div>
+                        </div>
+                        
+                        <div class="scroll-reveal card-border hover-effect delay-100">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-4">
+                                    <span class="material-symbols-outlined text-primary text-2xl">storage</span>
+                                    <div>
+                                        <h3 class="font-bold text-lg">SQLite</h3>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400">Base de datos ligera y eficiente</p>
+                                    </div>
+                                </div>
+                                <span class="text-xs px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-full">Database</span>
+                            </div>
+                        </div>
+                        
+                        <div class="scroll-reveal card-border hover-effect delay-200">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-4">
+                                    <span class="material-symbols-outlined text-primary text-2xl">description</span>
+                                    <div>
+                                        <h3 class="font-bold text-lg">PDF.js</h3>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400">Renderizado de documentos PDF</p>
+                                    </div>
+                                </div>
+                                <span class="text-xs px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-full">PDF</span>
+                            </div>
+                        </div>
+                        
+                        <div class="scroll-reveal card-border hover-effect delay-300">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-4">
+                                    <span class="material-symbols-outlined text-primary text-2xl">volume_up</span>
+                                    <div>
+                                        <h3 class="font-bold text-lg">Web Speech API</h3>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400">Síntesis de voz nativa del navegador</p>
+                                    </div>
+                                </div>
+                                <span class="text-xs px-3 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 rounded-full">Voice</span>
+                            </div>
+                        </div>
+                        
+                        <div class="scroll-reveal card-border hover-effect delay-400">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-4">
+                                    <span class="material-symbols-outlined text-primary text-2xl">accessibility_new</span>
+                                    <div>
+                                        <h3 class="font-bold text-lg">HTML5 y ARIA</h3>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400">Estándares de accesibilidad web</p>
+                                    </div>
+                                </div>
+                                <span class="text-xs px-3 py-1 bg-cyan-100 dark:bg-cyan-900/30 text-cyan-600 dark:text-cyan-400 rounded-full">A11y</span>
+                            </div>
+                        </div>
+                        
+                        <div class="scroll-reveal card-border hover-effect delay-500">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-4">
+                                    <span class="material-symbols-outlined text-primary text-2xl">palette</span>
+                                    <div>
+                                        <h3 class="font-bold text-lg">Tailwind CSS</h3>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400">Diseño moderno y responsive</p>
+                                    </div>
+                                </div>
+                                <span class="text-xs px-3 py-1 bg-pink-100 dark:bg-pink-900/30 text-pink-600 dark:text-pink-400 rounded-full">CSS</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                </section>
+
+        <!-- Accesibilidad Section - Diseño Alternado -->
+        <section class="py-16">
+            <div class="container mx-auto px-6 max-w-6xl">
+                <div class="text-center mb-16 scroll-reveal">
+                    <div class="inline-flex items-center gap-3 mb-4">
+                        <div class="icon-wrapper bg-green-100 dark:bg-green-900/30">
+                            <span class="material-symbols-outlined text-green-600 dark:text-green-400 text-3xl">accessibility_new</span>
+                        </div>
+                        <h2 class="text-4xl md:text-5xl font-bold gradient-text">Accesibilidad</h2>
+                    </div>
+                    <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                        Implementamos las mejores prácticas de accesibilidad web
+                    </p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                    <div class="scroll-reveal card-border hover-effect">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="material-symbols-outlined text-green-600 dark:text-green-400 text-xl">check_circle</span>
+                            <h3 class="font-bold">Navegación por Teclado</h3>
+                        </div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Control completo sin necesidad de mouse</p>
+                    </div>
+                    
+                    <div class="scroll-reveal card-border hover-effect delay-100">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="material-symbols-outlined text-green-600 dark:text-green-400 text-xl">check_circle</span>
+                            <h3 class="font-bold">Etiquetas ARIA</h3>
+                        </div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Descripciones apropiadas para lectores de pantalla</p>
+                    </div>
+                    
+                    <div class="scroll-reveal card-border hover-effect delay-200">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="material-symbols-outlined text-green-600 dark:text-green-400 text-xl">check_circle</span>
+                            <h3 class="font-bold">Alto Contraste</h3>
+                        </div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Modo configurable para mejor visibilidad</p>
+                    </div>
+                    
+                    <div class="scroll-reveal card-border hover-effect delay-300">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="material-symbols-outlined text-green-600 dark:text-green-400 text-xl">check_circle</span>
+                            <h3 class="font-bold">Tamaño de Fuente</h3>
+                        </div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Ajuste personalizable del texto</p>
+                    </div>
+                    
+                    <div class="scroll-reveal card-border hover-effect delay-400">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="material-symbols-outlined text-green-600 dark:text-green-400 text-xl">check_circle</span>
+                            <h3 class="font-bold">Focus Visible</h3>
+                        </div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Indicadores claros en elementos interactivos</p>
+                    </div>
+                    
+                    <div class="scroll-reveal card-border hover-effect delay-500">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="material-symbols-outlined text-green-600 dark:text-green-400 text-xl">check_circle</span>
+                            <h3 class="font-bold">Contenido Semántico</h3>
+                        </div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Estructura clara y bien organizada</p>
+                    </div>
+                </div>
+            </div>
+                </section>
+
+        <!-- Contacto Section - Minimalista -->
+        <section class="py-16 bg-gray-50 dark:bg-slate-800/50">
+            <div class="container mx-auto px-6 max-w-4xl">
+                <div class="text-center scroll-reveal">
+                    <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-blue-100 dark:bg-blue-900/30 mb-6 float-animation">
+                        <span class="material-symbols-outlined text-primary text-4xl">mail</span>
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-bold mb-6 gradient-text">Contacto</h2>
+                    <p class="text-lg text-gray-700 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed mb-12">
+                        Si tienes preguntas, sugerencias o necesitas soporte, no dudes en contactarnos. 
+                        Estamos comprometidos con <strong class="text-primary">mejorar continuamente</strong> la plataforma para servir mejor a nuestra comunidad.
+                    </p>
+                </div>
+                
+                <!-- Desarrolladores -->
+                <div class="scroll-reveal delay-200">
+                    <h3 class="text-2xl font-bold text-center mb-8 text-gray-900 dark:text-white">
+                        Equipo de Desarrollo
+                    </h3>
+                    <div class="grid md:grid-cols-2 gap-4 max-w-3xl mx-auto">
+                        <a href="mailto:jhonatan.yepes@unisimon.edu.co" class="card-border hover-effect flex items-center gap-4 p-4 group">
+                            <div class="w-12 h-12 rounded-full bg-primary/10 dark:bg-primary/20 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 dark:group-hover:bg-primary/30 transition-colors">
+                                <span class="material-symbols-outlined text-primary">person</span>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p class="font-medium text-gray-900 dark:text-white truncate group-hover:text-primary transition-colors">
+                                    Jhonatan Yepes
+                                </p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400 truncate">
+                                    jhonatan.yepes@unisimon.edu.co
+                                </p>
+                            </div>
+                            <span class="material-symbols-outlined text-gray-400 group-hover:text-primary transition-colors flex-shrink-0">mail</span>
+                        </a>
+                        
+                        <a href="mailto:juan.edna@unisimon.edu.co" class="card-border hover-effect flex items-center gap-4 p-4 group">
+                            <div class="w-12 h-12 rounded-full bg-primary/10 dark:bg-primary/20 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 dark:group-hover:bg-primary/30 transition-colors">
+                                <span class="material-symbols-outlined text-primary">person</span>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p class="font-medium text-gray-900 dark:text-white truncate group-hover:text-primary transition-colors">
+                                    Juan Edna
+                                </p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400 truncate">
+                                    juan.edna@unisimon.edu.co
+                                </p>
+                            </div>
+                            <span class="material-symbols-outlined text-gray-400 group-hover:text-primary transition-colors flex-shrink-0">mail</span>
+                        </a>
+                        
+                        <a href="mailto:jhon.perezc@unisimon.edu.co" class="card-border hover-effect flex items-center gap-4 p-4 group">
+                            <div class="w-12 h-12 rounded-full bg-primary/10 dark:bg-primary/20 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 dark:group-hover:bg-primary/30 transition-colors">
+                                <span class="material-symbols-outlined text-primary">person</span>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p class="font-medium text-gray-900 dark:text-white truncate group-hover:text-primary transition-colors">
+                                    Jhon Pérez
+                                </p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400 truncate">
+                                    jhon.perezc@unisimon.edu.co
+                                </p>
+                            </div>
+                            <span class="material-symbols-outlined text-gray-400 group-hover:text-primary transition-colors flex-shrink-0">mail</span>
+                        </a>
+                        
+                        <a href="mailto:samuel.hernandezp@unisimon.edu.co" class="card-border hover-effect flex items-center gap-4 p-4 group">
+                            <div class="w-12 h-12 rounded-full bg-primary/10 dark:bg-primary/20 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 dark:group-hover:bg-primary/30 transition-colors">
+                                <span class="material-symbols-outlined text-primary">person</span>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p class="font-medium text-gray-900 dark:text-white truncate group-hover:text-primary transition-colors">
+                                    Samuel Hernández
+                                </p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400 truncate">
+                                    samuel.hernandezp@unisimon.edu.co
+                                </p>
+                            </div>
+                            <span class="material-symbols-outlined text-gray-400 group-hover:text-primary transition-colors flex-shrink-0">mail</span>
+                        </a>
+                        
+                        <a href="mailto:bayron.barrios@unisimon.edu.co" class="card-border hover-effect flex items-center gap-4 p-4 group md:col-span-2 max-w-md mx-auto">
+                            <div class="w-12 h-12 rounded-full bg-primary/10 dark:bg-primary/20 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 dark:group-hover:bg-primary/30 transition-colors">
+                                <span class="material-symbols-outlined text-primary">person</span>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p class="font-medium text-gray-900 dark:text-white truncate group-hover:text-primary transition-colors">
+                                    Bayron Barrios
+                                </p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400 truncate">
+                                    bayron.barrios@unisimon.edu.co
+                                </p>
+                            </div>
+                            <span class="material-symbols-outlined text-gray-400 group-hover:text-primary transition-colors flex-shrink-0">mail</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Minimalista -->
+    <footer class="bg-white dark:bg-slate-900 border-t border-gray-200 dark:border-slate-800 py-8">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-gray-600 dark:text-gray-400">© 2024 Sense-Tech. Plataforma de lectura accesible.</p>
+        </div>
+    </footer>
+
+    <!-- Theme Toggle Button -->
+    <button id="themeToggle" class="fixed bottom-6 right-6 w-14 h-14 bg-primary text-white rounded-full shadow-lg hover:shadow-xl z-50 transition-all duration-300 hover:scale-110 flex items-center justify-center scale-in delay-700">
+        <span class="material-symbols-outlined text-2xl">light_mode</span>
+    </button>
+
+    <script>
+        // Theme toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        
+        if (currentTheme === 'dark') {
+            document.documentElement.classList.add('dark');
+            themeToggle.innerHTML = '<span class="material-symbols-outlined text-2xl">dark_mode</span>';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            const isDark = document.documentElement.classList.contains('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            themeToggle.innerHTML = isDark 
+                ? '<span class="material-symbols-outlined text-2xl">dark_mode</span>'
+                : '<span class="material-symbols-outlined text-2xl">light_mode</span>';
+        });
+        
+        // Scroll reveal
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.scroll-reveal').forEach(el => {
+            observer.observe(el);
+        });
+        
+        // Animate on load
+        window.addEventListener('load', () => {
+            document.querySelectorAll('.slide-up, .slide-down, .scale-in').forEach((el, index) => {
+                setTimeout(() => {
+                    el.style.opacity = '1';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>
