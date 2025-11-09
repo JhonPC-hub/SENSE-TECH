@@ -27,9 +27,10 @@
 5. **Disco persistente (IMPORTANTE)**
    - En la sección "Disk", añade un disco:
      - **Name:** sense-tech-disk
-     - **Mount Path:** `/opt/render/project/src`
+     - **Mount Path:** `/opt/render/project/data`
      - **Size:** 1GB (gratis)
    - Esto es necesario para que la base de datos SQLite y los uploads persistan
+   - **NOTA:** `/opt/render/project/src` es una ruta reservada y no puede usarse como mount path
 
 6. **Deploy**
    - Haz clic en "Create Web Service"
@@ -81,11 +82,17 @@ Después del deploy, verifica:
 - Render asigna el puerto automáticamente, no deberías tener este error
 - Verifica que uses `process.env.PORT` en server.js
 
+### Error: "La ruta no puede ser una ruta reservada"
+- **Problema:** Render no permite montar discos en `/opt/render/project/src` porque es una ruta reservada
+- **Solución:** Usa `/opt/render/project/data` como mount path (ya configurado en el código)
+- El código detecta automáticamente si está en Render y usa la ruta correcta del disco
+
 ### Base de datos no persiste
 - Asegúrate de tener un disco persistente configurado
-- Verifica que el mount path sea correcto
+- Verifica que el mount path sea `/opt/render/project/data` (no `/opt/render/project/src`)
+- El código usa automáticamente el disco persistente cuando detecta que está en Render
 
 ### Archivos subidos se pierden
-- Los uploads deben estar en el disco persistente
-- Verifica que la carpeta `uploads/` esté en el mount path
+- Los uploads se guardan automáticamente en el disco persistente cuando está configurado
+- Verifica que el disco esté montado correctamente en `/opt/render/project/data`
 

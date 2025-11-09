@@ -11,15 +11,43 @@ const fs = require('fs');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Trust proxy - Necesario para que las cookies funcionen en producción (Render.com, etc.)
+// Esto permite que Express confíe en los headers X-Forwarded-* del proxy inverso
+app.set('trust proxy', 1);
+
+// Configuración de rutas para datos persistentes
+// En Render, el disco se monta en /opt/render/project/data
+// En desarrollo, usamos rutas relativas
+// Prioridad: 1. Variable de entorno DATA_DIR, 2. Disco de Render (si existe), 3. Directorio actual
+const RENDER_DATA_DIR = '/opt/render/project/data';
+const DATA_DIR = process.env.DATA_DIR || 
+    (fs.existsSync(RENDER_DATA_DIR) ? RENDER_DATA_DIR : __dirname);
+const UPLOADS_DIR = path.join(DATA_DIR, 'uploads');
+const DB_PATH = path.join(DATA_DIR, 'sense-tech.db');
+
+console.log('=== Configuración de Rutas ===');
+console.log('NODE_ENV:', process.env.NODE_ENV || 'development');
+console.log('DATA_DIR:', DATA_DIR);
+console.log('UPLOADS_DIR:', UPLOADS_DIR);
+console.log('DB_PATH:', DB_PATH);
+console.log('Usando disco persistente:', DATA_DIR === RENDER_DATA_DIR ? 'Sí' : 'No');
+
 // Configuración de sesión
+const isProduction = process.env.NODE_ENV === 'production';
 app.use(session({
     secret: process.env.SESSION_SECRET || 'sense-tech-secret-key-2024',
     resave: false,
     saveUninitialized: false,
+    name: 'sense-tech.sid', // Nombre personalizado para la cookie de sesión
     cookie: {
-        secure: process.env.NODE_ENV === 'production',
-        maxAge: 24 * 60 * 60 * 1000 // 24 horas
-    }
+        secure: isProduction, // true en producción (HTTPS requerido)
+        httpOnly: true,
+        sameSite: 'lax', // 'lax' funciona bien para mismo sitio en producción y desarrollo
+        maxAge: 24 * 60 * 60 * 1000, // 24 horas
+        path: '/' // Asegurar que la cookie esté disponible en toda la aplicación
+    },
+    // Guardar la sesión incluso si no se ha modificado (para producción)
+    rolling: true
 }));
 
 // Middleware
@@ -28,19 +56,20 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // NO mover express.static aquí - debe ir después de las rutas de API
 
 // Crear carpetas si no existen
-if (!fs.existsSync('uploads')) {
-    fs.mkdirSync('uploads', { recursive: true });
-    console.log('Carpeta uploads creada');
+if (!fs.existsSync(UPLOADS_DIR)) {
+    fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+    console.log('Carpeta uploads creada en:', UPLOADS_DIR);
 }
-if (!fs.existsSync('uploads/profile-pictures')) {
-    fs.mkdirSync('uploads/profile-pictures', { recursive: true });
-    console.log('Carpeta uploads/profile-pictures creada');
+const PROFILE_PICTURES_DIR = path.join(UPLOADS_DIR, 'profile-pictures');
+if (!fs.existsSync(PROFILE_PICTURES_DIR)) {
+    fs.mkdirSync(PROFILE_PICTURES_DIR, { recursive: true });
+    console.log('Carpeta uploads/profile-pictures creada en:', PROFILE_PICTURES_DIR);
 }
 
 // Configuración de Multer para PDFs
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'uploads/');
+        cb(null, UPLOADS_DIR);
     },
     filename: (req, file, cb) => {
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
@@ -63,12 +92,11 @@ const upload = multer({
 // Configuración de Multer para imágenes de perfil
 const profilePictureStorage = multer.diskStorage({
     destination: (req, file, cb) => {
-        const dest = 'uploads/profile-pictures/';
         // Asegurar que la carpeta existe
-        if (!fs.existsSync(dest)) {
-            fs.mkdirSync(dest, { recursive: true });
+        if (!fs.existsSync(PROFILE_PICTURES_DIR)) {
+            fs.mkdirSync(PROFILE_PICTURES_DIR, { recursive: true });
         }
-        cb(null, dest);
+        cb(null, PROFILE_PICTURES_DIR);
     },
     filename: (req, file, cb) => {
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
@@ -90,11 +118,11 @@ const uploadProfilePicture = multer({
 });
 
 // Inicializar base de datos
-const db = new sqlite3.Database('sense-tech.db', (err) => {
+const db = new sqlite3.Database(DB_PATH, (err) => {
     if (err) {
         console.error('Error al conectar con la base de datos:', err);
     } else {
-        console.log('Conectado a la base de datos SQLite');
+        console.log('Conectado a la base de datos SQLite en:', DB_PATH);
         initializeDatabase();
     }
 });
@@ -251,14 +279,19 @@ function requireAuth(req, res, next) {
 // Middleware de administrador
 function requireAdmin(req, res, next) {
     console.log('requireAdmin - URL:', req.url, 'Method:', req.method);
-    console.log('requireAdmin - Session:', req.session ? { userId: req.session.userId, isAdmin: req.session.isAdmin } : 'No session');
+    console.log('requireAdmin - Session:', req.session ? { userId: req.session.userId, isAdmin: req.session.isAdmin, username: req.session.username } : 'No session');
     
-    if (req.session && req.session.userId && req.session.isAdmin) {
-        return next();
+    if (!req.session || !req.session.userId) {
+        console.log('requireAdmin - No autenticado');
+        return res.status(401).json({ success: false, error: 'No autenticado. Por favor, inicia sesión.' });
     }
     
-    console.log('requireAdmin - Acceso denegado');
-    res.status(403).json({ success: false, error: 'Acceso denegado' });
+    if (!req.session.isAdmin) {
+        console.log('requireAdmin - Usuario no es administrador:', req.session.username);
+        return res.status(403).json({ success: false, error: 'Acceso denegado. Se requieren permisos de administrador.' });
+    }
+    
+    return next();
 }
 
 // ==================== ENDPOINTS DE AUTENTICACIÓN ====================
@@ -322,12 +355,23 @@ app.post('/api/login', async (req, res) => {
             req.session.username = user.username;
             req.session.isAdmin = user.is_admin === 1;
 
-            res.json({ 
-                success: true, 
-                user: { 
-                    username: user.username, 
-                    isAdmin: user.is_admin === 1 
-                } 
+            // Guardar la sesión explícitamente
+            req.session.save((err) => {
+                if (err) {
+                    console.error('Error al guardar sesión:', err);
+                    return res.status(500).json({ success: false, error: 'Error al iniciar sesión' });
+                }
+                
+                console.log('Sesión creada para usuario:', user.username, 'isAdmin:', user.is_admin === 1);
+                console.log('Session ID:', req.sessionID);
+                
+                res.json({ 
+                    success: true, 
+                    user: { 
+                        username: user.username, 
+                        isAdmin: user.is_admin === 1 
+                    } 
+                });
             });
         });
     } catch (error) {
@@ -341,6 +385,24 @@ app.post('/api/logout', (req, res) => {
             return res.status(500).json({ success: false, error: 'Error al cerrar sesión' });
         }
         res.json({ success: true });
+    });
+});
+
+// Endpoint de debug para verificar el estado de la sesión (solo en desarrollo)
+app.get('/api/debug/session', (req, res) => {
+    res.json({
+        sessionId: req.sessionID,
+        session: req.session ? {
+            userId: req.session.userId,
+            username: req.session.username,
+            isAdmin: req.session.isAdmin
+        } : null,
+        cookies: req.cookies,
+        headers: {
+            'x-forwarded-proto': req.headers['x-forwarded-proto'],
+            'x-forwarded-for': req.headers['x-forwarded-for'],
+            'host': req.headers['host']
+        }
     });
 });
 
@@ -558,7 +620,8 @@ app.post('/api/user/profile-picture', requireAuth, (req, res, next) => {
             // Continuar de todas formas
         } else if (user && user.profile_picture && user.profile_picture.startsWith('/uploads/profile-pictures/')) {
             // Eliminar archivo anterior
-            const oldFilePath = path.join(__dirname, user.profile_picture);
+            const filename = path.basename(user.profile_picture);
+            const oldFilePath = path.join(PROFILE_PICTURES_DIR, filename);
             fs.unlink(oldFilePath, (err) => {
                 if (err && err.code !== 'ENOENT') {
                     console.error('Error al eliminar foto anterior:', err);
@@ -1047,7 +1110,7 @@ app.get('/api/pdfs/:id/text', requireAuth, async (req, res) => {
                 return res.status(404).json({ success: false, error: 'PDF no encontrado' });
             }
             
-            const filePath = path.join(__dirname, 'uploads', pdf.filename);
+            const filePath = path.join(UPLOADS_DIR, pdf.filename);
             const dataBuffer = fs.readFileSync(filePath);
             const data = await pdfParse(dataBuffer);
             
@@ -1070,7 +1133,7 @@ app.get('/api/pdfs/:id', requireAuth, (req, res) => {
             return res.status(404).json({ success: false, error: 'PDF no encontrado' });
         }
         
-        const filePath = path.join(__dirname, 'uploads', pdf.filename);
+        const filePath = path.join(UPLOADS_DIR, pdf.filename);
         res.sendFile(filePath);
     });
 });
@@ -1217,12 +1280,12 @@ app.delete('/api/admin/users/:userId', requireAdmin, (req, res) => {
 app.delete('/api/admin/pdfs/:pdfId', requireAdmin, (req, res) => {
     const pdfId = parseInt(req.params.pdfId);
     
-    db.get('SELECT * FROM pdfs WHERE id = ?', [pdfId], (err, pdf) => {
+    db.get('SELECT filename FROM pdfs WHERE id = ?', [pdfId], (err, pdf) => {
         if (err || !pdf) {
             return res.status(404).json({ success: false, error: 'PDF no encontrado' });
         }
         
-        const filePath = pdf.file_path;
+        const filePath = path.join(UPLOADS_DIR, pdf.filename);
         
         // Eliminar en cascada: progreso de lectura
         db.run('DELETE FROM reading_progress WHERE pdf_id = ?', [pdfId], (err) => {
@@ -1237,7 +1300,7 @@ app.delete('/api/admin/pdfs/:pdfId', requireAdmin, (req, res) => {
                 }
                 
                 // Eliminar el archivo físico si existe
-                if (filePath && fs.existsSync(filePath)) {
+                if (fs.existsSync(filePath)) {
                     fs.unlink(filePath, (err) => {
                         if (err) {
                             console.error('Error al eliminar archivo físico:', err);
@@ -1315,8 +1378,8 @@ app.post('/api/testimonials', requireAuth, (req, res) => {
 // Servir archivos estáticos DESPUÉS de todas las rutas de API
 // IMPORTANTE: Express.static debe ir después de todas las rutas de API
 app.use(express.static('public'));
-// Servir imágenes de perfil
-app.use('/uploads', express.static('uploads'));
+// Servir archivos uploads desde el directorio de datos persistente
+app.use('/uploads', express.static(UPLOADS_DIR));
 
 // Manejar todas las demás rutas (SPA) - debe ir al final
 app.get('*', (req, res) => {
