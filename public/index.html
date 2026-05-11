@@ -19,6 +19,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Material Symbols -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
@@ -31,6 +32,7 @@
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="home-premium.css">
     
     <script>
         tailwind.config = {
@@ -52,310 +54,362 @@
 </head>
 <body class="font-sans antialiased bg-background-light dark:bg-background-dark text-gray-900 dark:text-gray-100">
     
-    <!-- Header/Navbar -->
-    <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-white/70 dark:bg-slate-900/70 backdrop-blur-md border-b border-slate-200/60 dark:border-slate-800/60 transition-all duration-300">
-        <nav class="container mx-auto px-6 py-4">
-            <div class="flex items-center justify-between">
-                <!-- Logo -->
-                <div class="flex items-center gap-3">
-                    <img id="logoImg" src="images/logo.png" alt="Sense-Tech" class="h-10 w-auto dark:hidden" onerror="this.style.display='none'">
-                    <img id="logoImgDark" src="images/logo2.png" alt="Sense-Tech" class="h-10 w-auto hidden dark:block" onerror="this.style.display='none'">
-                    <span class="text-2xl font-black text-primary">Sense-Tech</span>
+    <!-- Header premium -->
+    <header id="header" class="header-premium fixed top-0 left-0 right-0 z-50 transition-all duration-500">
+        <div class="header-premium-inner">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 md:h-[4.25rem]">
+                <div class="header-logo-wrap flex items-center gap-3">
+                    <div class="header-logo-glow" aria-hidden="true"></div>
+                    <img id="logoImg" src="images/logo.png" alt="Sense-Tech" class="h-9 md:h-10 w-auto dark:hidden relative z-10" onerror="this.style.display='none'">
+                    <img id="logoImgDark" src="images/logo2.png" alt="Sense-Tech" class="h-9 md:h-10 w-auto hidden dark:block relative z-10" onerror="this.style.display='none'">
+                    <span class="header-logo-type text-xl md:text-2xl font-extrabold tracking-tight text-primary">Sense-Tech</span>
                 </div>
                 
-                <!-- Navigation Links -->
-                <div class="hidden md:flex items-center gap-6">
-                    <a href="#" id="homeLink" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-sm">Inicio</a>
-                    <a href="about.html" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-sm">Acerca de</a>
-                    <a href="#" id="loginLink" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Iniciar Sesión</a>
-                    <a href="#" id="registerLink" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Registrarse</a>
-                    <a href="#" id="dashboardLink" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary transition-colors hidden">Panel</a>
-                    <a href="#" id="adminLink" class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary transition-colors hidden">Admin</a>
+                <div class="hidden md:flex items-center gap-1 lg:gap-2">
+                    <a href="#" id="homeLink" class="nav-pill nav-link">Inicio</a>
+                    <a href="about.html" class="nav-pill nav-link">Acerca de</a>
+                    <a href="#" id="loginLink" class="nav-pill nav-link">Iniciar Sesión</a>
+                    <a href="#" id="registerLink" class="nav-pill nav-link">Registrarse</a>
+                    <a href="#" id="dashboardLink" class="nav-pill nav-link hidden">Panel</a>
+                    <a href="#" id="adminLink" class="nav-pill nav-link hidden">Admin</a>
                     
-                    <!-- Profile Menu -->
                     <div class="relative hidden" id="profileMenuContainer">
-                        <button id="profileMenuBtn" class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors">
-                            <img id="profileAvatar" src="https://ui-avatars.com/api/?name=User&background=137fec&color=fff" alt="Avatar" class="w-8 h-8 rounded-full">
+                        <button id="profileMenuBtn" class="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
+                            <img id="profileAvatar" src="https://ui-avatars.com/api/?name=User&background=137fec&color=fff" alt="Avatar" class="w-8 h-8 rounded-full ring-2 ring-primary/30">
                             <span id="profileUsername" class="text-sm font-medium"></span>
                             <span class="material-symbols-outlined text-sm">expand_more</span>
                         </button>
-                        <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white dark:bg-slate-800 rounded-lg shadow-xl border border-gray-200 dark:border-slate-700 py-2 z-50">
-                            <a href="#" id="preferencesLink" class="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors">Preferencias</a>
-                            <a href="#" id="progressLink" class="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors">Mi Progreso</a>
-                            <hr class="my-2 border-gray-200 dark:border-slate-700">
-                            <a href="#" id="logoutLink" class="block px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors">Cerrar Sesión</a>
+                        <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl rounded-xl shadow-2xl border border-slate-200/80 dark:border-slate-700 py-2 z-50">
+                            <a href="#" id="preferencesLink" class="block px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">Preferencias</a>
+                            <a href="#" id="progressLink" class="block px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">Mi Progreso</a>
+                            <hr class="my-2 border-slate-200 dark:border-slate-700">
+                            <a href="#" id="logoutLink" class="block px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">Cerrar Sesión</a>
                         </div>
                     </div>
                     
-                    <!-- Theme Toggle -->
-                    <button id="themeToggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors">
+                    <button id="themeToggle" type="button" class="nav-theme-btn p-2.5 rounded-xl hover:bg-black/5 dark:hover:bg-white/5 transition-colors" aria-label="Cambiar tema">
                         <span class="material-symbols-outlined text-xl">light_mode</span>
                     </button>
                 </div>
                 
-                <!-- Mobile Menu Button -->
-                <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800">
+                <button id="mobileMenuBtn" type="button" class="md:hidden p-2.5 rounded-xl hover:bg-black/5 dark:hover:bg-white/5" aria-expanded="false" aria-label="Abrir menú">
                     <span class="material-symbols-outlined text-2xl">menu</span>
                 </button>
             </div>
             
-            <!-- Mobile Menu -->
-            <div id="mobileMenu" class="hidden md:hidden mt-4 pb-4 border-t border-gray-200 dark:border-slate-700 pt-4">
-                <div class="flex flex-col gap-3">
-                    <a href="#" id="mobileHomeLink" class="nav-link">Inicio</a>
-                    <a href="about.html" class="nav-link">Acerca de</a>
-                    <a href="#" id="mobileLoginLink" class="nav-link">Iniciar Sesión</a>
-                    <a href="#" id="mobileRegisterLink" class="nav-link">Registrarse</a>
-                    <a href="#" id="mobileDashboardLink" class="nav-link hidden">Panel</a>
-                    <a href="#" id="mobileAdminLink" class="nav-link hidden">Admin</a>
-                    <a href="#" id="mobilePreferencesLink" class="nav-link hidden">Preferencias</a>
-                    <a href="#" id="mobileProgressLink" class="nav-link hidden">Mi Progreso</a>
-                    <a href="#" id="mobileLogoutLink" class="nav-link text-red-600 dark:text-red-400 hidden">Cerrar Sesión</a>
+            <div id="mobileMenu" class="hidden md:hidden mt-3 pb-4 border-t border-slate-200/60 dark:border-slate-700/60 pt-4">
+                <div class="flex flex-col gap-1">
+                    <a href="#" id="mobileHomeLink" class="nav-link mobile-nav-link py-3 px-3 rounded-xl">Inicio</a>
+                    <a href="about.html" class="nav-link mobile-nav-link py-3 px-3 rounded-xl">Acerca de</a>
+                    <a href="#" id="mobileLoginLink" class="nav-link mobile-nav-link py-3 px-3 rounded-xl">Iniciar Sesión</a>
+                    <a href="#" id="mobileRegisterLink" class="nav-link mobile-nav-link py-3 px-3 rounded-xl">Registrarse</a>
+                    <a href="#" id="mobileDashboardLink" class="nav-link mobile-nav-link py-3 px-3 rounded-xl hidden">Panel</a>
+                    <a href="#" id="mobileAdminLink" class="nav-link mobile-nav-link py-3 px-3 rounded-xl hidden">Admin</a>
+                    <a href="#" id="mobilePreferencesLink" class="nav-link mobile-nav-link py-3 px-3 rounded-xl hidden">Preferencias</a>
+                    <a href="#" id="mobileProgressLink" class="nav-link mobile-nav-link py-3 px-3 rounded-xl hidden">Mi Progreso</a>
+                    <a href="#" id="mobileLogoutLink" class="nav-link mobile-nav-link py-3 px-3 rounded-xl text-red-600 dark:text-red-400 hidden">Cerrar Sesión</a>
                 </div>
             </div>
         </nav>
+        </div>
     </header>
 
     <!-- Main Content -->
-    <main class="pt-28 min-h-screen focus:outline-none" id="main-content" tabindex="-1">
+    <main class="home-main pt-24 md:pt-28 min-h-screen focus:outline-none relative" id="main-content" tabindex="-1">
         
         <!-- ==================== PÁGINA DE INICIO ==================== -->
-        <div id="homePage" class="page">
-            <!-- Skip Link para Accesibilidad -->
-            <a class="skip-link" href="#main-content">Saltar al Contenido Principal</a>
+        <div id="homePage" class="page home-page-v2">
+            <div class="home-ambient" aria-hidden="true">
+                <canvas id="homeTechCanvas" class="home-tech-canvas"></canvas>
+                <div class="home-tech-vignette"></div>
+                <div class="home-tech-scanlines"></div>
+                <div id="homeMouseGlow" class="home-mouse-glow"></div>
+            </div>
+            <div class="home-page-inner relative z-[1]">
             
-            <!-- Hero Section -->
-            <section class="container mx-auto px-6 py-20 sm:py-28 relative overflow-hidden">
-                <!-- Elementos decorativos animados -->
-                <div class="absolute top-0 left-0 w-72 h-72 bg-primary/10 rounded-full blur-3xl animate-float"></div>
-                <div class="absolute bottom-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-float" style="animation-delay: 1s;"></div>
-                
-                <div class="max-w-4xl mx-auto text-center relative z-10">
-                    <div class="animate-fade-in-up">
-                        <h1 class="text-4xl sm:text-5xl md:text-6xl font-black leading-tight tracking-[-0.033em] mb-6 hero-gradient">
-                            Educación en Ingeniería, Hecha Accesible
-                        </h1>
-                    </div>
-                    <p class="text-base sm:text-lg font-normal leading-normal max-w-3xl mx-auto text-gray-600 dark:text-gray-300 mb-8 animate-fade-in-up fade-in-on-scroll" style="animation-delay: 0.2s;">
-                        Tu puerta de entrada al aprendizaje sin barreras. Proporcionamos recursos completos en ingeniería de sistemas, diseñados para personas con discapacidad visual.
-                    </p>
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up fade-in-on-scroll" style="animation-delay: 0.4s;">
-                        <a href="#" id="heroRegisterBtn" class="px-8 py-4 bg-primary text-white rounded-lg font-bold text-base hover:bg-primary/90 transition-all transform hover:scale-105 shadow-lg glow-on-hover focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 animate-bounce-slow">
-                            <span class="truncate">Registrarse</span>
-                        </a>
-                        <a href="#" id="heroLoginBtn" class="px-8 py-4 bg-transparent border-2 border-primary text-primary rounded-lg font-bold text-base hover:bg-primary/10 transition-all transform hover:scale-105 hover-lift focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
-                            <span class="truncate">Iniciar Sesión</span>
-                        </a>
+            <!-- Hero -->
+            <section class="home-hero relative overflow-hidden">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-14 md:py-20 lg:py-24">
+                    <div class="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+                        <div class="lg:col-span-6 home-hero-copy text-center lg:text-left">
+                            <div class="home-hero-badge fade-in-on-scroll">
+                                <span class="material-symbols-outlined text-base" aria-hidden="true">auto_awesome</span>
+                                IA · Accesibilidad · Educación digital
+                            </div>
+                            <h1 class="home-hero-title mt-5 font-bold tracking-tight">
+                                Educación inteligente para el futuro
+                            </h1>
+                            <p class="home-hero-lead mt-5 text-base sm:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0">
+                                Plataforma SaaS de lectura accesible con voz, alto contraste y biblioteca técnica—pensada para ingeniería de sistemas y para quienes merecen la misma excelencia, con o sin visión plena.
+                            </p>
+                            <div class="home-hero-actions mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                                <a href="#" id="heroRegisterBtn" class="home-btn home-btn-primary">
+                                    <span class="home-btn-shine" aria-hidden="true"></span>
+                                    <span class="relative z-10 flex items-center gap-2">
+                                        Empezar gratis
+                                        <span class="material-symbols-outlined text-lg">rocket_launch</span>
+                                    </span>
+                                </a>
+                                <a href="#" id="heroLoginBtn" class="home-btn home-btn-ghost">Iniciar sesión</a>
+                            </div>
+                            <div class="home-hero-chips mt-10 flex flex-wrap gap-2 justify-center lg:justify-start">
+                                <span class="home-chip"><span class="material-symbols-outlined text-sm">graphic_eq</span> Text-to-speech</span>
+                                <span class="home-chip"><span class="material-symbols-outlined text-sm">visibility</span> Baja visión</span>
+                                <span class="home-chip"><span class="material-symbols-outlined text-sm">encrypted</span> Sesión segura</span>
+                            </div>
+                        </div>
+                        <div class="lg:col-span-6 home-hero-visual" aria-hidden="true">
+                            <div class="home-visual-frame">
+                                <div class="home-orbit home-orbit--1"></div>
+                                <div class="home-orbit home-orbit--2"></div>
+                                <div class="home-orbit home-orbit--3"></div>
+                                <div class="home-electron-ring home-electron-ring--1" aria-hidden="true">
+                                    <span class="home-electron"></span>
+                                </div>
+                                <div class="home-electron-ring home-electron-ring--2" aria-hidden="true">
+                                    <span class="home-electron"></span>
+                                </div>
+                                <div class="home-electron-ring home-electron-ring--3" aria-hidden="true">
+                                    <span class="home-electron"></span>
+                                </div>
+                                <div class="home-orbit-core">
+                                <svg class="st-constellation" viewBox="0 0 120 120" role="img" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+                                    <defs>
+                                        <linearGradient id="stConstGradHome" x1="0" y1="0" x2="1" y2="1">
+                                            <stop offset="0%" stop-color="#38bdf8"/>
+                                            <stop offset="100%" stop-color="#0369a1"/>
+                                        </linearGradient>
+                                    </defs>
+                                    <g class="st-constellation__spin">
+                                        <path
+                                            class="st-constellation__ring"
+                                            pathLength="100"
+                                            fill="none"
+                                            stroke="url(#stConstGradHome)"
+                                            stroke-width="1.35"
+                                            stroke-linejoin="round"
+                                            d="M60 28 L88 44 L88 76 L60 92 L32 76 L32 44 Z"
+                                        />
+                                        <line class="st-constellation__spoke" x1="60" y1="60" x2="60" y2="28" stroke="url(#stConstGradHome)" stroke-width="1.1"/>
+                                        <line class="st-constellation__spoke" x1="60" y1="60" x2="88" y2="44" stroke="url(#stConstGradHome)" stroke-width="1.1"/>
+                                        <line class="st-constellation__spoke" x1="60" y1="60" x2="88" y2="76" stroke="url(#stConstGradHome)" stroke-width="1.1"/>
+                                        <line class="st-constellation__spoke" x1="60" y1="60" x2="60" y2="92" stroke="url(#stConstGradHome)" stroke-width="1.1"/>
+                                        <line class="st-constellation__spoke" x1="60" y1="60" x2="32" y2="76" stroke="url(#stConstGradHome)" stroke-width="1.1"/>
+                                        <line class="st-constellation__spoke" x1="60" y1="60" x2="32" y2="44" stroke="url(#stConstGradHome)" stroke-width="1.1"/>
+                                        <circle class="st-constellation__dot st-constellation__dot--1" cx="60" cy="28" r="3.2" fill="#7dd3fc"/>
+                                        <circle class="st-constellation__dot st-constellation__dot--2" cx="88" cy="44" r="2.85" fill="#7dd3fc"/>
+                                        <circle class="st-constellation__dot st-constellation__dot--3" cx="88" cy="76" r="2.85" fill="#7dd3fc"/>
+                                        <circle class="st-constellation__dot st-constellation__dot--4" cx="60" cy="92" r="3.2" fill="#7dd3fc"/>
+                                        <circle class="st-constellation__dot st-constellation__dot--5" cx="32" cy="76" r="2.85" fill="#7dd3fc"/>
+                                        <circle class="st-constellation__dot st-constellation__dot--6" cx="32" cy="44" r="2.85" fill="#7dd3fc"/>
+                                        <circle class="st-constellation__core" cx="60" cy="60" r="5" fill="#38bdf8" stroke="#0ea5e9" stroke-width="0.75"/>
+                                    </g>
+                                </svg>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Gráfica de Crecimiento -->
-            <section aria-labelledby="user-growth-heading" class="container mx-auto px-6 py-16">
-                <div class="flex flex-col items-center text-center gap-4 mb-10">
-                    <h2 class="text-3xl font-bold leading-tight tracking-[-0.015em]" id="user-growth-heading">Únete a Nuestra Creciente Comunidad</h2>
-                    <p class="text-base font-normal leading-normal max-w-2xl text-gray-600 dark:text-gray-400">
-                        Miles de estudiantes confían en nuestra plataforma para avanzar en sus habilidades y carreras.
-                    </p>
-                </div>
-                <div aria-label="Estadísticas de la plataforma" class="bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-lg max-w-4xl mx-auto" role="figure">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                        <div class="flex flex-col items-center hover-lift fade-in-on-scroll">
-                            <div class="text-4xl font-black text-primary mb-2 stat-number" id="publicTotalUsers">0</div>
-                            <p class="text-sm text-gray-600 dark:text-gray-400">Usuarios Activos</p>
-                        </div>
-                        <div class="flex flex-col items-center hover-lift fade-in-on-scroll" style="animation-delay: 0.1s;">
-                            <div class="text-4xl font-black text-primary mb-2 stat-number" id="publicTotalPdfs">0</div>
-                            <p class="text-sm text-gray-600 dark:text-gray-400">PDFs Disponibles</p>
-                        </div>
-                        <div class="flex flex-col items-center hover-lift fade-in-on-scroll" style="animation-delay: 0.2s;">
-                            <div class="text-4xl font-black text-primary mb-2 stat-number" id="publicTotalViews">0</div>
-                            <p class="text-sm text-gray-600 dark:text-gray-400">Lecturas Realizadas</p>
-                        </div>
+            <!-- Estadísticas -->
+            <section aria-labelledby="user-growth-heading" class="home-section home-stats py-16 md:py-20">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center max-w-2xl mx-auto mb-12 fade-in-on-scroll">
+                        <p class="home-section-eyebrow">Impacto en tiempo real</p>
+                        <h2 class="home-section-title" id="user-growth-heading">Comunidad en crecimiento</h2>
+                        <p class="home-section-sub mt-3">Miles de personas usan Sense-Tech para estudiar ingeniería con herramientas accesibles de verdad.</p>
                     </div>
-                    <!-- Gráfica de barras animada -->
-                    <div class="flex justify-between items-end h-64 gap-2 md:gap-4 mt-8">
-                        <div class="flex flex-col items-center h-full justify-end w-1/4">
-                            <div class="w-full bg-primary/20 dark:bg-primary/30 rounded-t-lg transition-all duration-1000 ease-out" style="height: 20%" id="bar-2021"></div>
-                            <span class="text-sm mt-2 text-gray-600 dark:text-gray-400">2021</span>
-                        </div>
-                        <div class="flex flex-col items-center h-full justify-end w-1/4">
-                            <div class="w-full bg-primary/40 dark:bg-primary/50 rounded-t-lg transition-all duration-1000 ease-out" style="height: 45%" id="bar-2022"></div>
-                            <span class="text-sm mt-2 text-gray-600 dark:text-gray-400">2022</span>
-                        </div>
-                        <div class="flex flex-col items-center h-full justify-end w-1/4">
-                            <div class="w-full bg-primary/60 dark:bg-primary/70 rounded-t-lg transition-all duration-1000 ease-out" style="height: 70%" id="bar-2023"></div>
-                            <span class="text-sm mt-2 text-gray-600 dark:text-gray-400">2023</span>
-                        </div>
-                        <div class="flex flex-col items-center h-full justify-end w-1/4">
-                            <div class="w-full bg-primary rounded-t-lg transition-all duration-1000 ease-out" style="height: 100%" id="bar-2024"></div>
-                            <span class="text-sm mt-2 font-bold text-primary">2024</span>
-                        </div>
+                    <div class="home-stats-grid grid md:grid-cols-3 gap-5 max-w-5xl mx-auto mb-10">
+                        <article class="home-stat-card fade-in-on-scroll">
+                            <div class="home-stat-icon" aria-hidden="true"><span class="material-symbols-outlined">groups</span></div>
+                            <div class="home-stat-value stat-number" id="publicTotalUsers">0</div>
+                            <p class="home-stat-label">Usuarios activos</p>
+                        </article>
+                        <article class="home-stat-card fade-in-on-scroll" style="animation-delay:0.08s">
+                            <div class="home-stat-icon" aria-hidden="true"><span class="material-symbols-outlined">menu_book</span></div>
+                            <div class="home-stat-value stat-number" id="publicTotalPdfs">0</div>
+                            <p class="home-stat-label">PDFs en biblioteca</p>
+                        </article>
+                        <article class="home-stat-card fade-in-on-scroll" style="animation-delay:0.15s">
+                            <div class="home-stat-icon" aria-hidden="true"><span class="material-symbols-outlined">visibility</span></div>
+                            <div class="home-stat-value stat-number" id="publicTotalViews">0</div>
+                            <p class="home-stat-label">Lecturas realizadas</p>
+                        </article>
                     </div>
-                    <p class="sr-only">El gráfico muestra el crecimiento de usuarios a lo largo de los años.</p>
+                    <div aria-label="Estadísticas de la plataforma" class="home-chart-card max-w-4xl mx-auto" role="figure">
+                        <p class="home-chart-label">Crecimiento de actividad</p>
+                        <div class="flex justify-between items-end h-56 sm:h-64 gap-2 sm:gap-4 mt-6 px-2">
+                            <div class="flex flex-col items-center h-full justify-end flex-1">
+                                <div class="home-bar w-full rounded-t-lg" style="height:20%" id="bar-2021"></div>
+                                <span class="text-xs sm:text-sm mt-3 home-chart-year">2021</span>
+                            </div>
+                            <div class="flex flex-col items-center h-full justify-end flex-1">
+                                <div class="home-bar w-full rounded-t-lg" style="height:45%" id="bar-2022"></div>
+                                <span class="text-xs sm:text-sm mt-3 home-chart-year">2022</span>
+                            </div>
+                            <div class="flex flex-col items-center h-full justify-end flex-1">
+                                <div class="home-bar w-full rounded-t-lg" style="height:70%" id="bar-2023"></div>
+                                <span class="text-xs sm:text-sm mt-3 home-chart-year">2023</span>
+                            </div>
+                            <div class="flex flex-col items-center h-full justify-end flex-1">
+                                <div class="home-bar home-bar--max w-full rounded-t-lg" style="height:100%" id="bar-2024"></div>
+                                <span class="text-xs sm:text-sm mt-3 font-semibold text-primary">2024</span>
+                            </div>
+                        </div>
+                        <p class="sr-only">El gráfico muestra el crecimiento de usuarios a lo largo de los años.</p>
+                    </div>
                 </div>
             </section>
 
-            <!-- Nuestros Libros (PDFs) - Carrusel -->
-            <section class="container mx-auto px-6 py-16 fade-in-on-scroll" id="libros">
-                <div class="flex flex-col items-center text-center gap-4 mb-10">
-                    <h2 class="text-3xl font-bold leading-tight tracking-[-0.015em] fade-in-on-scroll">Nuestros Libros</h2>
-                    <p class="text-base font-normal leading-normal max-w-2xl text-gray-600 dark:text-gray-400 fade-in-on-scroll">
-                        Explora nuestra biblioteca de libros de ingeniería de sistemas, totalmente accesibles y disponibles con tecnología text-to-speech.
-                    </p>
-                </div>
-                
-                <!-- Carrusel de Libros -->
-                <div class="carousel-container max-w-6xl mx-auto">
+            <!-- Biblioteca (carrusel) -->
+            <section class="home-section home-books py-16 md:py-24 fade-in-on-scroll" id="libros">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center max-w-2xl mx-auto mb-12">
+                        <p class="home-section-eyebrow">Biblioteca curada</p>
+                        <h2 class="home-section-title">Nuestros libros</h2>
+                        <p class="home-section-sub mt-3">Títulos de ingeniería de sistemas con lectura por voz y legibilidad optimizada—estilo premium, accesibilidad real.</p>
+                    </div>
+                <div class="carousel-container home-carousel max-w-6xl mx-auto">
                     <div class="carousel-wrapper" id="booksCarousel">
-                        <!-- Slide 1: Introducción a la Ingeniería de Sistemas -->
                         <div class="carousel-item active">
                             <div class="flex justify-center items-center px-4">
-                                <div class="flex flex-col gap-3 hover-lift max-w-md w-full">
-                                    <img alt="Una pila de libros de texto de ingeniería de tapa dura con cubiertas azules y blancas sobre una mesa de madera." 
-                                         class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg object-cover shadow-lg" 
-                                         src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&h=500&fit=crop">
-                                    <div>
-                                        <h3 class="text-base font-medium leading-normal">Introducción a la Ingeniería de Sistemas</h3>
-                                        <p class="text-gray-600 dark:text-gray-400 text-sm font-normal leading-normal mt-1">
-                                            Un texto fundamental que cubre los principios y metodologías centrales de la ingeniería de sistemas.
-                                        </p>
+                                <article class="home-book-card max-w-md w-full">
+                                    <div class="home-book-media">
+                                        <img alt="Una pila de libros de texto de ingeniería de tapa dura con cubiertas azules y blancas sobre una mesa de madera." class="home-book-cover" src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&h=500&fit=crop">
+                                        <div class="home-book-overlay" aria-hidden="true"></div>
                                     </div>
-                                </div>
+                                    <div class="home-book-body">
+                                        <h3 class="home-book-title">Introducción a la Ingeniería de Sistemas</h3>
+                                        <p class="home-book-desc">Un texto fundamental que cubre los principios y metodologías centrales de la ingeniería de sistemas.</p>
+                                    </div>
+                                </article>
                             </div>
                         </div>
-                        <!-- Slide 2: Sistemas Avanzados Basados en Modelos -->
                         <div class="carousel-item">
                             <div class="flex justify-center items-center px-4">
-                                <div class="flex flex-col gap-3 hover-lift max-w-md w-full">
-                                    <img alt="Un libro abierto que muestra diagramas complejos de ingeniería de sistemas, con gráficos y anotaciones detalladas." 
-                                         class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg object-cover shadow-lg" 
-                                         src="https://images.unsplash.com/photo-1532012197267-da84d127e765?w=400&h=500&fit=crop">
-                                    <div>
-                                        <h3 class="text-base font-medium leading-normal">Sistemas Avanzados Basados en Modelos</h3>
-                                        <p class="text-gray-600 dark:text-gray-400 text-sm font-normal leading-normal mt-1">
-                                            Sumérgete en el MBSE con ejemplos prácticos y estudios de caso.
-                                        </p>
+                                <article class="home-book-card max-w-md w-full">
+                                    <div class="home-book-media">
+                                        <img alt="Un libro abierto que muestra diagramas complejos de ingeniería de sistemas, con gráficos y anotaciones detalladas." class="home-book-cover" src="https://images.unsplash.com/photo-1532012197267-da84d127e765?w=400&h=500&fit=crop">
+                                        <div class="home-book-overlay" aria-hidden="true"></div>
                                     </div>
-                                </div>
+                                    <div class="home-book-body">
+                                        <h3 class="home-book-title">Sistemas Avanzados Basados en Modelos</h3>
+                                        <p class="home-book-desc">Sumérgete en el MBSE con ejemplos prácticos y estudios de caso.</p>
+                                    </div>
+                                </article>
                             </div>
                         </div>
-                        <!-- Slide 3: Ingeniería de Requisitos -->
                         <div class="carousel-item">
                             <div class="flex justify-center items-center px-4">
-                                <div class="flex flex-col gap-3 hover-lift max-w-md w-full">
-                                    <img alt="Un primer plano de un libro de texto con el título 'Ingeniería de Requisitos' en la portada, mostrando texto claro y de alto contraste." 
-                                         class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg object-cover shadow-lg" 
-                                         src="images/gojo.png">
-                                    <div>
-                                        <h3 class="text-base font-medium leading-normal">Ingeniería de Requisitos</h3>
-                                        <p class="text-gray-600 dark:text-gray-400 text-sm font-normal leading-normal mt-1">
-                                            Aprende el arte y la ciencia de definir, documentar y mantener los requisitos del sistema.
-                                        </p>
+                                <article class="home-book-card max-w-md w-full">
+                                    <div class="home-book-media">
+                                        <img alt="Un primer plano de un libro de texto con el título 'Ingeniería de Requisitos' en la portada, mostrando texto claro y de alto contraste." class="home-book-cover" src="images/gojo.png">
+                                        <div class="home-book-overlay" aria-hidden="true"></div>
                                     </div>
-                                </div>
+                                    <div class="home-book-body">
+                                        <h3 class="home-book-title">Ingeniería de Requisitos</h3>
+                                        <p class="home-book-desc">Aprende el arte y la ciencia de definir, documentar y mantener los requisitos del sistema.</p>
+                                    </div>
+                                </article>
                             </div>
                         </div>
-                        <!-- Slide 4: Arquitectura de Sistemas -->
                         <div class="carousel-item">
                             <div class="flex justify-center items-center px-4">
-                                <div class="flex flex-col gap-3 hover-lift max-w-md w-full">
-                                    <img alt="Un libro abierto sobre arquitectura de sistemas con diagramas y esquemas de diseño de sistemas complejos." 
-                                         class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg object-cover shadow-lg" 
-                                         src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=500&fit=crop">
-                                    <div>
-                                        <h3 class="text-base font-medium leading-normal">Arquitectura de Sistemas</h3>
-                                        <p class="text-gray-600 dark:text-gray-400 text-sm font-normal leading-normal mt-1">
-                                            Domina el diseño y la arquitectura de sistemas complejos con metodologías probadas y mejores prácticas.
-                                        </p>
+                                <article class="home-book-card max-w-md w-full">
+                                    <div class="home-book-media">
+                                        <img alt="Un libro abierto sobre arquitectura de sistemas con diagramas y esquemas de diseño de sistemas complejos." class="home-book-cover" src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=500&fit=crop">
+                                        <div class="home-book-overlay" aria-hidden="true"></div>
                                     </div>
-                                </div>
+                                    <div class="home-book-body">
+                                        <h3 class="home-book-title">Arquitectura de Sistemas</h3>
+                                        <p class="home-book-desc">Domina el diseño y la arquitectura de sistemas complejos con metodologías probadas y mejores prácticas.</p>
+                                    </div>
+                                </article>
                             </div>
                         </div>
-                        <!-- Slide 5: Gestión de Proyectos de Sistemas -->
                         <div class="carousel-item">
                             <div class="flex justify-center items-center px-4">
-                                <div class="flex flex-col gap-3 hover-lift max-w-md w-full">
-                                    <img alt="Un libro sobre gestión de proyectos de ingeniería de sistemas con herramientas y metodologías de planificación." 
-                                         class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg object-cover shadow-lg" 
-                                         src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&h=500&fit=crop">
-                                    <div>
-                                        <h3 class="text-base font-medium leading-normal">Gestión de Proyectos de Sistemas</h3>
-                                        <p class="text-gray-600 dark:text-gray-400 text-sm font-normal leading-normal mt-1">
-                                            Guía completa para la planificación, ejecución y control de proyectos de ingeniería de sistemas.
-                                        </p>
+                                <article class="home-book-card max-w-md w-full">
+                                    <div class="home-book-media">
+                                        <img alt="Un libro sobre gestión de proyectos de ingeniería de sistemas con herramientas y metodologías de planificación." class="home-book-cover" src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&h=500&fit=crop">
+                                        <div class="home-book-overlay" aria-hidden="true"></div>
                                     </div>
-                                </div>
+                                    <div class="home-book-body">
+                                        <h3 class="home-book-title">Gestión de Proyectos de Sistemas</h3>
+                                        <p class="home-book-desc">Guía completa para la planificación, ejecución y control de proyectos de ingeniería de sistemas.</p>
+                                    </div>
+                                </article>
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- Botones de navegación -->
-                    <button class="carousel-btn prev" id="booksCarouselPrev" aria-label="Libro anterior">
+                    <button class="carousel-btn prev home-carousel-btn" id="booksCarouselPrev" aria-label="Libro anterior">
                         <span class="material-symbols-outlined">chevron_left</span>
                     </button>
-                    <button class="carousel-btn next" id="booksCarouselNext" aria-label="Libro siguiente">
+                    <button class="carousel-btn next home-carousel-btn" id="booksCarouselNext" aria-label="Libro siguiente">
                         <span class="material-symbols-outlined">chevron_right</span>
                     </button>
-                    
-                    <!-- Indicadores -->
-                    <div class="carousel-indicators" id="booksCarouselIndicators"></div>
+                    <div class="carousel-indicators home-carousel-dots" id="booksCarouselIndicators"></div>
+                </div>
                 </div>
             </section>
 
             <!-- Diapositivas -->
-            <section class="container mx-auto px-6 py-16 fade-in-on-scroll parallax" id="diapositivas">
-                <div class="grid md:grid-cols-2 gap-10 items-center">
-                    <div class="flex flex-col gap-4 text-center md:text-left items-center md:items-start fade-in-on-scroll">
-                        <h2 class="text-3xl font-bold leading-tight tracking-[-0.015em]">Nuestras Diapositivas</h2>
-                        <p class="text-base font-normal leading-normal max-w-xl text-gray-600 dark:text-gray-400">
-                            Nuestras presentaciones de diapositivas accesibles están diseñadas pensando en los lectores de pantalla. Cada presentación incluye descripciones de texto detalladas para todos los diagramas, un orden de lectura lógico y visuales de alto contraste para garantizar una experiencia de aprendizaje integral para todos.
+            <section class="home-section home-slides py-16 md:py-24 fade-in-on-scroll parallax" id="diapositivas">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+                    <div class="home-slide-copy text-center lg:text-left">
+                        <p class="home-section-eyebrow justify-center lg:justify-start">Presentaciones accesibles</p>
+                        <h2 class="home-section-title mt-2">Nuestras diapositivas</h2>
+                        <p class="home-section-sub mt-4 max-w-xl mx-auto lg:mx-0">
+                            Diseñadas para lectores de pantalla: descripciones de diagramas, orden de lectura lógico y alto contraste—el mismo estándar que esperas de un producto SaaS serio.
                         </p>
+                        <ul class="home-slide-features mt-8 space-y-3 text-left max-w-md mx-auto lg:mx-0">
+                            <li class="home-slide-li"><span class="material-symbols-outlined">check_circle</span> Texto alternativo estructurado</li>
+                            <li class="home-slide-li"><span class="material-symbols-outlined">check_circle</span> Navegación por teclado</li>
+                            <li class="home-slide-li"><span class="material-symbols-outlined">check_circle</span> Visuales claros y ampliables</li>
+                        </ul>
                     </div>
-                    <div class="fade-in-on-scroll hover-lift">
-                        <img alt="Una pantalla de proyector mostrando una diapositiva de ingeniería con diagramas claros y texto grande, diseñada para una legibilidad óptima." 
-                             class="w-full max-w-md mx-auto rounded-lg object-cover shadow-xl glow-on-hover" 
-                             src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&h=400&fit=crop">
+                    <div class="home-slide-visual-wrap">
+                        <div class="home-slide-visual">
+                            <div class="home-slide-frame">
+                                <img alt="Una pantalla de proyector mostrando una diapositiva de ingeniería con diagramas claros y texto grande, diseñada para una legibilidad óptima." class="home-slide-img" src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&h=400&fit=crop">
+                                <div class="home-slide-scan" aria-hidden="true"></div>
+                            </div>
+                            <div class="home-slide-glow" aria-hidden="true"></div>
+                        </div>
                     </div>
+                </div>
                 </div>
             </section>
 
-            <!-- Testimonios - Carrusel -->
-            <section class="container mx-auto px-6 py-16 fade-in-on-scroll" id="testimonios">
-                <div class="flex flex-col items-center text-center gap-4 mb-10">
-                    <h2 class="text-3xl font-bold leading-tight tracking-[-0.015em] fade-in-on-scroll">Lo Que Dicen Nuestros Usuarios</h2>
-                    <p class="text-base font-normal leading-normal max-w-2xl text-gray-600 dark:text-gray-400 fade-in-on-scroll">
-                        Escucha a los ingenieros que han transformado su experiencia de aprendizaje con nuestra plataforma.
-                    </p>
+            <!-- Testimonios -->
+            <section class="home-section home-testimonials py-16 md:py-24 fade-in-on-scroll" id="testimonios">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <p class="home-section-eyebrow">Confianza real</p>
+                    <h2 class="home-section-title">Lo que dicen nuestros usuarios</h2>
+                    <p class="home-section-sub mt-3">Equipos de ingeniería y estudiantes que viven la accesibilidad como ventaja, no como un extra.</p>
                 </div>
-                
-                <!-- Carrusel de Testimonios -->
-                <div class="carousel-container max-w-5xl mx-auto">
-                    <div class="carousel-wrapper" id="testimonialsCarousel">
-                        <!-- Los testimonios se cargarán dinámicamente -->
-                    </div>
-                    
-                    <!-- Botones de navegación -->
-                    <button class="carousel-btn prev" id="testimonialsCarouselPrev" aria-label="Testimonio anterior">
+                <div class="carousel-container home-carousel max-w-5xl mx-auto">
+                    <div class="carousel-wrapper" id="testimonialsCarousel"></div>
+                    <button class="carousel-btn prev home-carousel-btn" id="testimonialsCarouselPrev" aria-label="Testimonio anterior">
                         <span class="material-symbols-outlined">chevron_left</span>
                     </button>
-                    <button class="carousel-btn next" id="testimonialsCarouselNext" aria-label="Testimonio siguiente">
+                    <button class="carousel-btn next home-carousel-btn" id="testimonialsCarouselNext" aria-label="Testimonio siguiente">
                         <span class="material-symbols-outlined">chevron_right</span>
                     </button>
-                    
-                    <!-- Indicadores -->
-                    <div class="carousel-indicators" id="testimonialsCarouselIndicators"></div>
+                    <div class="carousel-indicators home-carousel-dots" id="testimonialsCarouselIndicators"></div>
                 </div>
-                
-                <!-- Formulario de Testimonio (solo si autenticado) -->
                 <div id="testimonialFormContainer" class="max-w-2xl mx-auto mt-12 hidden">
-                    <div class="bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 p-6">
-                        <h3 class="text-xl font-bold mb-4">Agregar Testimonio</h3>
+                    <div class="home-testimonial-form glass-panel-home p-6 sm:p-8">
+                        <h3 class="text-xl font-bold mb-4">Agregar testimonio</h3>
                         <form id="testimonialForm">
-                            <textarea id="testimonialComment" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-slate-800 mb-4 focus:outline-none focus:ring-2 focus:ring-primary" rows="4" placeholder="Escribe tu comentario..."></textarea>
+                            <textarea id="testimonialComment" class="home-input w-full px-4 py-3 rounded-xl mb-4" rows="4" placeholder="Escribe tu comentario..."></textarea>
                             <div class="mb-4">
-                                <label class="block mb-2 font-medium">Calificación:</label>
-                                <select id="testimonialRating" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-primary">
+                                <label class="block mb-2 font-medium text-sm">Calificación</label>
+                                <select id="testimonialRating" class="home-input w-full px-4 py-3 rounded-xl">
                                     <option value="5">5 estrellas</option>
                                     <option value="4">4 estrellas</option>
                                     <option value="3">3 estrellas</option>
@@ -363,258 +417,266 @@
                                     <option value="1">1 estrella</option>
                                 </select>
                             </div>
-                            <button type="submit" class="w-full px-6 py-3 bg-primary text-white rounded-lg font-bold hover:bg-primary/90 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
-                                Enviar Testimonio
-                            </button>
+                            <button type="submit" class="home-btn home-btn-primary w-full justify-center">Enviar testimonio</button>
                         </form>
+                    </div>
+                </div>
+                </div>
+            </section>
+
+            <!-- Cómo funciona -->
+            <section class="home-section home-how py-16 md:py-24 fade-in-on-scroll">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center max-w-2xl mx-auto mb-14">
+                        <p class="home-section-eyebrow">Tu flujo en 3 pasos</p>
+                        <h2 class="home-section-title">Cómo funciona</h2>
+                        <p class="home-section-sub mt-3">Onboarding ligero, biblioteca potente, lectura accesible desde el primer minuto.</p>
+                    </div>
+                    <div class="home-timeline max-w-4xl mx-auto">
+                        <div class="home-timeline-step fade-in-on-scroll">
+                            <div class="home-timeline-marker"><span>1</span></div>
+                            <div class="home-timeline-body glass-panel-home">
+                                <div class="home-step-icon"><span class="material-symbols-outlined">person_add</span></div>
+                                <h3 class="home-step-title">Crea tu cuenta</h3>
+                                <p class="home-step-text">Registro rápido y sesión segura para sincronizar preferencias y progreso.</p>
+                            </div>
+                        </div>
+                        <div class="home-timeline-step fade-in-on-scroll" style="animation-delay:0.08s">
+                            <div class="home-timeline-marker"><span>2</span></div>
+                            <div class="home-timeline-body glass-panel-home">
+                                <div class="home-step-icon"><span class="material-symbols-outlined">hub</span></div>
+                                <h3 class="home-step-title">Explora recursos</h3>
+                                <p class="home-step-text">PDFs, diapositivas y documentación técnica seleccionada para ingeniería de sistemas.</p>
+                            </div>
+                        </div>
+                        <div class="home-timeline-step fade-in-on-scroll" style="animation-delay:0.15s">
+                            <div class="home-timeline-marker"><span>3</span></div>
+                            <div class="home-timeline-body glass-panel-home">
+                                <div class="home-step-icon"><span class="material-symbols-outlined">record_voice_over</span></div>
+                                <h3 class="home-step-title">Lee con voz IA</h3>
+                                <p class="home-step-text">Text-to-speech en español, contraste y controles adaptados a tu ritmo.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Cómo Funciona -->
-            <section class="container mx-auto px-6 py-16 fade-in-on-scroll">
-                <div class="flex flex-col items-center text-center gap-4 mb-12">
-                    <h2 class="text-3xl font-bold leading-tight tracking-[-0.015em] fade-in-on-scroll">Cómo Funciona</h2>
-                    <p class="text-base font-normal leading-normal max-w-2xl text-gray-600 dark:text-gray-400 fade-in-on-scroll">
-                        Comienza tu ruta de aprendizaje en tres sencillos pasos.
+            <!-- CTA final -->
+            <section class="home-section home-final-cta py-20 md:py-28 fade-in-on-scroll">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="home-cta-panel relative overflow-hidden rounded-3xl">
+                        <div class="home-cta-grid" aria-hidden="true"></div>
+                        <div class="home-cta-inner text-center px-6 py-14 md:py-16 relative z-10">
+                            <h2 class="home-cta-title">Empieza hoy. Sin fricción.</h2>
+                            <p class="home-cta-lead mt-4 max-w-2xl mx-auto">Únete a una comunidad que cree que la educación en ingeniería debe ser inclusiva, moderna y memorable.</p>
+                            <a href="#" id="finalRegisterBtn" class="home-btn home-btn-primary mt-10 inline-flex">
+                                <span class="home-btn-shine" aria-hidden="true"></span>
+                                <span class="relative z-10">Regístrate gratis</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            </div>
+        </div>
+
+        <!-- ==================== PÁGINA DE LOGIN (premium / futurista) ==================== -->
+        <div id="loginPage" class="page hidden login-page-container login-page-v2">
+            <div class="login-ambient" aria-hidden="true">
+                <canvas id="loginTechCanvas" class="login-tech-canvas"></canvas>
+                <div class="login-tech-vignette"></div>
+                <div class="login-tech-scanlines"></div>
+                <div id="loginMouseGlow" class="login-mouse-glow"></div>
+            </div>
+
+            <div class="login-content-wrap container mx-auto px-4 sm:px-6 py-14 sm:py-20 md:py-24 relative z-10">
+                <div class="max-w-[440px] mx-auto">
+                    <header class="login-hero-head">
+                        <div class="login-brand-cluster">
+                            <div class="login-brand-icon" aria-hidden="true">
+                                <span class="material-symbols-outlined">shield_lock</span>
+                            </div>
+                            <div class="login-brand-meta">
+                                <span class="login-eyebrow">Sense-Tech · acceso seguro</span>
+                                <h1 class="login-title">Bienvenido de nuevo</h1>
+                            </div>
+                        </div>
+                        <p class="login-sub">
+                            Plataforma con lectura accesible, voz y controles adaptados. Inicia sesión para entrar al panel y a la biblioteca.
+                        </p>
+                    </header>
+
+                    <div class="login-glass-panel">
+                        <div class="login-glass-inner">
+                            <form id="loginForm" class="login-form-stack" novalidate>
+                                <div class="login-field">
+                                    <div class="login-input-shell">
+                                        <span class="login-field-icon material-symbols-outlined" aria-hidden="true">person</span>
+                                        <input
+                                            type="text"
+                                            id="loginUsername"
+                                            class="login-field-input"
+                                            placeholder=" "
+                                            autocomplete="username"
+                                            required
+                                        >
+                                        <label class="login-float-label" for="loginUsername">Usuario</label>
+                                        <span class="login-input-border-glow" aria-hidden="true"></span>
+                                    </div>
+                                </div>
+
+                                <div class="login-field">
+                                    <div class="login-input-shell login-input-shell--password">
+                                        <span class="login-field-icon material-symbols-outlined" aria-hidden="true">key</span>
+                                        <input
+                                            type="password"
+                                            id="loginPassword"
+                                            class="login-field-input"
+                                            placeholder=" "
+                                            autocomplete="current-password"
+                                            required
+                                        >
+                                        <label class="login-float-label" for="loginPassword">Contraseña</label>
+                                        <button
+                                            type="button"
+                                            class="login-pw-toggle"
+                                            onclick="togglePasswordVisibility('loginPassword', this)"
+                                            aria-label="Mostrar u ocultar contraseña"
+                                        >
+                                            <span class="material-symbols-outlined" aria-hidden="true">visibility</span>
+                                        </button>
+                                        <span class="login-input-border-glow" aria-hidden="true"></span>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="login-cta-btn">
+                                    <span class="login-cta-shine" aria-hidden="true"></span>
+                                    <span class="login-cta-content">
+                                        <span>Iniciar sesión</span>
+                                        <span class="material-symbols-outlined login-cta-arrow">arrow_forward</span>
+                                    </span>
+                                </button>
+                            </form>
+
+                            <div id="loginError" class="login-auth-alert auth-message auth-error hidden" role="alert"></div>
+
+                            <div class="login-form-footer">
+                                <div class="login-divider">
+                                    <span>¿Nuevo en Sense-Tech?</span>
+                                </div>
+                                <a href="#" id="loginToRegisterLink" class="login-secondary-link">
+                                    <span class="material-symbols-outlined">person_add</span>
+                                    Crear una cuenta
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="login-trust-line">
+                        <span class="material-symbols-outlined login-trust-icon" aria-hidden="true">verified_user</span>
+                        Conexión cifrada · tus datos protegidos
                     </p>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center max-w-4xl mx-auto">
-                    <div class="flex flex-col items-center gap-4 fade-in-on-scroll hover-lift">
-                        <div class="flex items-center justify-center w-16 h-16 rounded-full bg-primary text-white font-bold text-xl shadow-lg glow-on-hover animate-bounce-slow">1</div>
-                        <h3 class="text-lg font-bold">Crea una Cuenta</h3>
-                        <p class="text-gray-600 dark:text-gray-400 text-sm">
-                            Regístrate gratis para tener acceso a nuestra plataforma y materiales introductorios.
-                        </p>
-                    </div>
-                    <div class="flex flex-col items-center gap-4 fade-in-on-scroll hover-lift" style="animation-delay: 0.1s;">
-                        <div class="flex items-center justify-center w-16 h-16 rounded-full bg-primary text-white font-bold text-xl shadow-lg glow-on-hover animate-bounce-slow" style="animation-delay: 0.2s;">2</div>
-                        <h3 class="text-lg font-bold">Explora los Recursos</h3>
-                        <p class="text-gray-600 dark:text-gray-400 text-sm">
-                            Navega por nuestra extensa biblioteca de libros, diapositivas y documentos técnicos.
-                        </p>
-                    </div>
-                    <div class="flex flex-col items-center gap-4 fade-in-on-scroll hover-lift" style="animation-delay: 0.2s;">
-                        <div class="flex items-center justify-center w-16 h-16 rounded-full bg-primary text-white font-bold text-xl shadow-lg glow-on-hover animate-bounce-slow" style="animation-delay: 0.4s;">3</div>
-                        <h3 class="text-lg font-bold">Aprende con Text-to-Speech</h3>
-                        <p class="text-gray-600 dark:text-gray-400 text-sm">
-                            Escucha los documentos con nuestra tecnología de síntesis de voz en español.
-                        </p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- CTA Final -->
-            <section class="container mx-auto px-6 py-20 my-16 fade-in-on-scroll">
-                <div class="flex flex-col items-center text-center gap-6 px-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl py-12 relative overflow-hidden hover-lift">
-                    <!-- Efecto shimmer -->
-                    <div class="absolute inset-0 shimmer opacity-30"></div>
-                    <div class="relative z-10">
-                        <h2 class="text-3xl font-bold leading-tight tracking-[-0.015em] mb-4">Comienza Tu Viaje de Aprendizaje Hoy</h2>
-                        <p class="text-base font-normal leading-normal max-w-2xl text-gray-600 dark:text-gray-400 mb-6">
-                            Únete a una comunidad dedicada a hacer que la educación en ingeniería sea accesible para todos.
-                        </p>
-                        <a href="#" id="finalRegisterBtn" class="px-8 py-4 bg-primary text-white rounded-lg font-bold text-base hover:bg-primary/90 transition-all transform hover:scale-110 glow-on-hover shadow-lg animate-pulse-slow focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-blue-50">
-                            <span class="truncate">Regístrate Gratis</span>
-                        </a>
-                    </div>
-                </div>
-            </section>
-        </div>
-
-        <!-- ==================== PÁGINA DE LOGIN ==================== -->
-        <div id="loginPage" class="page hidden login-page-container">
-            <!-- Fondo con gradiente animado -->
-            <div class="login-background">
-                <div class="login-bg-gradient"></div>
-                <div class="login-particles">
-                    <div class="particle"></div>
-                    <div class="particle"></div>
-                    <div class="particle"></div>
-                    <div class="particle"></div>
-                    <div class="particle"></div>
-                    <div class="particle"></div>
-                </div>
-            </div>
-            
-            <div class="container mx-auto px-6 py-20 relative z-10">
-                <div class="max-w-md mx-auto">
-                    <!-- Logo/Título decorativo -->
-                    <div class="text-center mb-8 login-header">
-                        <div class="login-icon-container">
-                            <span class="material-symbols-outlined login-icon">lock</span>
-                        </div>
-                        <h1 class="text-4xl font-black mb-2 bg-gradient-to-r from-primary via-blue-500 to-cyan-400 bg-clip-text text-transparent">
-                            Bienvenido de nuevo
-                        </h1>
-                        <p class="text-gray-600 dark:text-gray-400">Inicia sesión para continuar</p>
-                    </div>
-                    
-                    <!-- Formulario -->
-                    <div class="login-form-card">
-                        <form id="loginForm" class="space-y-6">
-                            <div class="form-group">
-                                <label class="form-label">
-                                    <span class="material-symbols-outlined form-label-icon">person</span>
-                                    Usuario
-                                </label>
-                                <div class="input-wrapper">
-                                    <span class="input-icon">
-                                        <span class="material-symbols-outlined">account_circle</span>
-                                    </span>
-                                    <input 
-                                        type="text" 
-                                        id="loginUsername" 
-                                        class="form-input" 
-                                        placeholder="Ingresa tu usuario"
-                                        required
-                                    >
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="form-label">
-                                    <span class="material-symbols-outlined form-label-icon">lock</span>
-                                    Contraseña
-                                </label>
-                                <div class="input-wrapper">
-                                    <span class="input-icon">
-                                        <span class="material-symbols-outlined">lock</span>
-                                    </span>
-                                    <input 
-                                        type="password" 
-                                        id="loginPassword" 
-                                        class="form-input password-input" 
-                                        placeholder="Ingresa tu contraseña"
-                                        required
-                                    >
-                                    <button 
-                                        type="button" 
-                                        class="password-toggle"
-                                        onclick="togglePasswordVisibility('loginPassword', this)"
-                                    >
-                                        <span class="material-symbols-outlined">visibility</span>
-                                    </button>
-                                </div>
-                            </div>
-                            
-                            <button type="submit" class="login-submit-btn">
-                                <span>Iniciar Sesión</span>
-                                <span class="material-symbols-outlined">arrow_forward</span>
-                            </button>
-                        </form>
-                        
-                        <!-- Mensajes de error/éxito -->
-                        <div id="loginError" class="auth-message auth-error hidden"></div>
-                        
-                        <!-- Enlace a registro -->
-                        <div class="auth-divider">
-                            <span>¿No tienes una cuenta?</span>
-                        </div>
-                        <a href="#" id="loginToRegisterLink" class="auth-link-btn">
-                            <span class="material-symbols-outlined">person_add</span>
-                            Crear una cuenta
-                        </a>
-                    </div>
-                </div>
             </div>
         </div>
 
-        <!-- ==================== PÁGINA DE REGISTRO ==================== -->
-        <div id="registerPage" class="page hidden register-page-container">
-            <!-- Fondo con gradiente animado -->
-            <div class="register-background">
-                <div class="register-bg-gradient"></div>
-                <div class="register-particles">
-                    <div class="particle"></div>
-                    <div class="particle"></div>
-                    <div class="particle"></div>
-                    <div class="particle"></div>
-                    <div class="particle"></div>
-                    <div class="particle"></div>
-                </div>
+        <!-- ==================== PÁGINA DE REGISTRO (premium / morado neón) ==================== -->
+        <div id="registerPage" class="page hidden register-page-container register-page-v2">
+            <div class="register-ambient" aria-hidden="true">
+                <canvas id="registerTechCanvas" class="register-tech-canvas"></canvas>
+                <div class="register-tech-vignette"></div>
+                <div class="register-tech-scanlines"></div>
+                <div id="registerMouseGlow" class="register-mouse-glow"></div>
             </div>
-            
-            <div class="container mx-auto px-6 py-20 relative z-10">
-                <div class="max-w-md mx-auto">
-                    <!-- Logo/Título decorativo -->
-                    <div class="text-center mb-8 register-header">
-                        <div class="register-icon-container">
-                            <span class="material-symbols-outlined register-icon">person_add</span>
-                        </div>
-                        <h1 class="text-4xl font-black mb-2 bg-gradient-to-r from-primary via-purple-500 to-pink-400 bg-clip-text text-transparent">
-                            Únete a nosotros
-                        </h1>
-                        <p class="text-gray-600 dark:text-gray-400">Crea tu cuenta y comienza a explorar</p>
-                    </div>
-                    
-                    <!-- Formulario -->
-                    <div class="register-form-card">
-                        <form id="registerForm" class="space-y-6">
-                            <div class="form-group">
-                                <label class="form-label">
-                                    <span class="material-symbols-outlined form-label-icon">person</span>
-                                    Usuario
-                                </label>
-                                <div class="input-wrapper">
-                                    <span class="input-icon">
-                                        <span class="material-symbols-outlined">account_circle</span>
-                                    </span>
-                                    <input 
-                                        type="text" 
-                                        id="registerUsername" 
-                                        class="form-input" 
-                                        placeholder="Elige un nombre de usuario"
-                                        required
-                                    >
-                                </div>
+
+            <div class="register-content-wrap container mx-auto px-4 sm:px-6 py-14 sm:py-20 md:py-24 relative z-10">
+                <div class="max-w-[440px] mx-auto">
+                    <header class="register-hero-head">
+                        <div class="register-brand-cluster">
+                            <div class="register-brand-icon" aria-hidden="true">
+                                <span class="material-symbols-outlined">person_add</span>
                             </div>
-                            
-                            <div class="form-group">
-                                <label class="form-label">
-                                    <span class="material-symbols-outlined form-label-icon">lock</span>
-                                    Contraseña
-                                </label>
-                                <div class="input-wrapper">
-                                    <span class="input-icon">
-                                        <span class="material-symbols-outlined">lock</span>
-                                    </span>
-                                    <input 
-                                        type="password" 
-                                        id="registerPassword" 
-                                        class="form-input password-input" 
-                                        placeholder="Crea una contraseña segura"
-                                        required
-                                    >
-                                    <button 
-                                        type="button" 
-                                        class="password-toggle"
-                                        onclick="togglePasswordVisibility('registerPassword', this)"
-                                    >
-                                        <span class="material-symbols-outlined">visibility</span>
-                                    </button>
-                                </div>
+                            <div class="register-brand-meta">
+                                <span class="register-eyebrow">Sense-Tech · nueva cuenta</span>
+                                <h1 class="register-title">Crea tu cuenta</h1>
                             </div>
-                            
-                            <button type="submit" class="register-submit-btn">
-                                <span>Crear Cuenta</span>
-                                <span class="material-symbols-outlined">arrow_forward</span>
-                            </button>
-                        </form>
-                        
-                        <!-- Mensajes de error/éxito -->
-                        <div id="registerError" class="auth-message auth-error hidden"></div>
-                        <div id="registerSuccess" class="auth-message auth-success hidden"></div>
-                        
-                        <!-- Enlace a login -->
-                        <div class="auth-divider">
-                            <span>¿Ya tienes una cuenta?</span>
                         </div>
-                        <a href="#" id="registerToLoginLink" class="auth-link-btn">
-                            <span class="material-symbols-outlined">login</span>
-                            Iniciar Sesión
-                        </a>
+                        <p class="register-sub">
+                            Accede a la biblioteca accesible, sincroniza tu progreso y personaliza voz, contraste y lectura en segundos.
+                        </p>
+                    </header>
+
+                    <div class="register-glass-panel">
+                        <div class="register-glass-inner">
+                            <form id="registerForm" class="register-form-stack" novalidate>
+                                <div class="register-field">
+                                    <div class="register-input-shell">
+                                        <span class="register-field-icon material-symbols-outlined" aria-hidden="true">person</span>
+                                        <input
+                                            type="text"
+                                            id="registerUsername"
+                                            class="register-field-input"
+                                            placeholder=" "
+                                            autocomplete="username"
+                                            required
+                                        >
+                                        <label class="register-float-label" for="registerUsername">Usuario</label>
+                                        <span class="register-input-border-glow" aria-hidden="true"></span>
+                                    </div>
+                                </div>
+
+                                <div class="register-field">
+                                    <div class="register-input-shell register-input-shell--password">
+                                        <span class="register-field-icon material-symbols-outlined" aria-hidden="true">key</span>
+                                        <input
+                                            type="password"
+                                            id="registerPassword"
+                                            class="register-field-input"
+                                            placeholder=" "
+                                            autocomplete="new-password"
+                                            required
+                                        >
+                                        <label class="register-float-label" for="registerPassword">Contraseña</label>
+                                        <button
+                                            type="button"
+                                            class="register-pw-toggle"
+                                            onclick="togglePasswordVisibility('registerPassword', this)"
+                                            aria-label="Mostrar u ocultar contraseña"
+                                        >
+                                            <span class="material-symbols-outlined" aria-hidden="true">visibility</span>
+                                        </button>
+                                        <span class="register-input-border-glow" aria-hidden="true"></span>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="register-cta-btn">
+                                    <span class="register-cta-shine" aria-hidden="true"></span>
+                                    <span class="register-cta-content">
+                                        <span>Crear cuenta</span>
+                                        <span class="material-symbols-outlined register-cta-arrow">arrow_forward</span>
+                                    </span>
+                                </button>
+                            </form>
+
+                            <div id="registerError" class="register-auth-alert auth-message auth-error hidden" role="alert"></div>
+                            <div id="registerSuccess" class="register-auth-alert auth-message auth-success hidden" role="status"></div>
+
+                            <div class="register-form-footer">
+                                <div class="register-divider">
+                                    <span>¿Ya tienes cuenta?</span>
+                                </div>
+                                <a href="#" id="registerToLoginLink" class="register-secondary-link">
+                                    <span class="material-symbols-outlined">login</span>
+                                    Iniciar sesión
+                                </a>
+                            </div>
+                        </div>
                     </div>
+
+                    <p class="register-trust-line">
+                        <span class="material-symbols-outlined register-trust-icon" aria-hidden="true">encrypted</span>
+                        Registro seguro · listo para lectura accesible
+                    </p>
                 </div>
             </div>
         </div>
@@ -1068,7 +1130,15 @@
 
                 <!-- Users Table -->
                 <div class="admin-section bg-white dark:bg-slate-800 rounded-xl p-8 shadow-lg mb-8 overflow-x-auto">
-                    <h2 class="text-2xl font-bold mb-6">Usuarios Registrados</h2>
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-6">
+                        <div>
+                            <h2 class="text-2xl font-bold">Usuarios Registrados</h2>
+                            <p id="usersTableSummary" class="text-sm text-gray-600 dark:text-gray-400 mt-1">Mostrando los últimos usuarios registrados</p>
+                        </div>
+                        <button id="toggleUsersTableBtn" type="button" onclick="showAdminDetailSection('users')" class="hidden px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
+                            Ver más
+                        </button>
+                    </div>
                     <table class="w-full">
                         <thead>
                             <tr class="border-b border-gray-300 dark:border-gray-700">
@@ -1091,7 +1161,15 @@
 
                 <!-- PDFs Table -->
                 <div class="admin-section bg-white dark:bg-slate-800 rounded-xl p-8 shadow-lg mb-8 overflow-x-auto">
-                    <h2 class="text-2xl font-bold mb-6">PDFs Subidos</h2>
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-6">
+                        <div>
+                            <h2 class="text-2xl font-bold">PDFs Subidos</h2>
+                            <p id="pdfsTableSummary" class="text-sm text-gray-600 dark:text-gray-400 mt-1">Mostrando los últimos PDFs subidos</p>
+                        </div>
+                        <button id="togglePdfsTableBtn" type="button" onclick="showAdminDetailSection('pdfs')" class="hidden px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
+                            Ver más
+                        </button>
+                    </div>
                     <table class="w-full">
                         <thead>
                             <tr class="border-b border-gray-300 dark:border-gray-700">
@@ -1179,8 +1257,16 @@
                 </div>
 
                 <!-- Popular PDFs -->
-                <div class="bg-white dark:bg-slate-800 rounded-xl p-8 shadow-lg">
-                    <h2 class="text-2xl font-bold mb-6">PDFs Más Populares</h2>
+                <div class="bg-white dark:bg-slate-800 rounded-xl p-8 shadow-lg overflow-x-auto">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-6">
+                        <div>
+                            <h2 class="text-2xl font-bold">PDFs Más Populares</h2>
+                            <p id="popularPdfsTableSummary" class="text-sm text-gray-600 dark:text-gray-400 mt-1">Mostrando los PDFs más populares</p>
+                        </div>
+                        <button id="togglePopularPdfsTableBtn" type="button" onclick="showAdminDetailSection('popularPdfs')" class="hidden px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
+                            Ver más
+                        </button>
+                    </div>
                     <table class="w-full">
                         <thead>
                             <tr class="border-b border-gray-300 dark:border-gray-700">
@@ -1194,6 +1280,26 @@
                             <!-- Filas se cargarán dinámicamente -->
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== DETALLE ADMIN ==================== -->
+        <div id="adminDetailPage" class="page hidden">
+            <div class="container mx-auto px-6 py-8">
+                <button type="button" onclick="returnToAdminPanel()" class="mb-6 px-4 py-2 bg-gray-200 dark:bg-slate-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-300 dark:hover:bg-slate-600 transition-colors flex items-center gap-2">
+                    <span class="material-symbols-outlined text-lg">arrow_back</span>
+                    Volver al panel admin
+                </button>
+
+                <div class="bg-white dark:bg-slate-800 rounded-xl p-8 shadow-lg overflow-x-auto">
+                    <div class="mb-6">
+                        <h1 id="adminDetailTitle" class="text-3xl font-black">Detalle</h1>
+                        <p id="adminDetailSummary" class="text-sm text-gray-600 dark:text-gray-400 mt-1"></p>
+                    </div>
+                    <div id="adminDetailTableContainer">
+                        <!-- Tabla completa se cargará dinámicamente -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -1849,7 +1955,10 @@
     </footer>
 
     <!-- JavaScript -->
-    <script src="app.js"></script>
+    <script src="home-ambient.js" defer></script>
+    <script src="login-ambient.js" defer></script>
+    <script src="register-ambient.js" defer></script>
+    <script src="app.js" defer></script>
 </body>
 </html>
 

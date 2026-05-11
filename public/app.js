@@ -26,6 +26,11 @@ let usageTrackingInterval = null;
 let progressUpdateInterval = null;
 let fullscreenControlsTimeout = null;
 let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+const ADMIN_PREVIEW_LIMIT = 5;
+let adminTotals = {
+    totalUsers: 0,
+    totalPdfs: 0
+};
 
 // Referencias DOM
 let pages = {};
@@ -56,6 +61,7 @@ function refreshPageReferences() {
         register: document.getElementById('registerPage'),
         dashboard: document.getElementById('dashboardPage'),
         admin: document.getElementById('adminPage'),
+        adminDetail: document.getElementById('adminDetailPage'),
         preferences: document.getElementById('preferencesPage'),
         progress: document.getElementById('progressPage')
     };
@@ -212,19 +218,61 @@ function showPage(pageName) {
     
     // Scroll al inicio
     window.scrollTo(0, 0);
+
+    document.body.classList.toggle('view-login', pageName === 'login');
+    document.body.classList.toggle('view-register', pageName === 'register');
+    document.body.classList.toggle('view-home', pageName === 'home');
 }
 
 // ==================== AUTENTICACIÓN ====================
 
+function stripViewQueryParam() {
+    try {
+        const url = new URL(window.location.href);
+        if (!url.searchParams.has('view')) return;
+        url.searchParams.delete('view');
+        const q = url.searchParams.toString();
+        window.history.replaceState({}, '', url.pathname + (q ? '?' + q : ''));
+    } catch (_) {
+        /* noop */
+    }
+}
+
+function getInitialView() {
+    try {
+        return new URLSearchParams(window.location.search).get('view');
+    } catch (_) {
+        return null;
+    }
+}
+
 async function checkAuth() {
+    const qView = getInitialView();
     try {
         const response = await fetch('/api/user');
         if (response.ok) {
             const data = await response.json();
             currentUser = data.user;
             updateUI();
-            // Cargar preferencias después de autenticarse
             await loadPreferences();
+            if (qView === 'home') {
+                showPage('home');
+                stripViewQueryParam();
+                return;
+            }
+            if (qView === 'preferences') {
+                showPage('preferences');
+                stripViewQueryParam();
+                return;
+            }
+            if (qView === 'progress') {
+                showPage('progress');
+                stripViewQueryParam();
+                return;
+            }
+            if (qView === 'login' || qView === 'register') {
+                stripViewQueryParam();
+            }
             if (currentUser.isAdmin) {
                 showPage('admin');
             } else {
@@ -233,13 +281,25 @@ async function checkAuth() {
         } else {
             currentUser = null;
             updateUI();
-            showPage('home');
+            const guestPages = { login: 'login', register: 'register', home: 'home' };
+            if (qView && guestPages[qView]) {
+                showPage(guestPages[qView]);
+                stripViewQueryParam();
+            } else {
+                showPage('home');
+            }
         }
     } catch (error) {
         console.error('Error al verificar autenticación:', error);
         currentUser = null;
         updateUI();
-        showPage('home');
+        const guestPages = { login: 'login', register: 'register', home: 'home' };
+        if (qView && guestPages[qView]) {
+            showPage(guestPages[qView]);
+            stripViewQueryParam();
+        } else {
+            showPage('home');
+        }
     }
 }
 
@@ -3269,8 +3329,8 @@ function initAdminAnimations() {
 }
 
 async function loadAdminData() {
+    await loadAdminStats();
     await Promise.all([
-        loadAdminStats(),
         loadAdminUsers(),
         loadConnectedUsers(),
         loadAdminPdfs(),
@@ -3305,6 +3365,10 @@ async function loadAdminStats() {
         const response = await fetch('/api/admin/stats');
         if (response.ok) {
             const stats = await response.json();
+            adminTotals = {
+                totalUsers: stats.totalUsers || 0,
+                totalPdfs: stats.totalPdfs || 0
+            };
             const totalUsers = document.getElementById('totalUsers');
             const totalPdfs = document.getElementById('totalPdfs');
             const totalViews = document.getElementById('totalViews');
@@ -3325,9 +3389,98 @@ async function loadAdminStats() {
     }
 }
 
+function updateAdminPreviewControls(currentCount, totalCount, summaryId, buttonId, previewLabel) {
+    const summary = document.getElementById(summaryId);
+    const button = document.getElementById(buttonId);
+    const hasMore = totalCount > ADMIN_PREVIEW_LIMIT;
+    
+    if (summary) {
+        summary.textContent = `${previewLabel}: ${Math.min(currentCount, ADMIN_PREVIEW_LIMIT)} de ${totalCount}`;
+    }
+    
+    if (button) {
+        button.classList.toggle('hidden', !hasMore);
+        button.textContent = 'Ver más';
+    }
+}
+
+function getAdminDetailConfig(section) {
+    const configs = {
+        users: {
+            title: 'Todos los Usuarios Registrados',
+            summary: total => `Mostrando ${total} usuarios registrados`,
+            fetchUrl: '/api/admin/users',
+            columns: ['ID', 'Usuario', 'Admin', 'Fecha Registro', 'Última Conexión', 'Tiempo de Uso', 'Libros Leídos', 'Progreso Promedio', 'Acciones'],
+            renderRows: renderAdminUserRows
+        },
+        pdfs: {
+            title: 'Todos los PDFs Subidos',
+            summary: total => `Mostrando ${total} PDFs subidos`,
+            fetchUrl: '/api/pdfs',
+            columns: ['ID', 'Nombre', 'Categoría', 'Fecha', 'Vistas', 'Acciones'],
+            renderRows: renderAdminPdfRows
+        },
+        popularPdfs: {
+            title: 'Todos los PDFs Más Populares',
+            summary: total => `Mostrando ${total} PDFs ordenados por popularidad`,
+            fetchUrl: '/api/pdfs/popular',
+            columns: ['ID', 'Nombre', 'Vistas', 'Fecha'],
+            renderRows: renderPopularPdfRows
+        }
+    };
+
+    return configs[section];
+}
+
+async function showAdminDetailSection(section) {
+    const config = getAdminDetailConfig(section);
+    if (!config || !pages.adminDetail) return;
+
+    Object.values(pages).forEach(page => {
+        if (page) {
+            page.classList.add('hidden');
+            page.classList.remove('active');
+        }
+    });
+
+    pages.adminDetail.classList.remove('hidden');
+    pages.adminDetail.classList.add('active');
+
+    const title = document.getElementById('adminDetailTitle');
+    const summary = document.getElementById('adminDetailSummary');
+    const container = document.getElementById('adminDetailTableContainer');
+
+    if (title) title.textContent = config.title;
+    if (summary) summary.textContent = 'Cargando datos...';
+    if (container) {
+        container.innerHTML = '<p class="py-4 text-gray-600 dark:text-gray-400">Cargando tabla...</p>';
+    }
+
+    try {
+        const response = await fetch(config.fetchUrl);
+        if (!response.ok) {
+            throw new Error('No se pudo cargar la información');
+        }
+
+        const items = await response.json();
+        renderAdminDetailTable(config, items);
+    } catch (error) {
+        console.error('Error al cargar detalle admin:', error);
+        if (container) {
+            container.innerHTML = '<p class="py-4 text-red-600 dark:text-red-400">Error al cargar la tabla completa.</p>';
+        }
+    }
+
+    window.scrollTo(0, 0);
+}
+
+function returnToAdminPanel() {
+    showPage('admin');
+}
+
 async function loadAdminUsers() {
     try {
-        const response = await fetch('/api/admin/users');
+        const response = await fetch(`/api/admin/users?limit=${ADMIN_PREVIEW_LIMIT}`);
         if (response.ok) {
             const users = await response.json();
             displayAdminUsers(users);
@@ -3342,7 +3495,23 @@ function displayAdminUsers(users) {
     if (!tbody) return;
     
     tbody.innerHTML = '';
+    updateAdminPreviewControls(
+        users.length,
+        adminTotals.totalUsers,
+        'usersTableSummary',
+        'toggleUsersTableBtn',
+        'Mostrando los últimos usuarios registrados'
+    );
     
+    if (users.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="9" class="py-4 px-4 text-center text-gray-600 dark:text-gray-400">No hay usuarios registrados</td></tr>';
+        return;
+    }
+    
+    renderAdminUserRows(tbody, users);
+}
+
+function renderAdminUserRows(tbody, users) {
     users.forEach((user, index) => {
         const row = document.createElement('tr');
         row.className = 'border-b border-gray-300 dark:border-gray-700';
@@ -3435,7 +3604,7 @@ function displayConnectedUsers(users) {
 
 async function loadAdminPdfs() {
     try {
-        const response = await fetch('/api/pdfs');
+        const response = await fetch(`/api/pdfs?limit=${ADMIN_PREVIEW_LIMIT}`);
         if (response.ok) {
             const pdfs = await response.json();
             displayAdminPdfs(pdfs);
@@ -3450,7 +3619,23 @@ function displayAdminPdfs(pdfs) {
     if (!tbody) return;
     
     tbody.innerHTML = '';
+    updateAdminPreviewControls(
+        pdfs.length,
+        adminTotals.totalPdfs,
+        'pdfsTableSummary',
+        'togglePdfsTableBtn',
+        'Mostrando los últimos PDFs subidos'
+    );
     
+    if (pdfs.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" class="py-4 px-4 text-center text-gray-600 dark:text-gray-400">No hay PDFs subidos</td></tr>';
+        return;
+    }
+    
+    renderAdminPdfRows(tbody, pdfs);
+}
+
+function renderAdminPdfRows(tbody, pdfs) {
     pdfs.forEach((pdf, index) => {
         const row = document.createElement('tr');
         row.className = 'border-b border-gray-300 dark:border-gray-700';
@@ -3490,10 +3675,10 @@ function displayAdminPdfs(pdfs) {
 
 async function loadPopularPdfs() {
     try {
-        const response = await fetch('/api/pdfs/popular');
+        const response = await fetch(`/api/pdfs/popular?limit=${ADMIN_PREVIEW_LIMIT}`);
         if (response.ok) {
             const pdfs = await response.json();
-            displayPopularPdfs(pdfs.slice(0, 5));
+            displayPopularPdfs(pdfs);
         }
     } catch (error) {
         console.error('Error al cargar PDFs populares:', error);
@@ -3505,7 +3690,23 @@ function displayPopularPdfs(pdfs) {
     if (!tbody) return;
     
     tbody.innerHTML = '';
+    updateAdminPreviewControls(
+        pdfs.length,
+        adminTotals.totalPdfs,
+        'popularPdfsTableSummary',
+        'togglePopularPdfsTableBtn',
+        'Mostrando los PDFs más populares'
+    );
     
+    if (pdfs.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4" class="py-4 px-4 text-center text-gray-600 dark:text-gray-400">No hay PDFs para mostrar</td></tr>';
+        return;
+    }
+    
+    renderPopularPdfRows(tbody, pdfs);
+}
+
+function renderPopularPdfRows(tbody, pdfs) {
     pdfs.forEach(pdf => {
         const row = document.createElement('tr');
         row.className = 'border-b border-gray-300 dark:border-gray-700';
@@ -3517,6 +3718,37 @@ function displayPopularPdfs(pdfs) {
         `;
         tbody.appendChild(row);
     });
+}
+
+function renderAdminDetailTable(config, items) {
+    const summary = document.getElementById('adminDetailSummary');
+    const container = document.getElementById('adminDetailTableContainer');
+    if (!container) return;
+
+    if (summary) {
+        summary.textContent = config.summary(items.length);
+    }
+
+    const table = document.createElement('table');
+    table.className = 'w-full';
+    table.innerHTML = `
+        <thead>
+            <tr class="border-b border-gray-300 dark:border-gray-700">
+                ${config.columns.map(column => `<th class="py-3 px-4 text-left">${column}</th>`).join('')}
+            </tr>
+        </thead>
+        <tbody></tbody>
+    `;
+
+    const tbody = table.querySelector('tbody');
+    if (items.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="${config.columns.length}" class="py-4 px-4 text-center text-gray-600 dark:text-gray-400">No hay datos para mostrar</td></tr>`;
+    } else {
+        config.renderRows(tbody, items);
+    }
+
+    container.innerHTML = '';
+    container.appendChild(table);
 }
 
 async function showUserDetails(userId) {
@@ -3546,8 +3778,8 @@ async function deleteUser(userId, username) {
         if (data.success) {
             alert('Usuario eliminado exitosamente');
             // Recargar la lista de usuarios y estadísticas
-            await loadAdminUsers();
             await loadAdminStats();
+            await loadAdminUsers();
         } else {
             alert('Error al eliminar usuario: ' + (data.error || 'Error desconocido'));
         }
@@ -3647,8 +3879,8 @@ async function handleEditPdf(e) {
             closeEditPdfModal();
             
             // Recargar la lista de PDFs y estadísticas
-            await loadAdminPdfs();
             await loadAdminStats();
+            await Promise.all([loadAdminPdfs(), loadPopularPdfs()]);
             
             // Mostrar mensaje de éxito
             showUploadMessage('PDF actualizado exitosamente', 'success');
@@ -3681,8 +3913,8 @@ async function deletePdf(pdfId, pdfName) {
         if (data.success) {
             alert('PDF eliminado exitosamente');
             // Recargar la lista de PDFs y estadísticas
-            await loadAdminPdfs();
             await loadAdminStats();
+            await Promise.all([loadAdminPdfs(), loadPopularPdfs()]);
             // Si estás en el dashboard, también recargar los PDFs
             if (pages.dashboard && pages.dashboard.classList.contains('active')) {
                 await loadPdfs(currentCategory);
@@ -4093,7 +4325,8 @@ let carouselIntervals = {};
 // Función auxiliar para crear tarjeta de testimonio
 function createTestimonialCard(testimonial, index) {
     const card = document.createElement('article');
-    card.className = 'flex flex-col gap-4 p-6 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 hover-lift';
+    card.className =
+        'testimonial-card-premium flex flex-col gap-4 p-6 sm:p-7 rounded-2xl border border-cyan-500/15 backdrop-blur-xl bg-white/60 dark:bg-slate-900/50 shadow-[0_20px_50px_-12px_rgba(14,165,233,0.25)] hover:shadow-[0_24px_60px_-8px_rgba(14,165,233,0.35)] transition-all duration-300 hover:-translate-y-1';
     card.setAttribute('aria-label', `Testimonio de ${testimonial.username}`);
     
     const initials = testimonial.username.split(' ').map(n => n[0]).join('').toUpperCase();
@@ -4415,7 +4648,7 @@ function displayTestimonials(testimonials) {
         slide.className = 'carousel-item';
         
         const grid = document.createElement('div');
-        grid.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-4';
+        grid.className = 'testimonials-slide-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 px-2 sm:px-4';
         
         const startIndex = i * itemsPerSlide;
         const endIndex = Math.min(startIndex + itemsPerSlide, testimonials.length);

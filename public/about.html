@@ -3,26 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acerca de - Sense-Tech</title>
-    
-    <!-- Favicon -->
+    <title>Acerca de — Sense-Tech</title>
     <link rel="icon" type="image/png" sizes="32x32" href="images/logo.png">
     <link rel="icon" type="image/png" sizes="16x16" href="images/logo.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="images/logo.png">
-    <link rel="shortcut icon" type="image/png" href="images/logo.png">
     <meta name="theme-color" content="#137fec">
-    
-    <!-- Tailwind CSS -->
+    <meta name="description" content="Sense-Tech: educación accesible e inteligente para ingeniería. Misión, visión, tecnología y equipo.">
+
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
-    
-    <!-- Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="home-premium.css">
+    <link rel="stylesheet" href="about-premium.css">
+
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -34,734 +30,519 @@
                         'background-dark': '#101727',
                     },
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
+                        sans: ['Poppins', 'Inter', 'sans-serif'],
                     },
                 },
             },
         }
     </script>
-    
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            overflow-x: hidden;
-        }
-        
-        /* Animaciones */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        @keyframes scaleIn {
-            from {
-                opacity: 0;
-                transform: scale(0.8);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-        
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-30px) rotate(5deg); }
-        }
-        
-        @keyframes gradient-shift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-        
-        @keyframes shimmer {
-            0% { background-position: -200% center; }
-            100% { background-position: 200% center; }
-        }
-        
-        .fade-in {
-            animation: fadeIn 1s ease-out forwards;
-        }
-        
-        .slide-up {
-            animation: slideUp 0.8s ease-out forwards;
-            opacity: 0;
-        }
-        
-        .slide-down {
-            animation: slideDown 0.8s ease-out forwards;
-            opacity: 0;
-        }
-        
-        .scale-in {
-            animation: scaleIn 0.6s ease-out forwards;
-            opacity: 0;
-        }
-        
-        .float-animation {
-            animation: float 6s ease-in-out infinite;
-        }
-        
-        .delay-100 { animation-delay: 0.1s; }
-        .delay-200 { animation-delay: 0.2s; }
-        .delay-300 { animation-delay: 0.3s; }
-        .delay-400 { animation-delay: 0.4s; }
-        .delay-500 { animation-delay: 0.5s; }
-        .delay-600 { animation-delay: 0.6s; }
-        .delay-700 { animation-delay: 0.7s; }
-        .delay-800 { animation-delay: 0.8s; }
-        .delay-900 { animation-delay: 0.9s; }
-        .delay-1000 { animation-delay: 1s; }
-        
-        /* Efectos hover */
-        .hover-effect {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .hover-effect:hover {
-            transform: translateY(-5px);
-        }
-        
-        /* Cards con borde animado */
-        .card-border {
-            position: relative;
-            background: white;
-            border-radius: 16px;
-            padding: 2rem;
-        }
-        
-        .dark .card-border {
-            background: #1e293b;
-        }
-        
-        .card-border::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 16px;
-            padding: 2px;
-            background: linear-gradient(135deg, #137fec, #3b82f6, #60a5fa, #137fec);
-            background-size: 200% 200%;
-            animation: gradient-shift 3s ease infinite;
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        
-        .card-border:hover::before {
-            opacity: 1;
-        }
-        
-        /* Texto con gradiente */
-        .gradient-text {
-            background: linear-gradient(135deg, #137fec 0%, #3b82f6 50%, #60a5fa 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .dark .gradient-text {
-            background: linear-gradient(135deg, #60a5fa 0%, #93c5fd 50%, #bfdbfe 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        /* Líneas decorativas */
-        .decorative-line {
-            height: 3px;
-            background: linear-gradient(90deg, transparent, #137fec, transparent);
-            margin: 2rem 0;
-        }
-        
-        .dark .decorative-line {
-            background: linear-gradient(90deg, transparent, #60a5fa, transparent);
-        }
-        
-        /* Scroll reveal */
-        .scroll-reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease-out;
-        }
-        
-        .scroll-reveal.revealed {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        /* Background pattern */
-        .bg-pattern {
-            background-image: 
-                radial-gradient(circle at 1px 1px, rgba(19, 127, 236, 0.15) 1px, transparent 0);
-            background-size: 40px 40px;
-        }
-        
-        .dark .bg-pattern {
-            background-image: 
-                radial-gradient(circle at 1px 1px, rgba(96, 165, 250, 0.1) 1px, transparent 0);
-        }
-        
-        /* Iconos con efecto */
-        .icon-wrapper {
-            width: 64px;
-            height: 64px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-        
-        .icon-wrapper:hover {
-            transform: scale(1.1) rotate(5deg);
-        }
-        
-        /* Números decorativos */
-        .number-badge {
-            position: absolute;
-            top: -12px;
-            left: -12px;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #137fec, #3b82f6);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 1.25rem;
-            box-shadow: 0 4px 12px rgba(19, 127, 236, 0.4);
-        }
-        
-        .dark .number-badge {
-            background: linear-gradient(135deg, #3b82f6, #60a5fa);
-        }
-    </style>
 </head>
-<body class="font-sans antialiased bg-white dark:bg-slate-900 text-gray-900 dark:text-gray-100 transition-colors duration-500">
-    
-    <!-- Header Minimalista -->
-    <header class="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-lg border-b border-gray-200 dark:border-slate-800 transition-all duration-300 fade-in">
-        <nav class="container mx-auto px-6 py-4">
-            <div class="flex items-center justify-between">
-                <a href="index.html" class="flex items-center gap-3 group">
-                    <img src="images/logo.png" alt="Sense-Tech" class="h-8 w-auto dark:hidden transition-transform duration-300 group-hover:rotate-12" onerror="this.style.display='none'">
-                    <img src="images/logo2.png" alt="Sense-Tech" class="h-8 w-auto hidden dark:block transition-transform duration-300 group-hover:rotate-12" onerror="this.style.display='none'">
-                    <span class="text-xl font-bold text-primary">Sense-Tech</span>
-                </a>
-                <a href="index.html" class="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-colors duration-300 flex items-center gap-2 group">
-                    <span class="material-symbols-outlined text-lg group-hover:-translate-x-1 transition-transform duration-300">arrow_back</span>
-                    <span>Volver</span>
-                </a>
-            </div>
-        </nav>
-    </header>
+<body class="font-sans antialiased bg-background-light dark:bg-background-dark text-gray-900 dark:text-gray-100 transition-colors duration-300">
 
-    <!-- Main Content -->
-    <main class="pt-20">
-        <!-- Hero Section - Estilo Minimalista -->
-        <section class="relative py-24 bg-pattern">
-            <div class="container mx-auto px-6 max-w-5xl">
-                <div class="text-center slide-down">
-                    <h1 class="text-5xl md:text-6xl font-black mb-6 gradient-text">
-                        Acerca de Sense-Tech
-                    </h1>
-                    <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed slide-up delay-200">
-                        Una plataforma diseñada para hacer la educación en ingeniería accesible para todos
-                    </p>
-                    <div class="decorative-line max-w-md mx-auto slide-up delay-400"></div>
-                </div>
-            </div>
-        </section>
+    <svg width="0" height="0" aria-hidden="true" class="absolute">
+        <defs>
+            <linearGradient id="aboutSparkGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#0284c7"/>
+                <stop offset="100%" stop-color="#22d3ee"/>
+            </linearGradient>
+        </defs>
+    </svg>
 
-        <!-- Misión Section - Diseño Lateral -->
-        <section class="py-16 bg-gray-50 dark:bg-slate-800/50">
-            <div class="container mx-auto px-6 max-w-6xl">
-                <div class="grid md:grid-cols-2 gap-12 items-center scroll-reveal">
-                    <div>
-                        <div class="inline-flex items-center gap-3 mb-6">
-                            <div class="icon-wrapper bg-blue-100 dark:bg-blue-900/30">
-                                <span class="material-symbols-outlined text-primary text-3xl">target</span>
-                            </div>
-                            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">Nuestra Misión</h2>
-                        </div>
-                        <div class="space-y-4 text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-                            <p>
-                                <strong class="text-primary">Sense-Tech</strong> es una plataforma web accesible diseñada específicamente para estudiantes de ingeniería en sistemas con baja visión. Nuestro objetivo principal es eliminar las barreras de accesibilidad visual y facilitar el acceso a materiales educativos técnicos.
-                            </p>
-                            <p>
-                                Creemos firmemente que el conocimiento debe ser accesible para todos, independientemente de las limitaciones visuales. Por eso, hemos desarrollado una plataforma que permite leer documentos PDF mediante síntesis de voz, con controles personalizables y una interfaz completamente accesible.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="relative">
-                        <div class="card-border hover-effect">
-                            <div class="space-y-6">
-                                <div class="flex items-start gap-4">
-                                    <span class="material-symbols-outlined text-primary text-2xl">visibility</span>
-                                    <div>
-                                        <h3 class="font-bold text-lg mb-2">Accesibilidad Visual</h3>
-                                        <p class="text-gray-600 dark:text-gray-400">Diseñado para usuarios con baja visión</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-start gap-4">
-                                    <span class="material-symbols-outlined text-primary text-2xl">school</span>
-                                    <div>
-                                        <h3 class="font-bold text-lg mb-2">Educación Técnica</h3>
-                                        <p class="text-gray-600 dark:text-gray-400">Contenido especializado en ingeniería</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-start gap-4">
-                                    <span class="material-symbols-outlined text-primary text-2xl">favorite</span>
-                                    <div>
-                                        <h3 class="font-bold text-lg mb-2">Compromiso Social</h3>
-                                        <p class="text-gray-600 dark:text-gray-400">Inclusión y equidad educativa</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Características Section - Grid Moderno -->
-        <section class="py-16">
-            <div class="container mx-auto px-6 max-w-6xl">
-                <div class="text-center mb-16 scroll-reveal">
-                    <h2 class="text-4xl md:text-5xl font-bold mb-4 gradient-text">Características Principales</h2>
-                    <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                        Herramientas y funcionalidades diseñadas para mejorar tu experiencia de aprendizaje
-                    </p>
-                </div>
-                
-                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div class="scroll-reveal card-border hover-effect">
-                        <div class="icon-wrapper bg-blue-100 dark:bg-blue-900/30 mb-4">
-                            <span class="material-symbols-outlined text-primary text-2xl">volume_up</span>
-                        </div>
-                        <h3 class="font-bold text-lg mb-2">Text-to-Speech</h3>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Síntesis de voz en español de alta calidad</p>
-                    </div>
-                    
-                    <div class="scroll-reveal card-border hover-effect delay-100">
-                        <div class="icon-wrapper bg-green-100 dark:bg-green-900/30 mb-4">
-                            <span class="material-symbols-outlined text-green-600 dark:text-green-400 text-2xl">keyboard</span>
-                        </div>
-                        <h3 class="font-bold text-lg mb-2">Navegación por Teclado</h3>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Control completo sin mouse</p>
-                    </div>
-                    
-                    <div class="scroll-reveal card-border hover-effect delay-200">
-                        <div class="icon-wrapper bg-purple-100 dark:bg-purple-900/30 mb-4">
-                            <span class="material-symbols-outlined text-purple-600 dark:text-purple-400 text-2xl">contrast</span>
-                        </div>
-                        <h3 class="font-bold text-lg mb-2">Alto Contraste</h3>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Modo configurable</p>
-                    </div>
-                    
-                    <div class="scroll-reveal card-border hover-effect delay-300">
-                        <div class="icon-wrapper bg-orange-100 dark:bg-orange-900/30 mb-4">
-                            <span class="material-symbols-outlined text-orange-600 dark:text-orange-400 text-2xl">text_fields</span>
-                        </div>
-                        <h3 class="font-bold text-lg mb-2">Tamaño de Fuente</h3>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Ajuste personalizable</p>
-                    </div>
-                    
-                    <div class="scroll-reveal card-border hover-effect delay-400">
-                        <div class="icon-wrapper bg-red-100 dark:bg-red-900/30 mb-4">
-                            <span class="material-symbols-outlined text-red-600 dark:text-red-400 text-2xl">speed</span>
-                        </div>
-                        <h3 class="font-bold text-lg mb-2">Control de Velocidad</h3>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Ajuste de velocidad de lectura</p>
-                    </div>
-                    
-                    <div class="scroll-reveal card-border hover-effect delay-500">
-                        <div class="icon-wrapper bg-cyan-100 dark:bg-cyan-900/30 mb-4">
-                            <span class="material-symbols-outlined text-cyan-600 dark:text-cyan-400 text-2xl">devices</span>
-                        </div>
-                        <h3 class="font-bold text-lg mb-2">Responsive</h3>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Todos los dispositivos</p>
-                    </div>
-                    
-                    <div class="scroll-reveal card-border hover-effect delay-600">
-                        <div class="icon-wrapper bg-pink-100 dark:bg-pink-900/30 mb-4">
-                            <span class="material-symbols-outlined text-pink-600 dark:text-pink-400 text-2xl">trending_up</span>
-                        </div>
-                        <h3 class="font-bold text-lg mb-2">Seguimiento</h3>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Monitorea tu progreso</p>
-                    </div>
-                    
-                    <div class="scroll-reveal card-border hover-effect delay-700">
-                        <div class="icon-wrapper bg-indigo-100 dark:bg-indigo-900/30 mb-4">
-                            <span class="material-symbols-outlined text-indigo-600 dark:text-indigo-400 text-2xl">folder</span>
-                        </div>
-                        <h3 class="font-bold text-lg mb-2">Biblioteca</h3>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Organizada por categorías</p>
-                    </div>
-                </div>
-            </div>
-                </section>
-
-        <!-- Tecnología Section - Lista Estilizada -->
-        <section class="py-16 bg-gray-50 dark:bg-slate-800/50">
-            <div class="container mx-auto px-6 max-w-6xl">
-                <div class="text-center mb-16 scroll-reveal">
-                    <div class="inline-flex items-center gap-3 mb-4">
-                        <div class="icon-wrapper bg-blue-100 dark:bg-blue-900/30">
-                            <span class="material-symbols-outlined text-primary text-3xl">code</span>
-                        </div>
-                        <h2 class="text-4xl md:text-5xl font-bold gradient-text">Tecnología</h2>
-                    </div>
-                    <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                        Construido con las mejores tecnologías web modernas
-                    </p>
-                </div>
-                
-                <div class="max-w-4xl mx-auto">
-                    <div class="space-y-4">
-                        <div class="scroll-reveal card-border hover-effect">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center gap-4">
-                                    <span class="material-symbols-outlined text-primary text-2xl">bolt</span>
-                                    <div>
-                                        <h3 class="font-bold text-lg">Node.js y Express.js</h3>
-                                        <p class="text-sm text-gray-600 dark:text-gray-400">Backend robusto y escalable</p>
-                                    </div>
-                                </div>
-                                <span class="text-xs px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-primary rounded-full">Backend</span>
-                            </div>
-                        </div>
-                        
-                        <div class="scroll-reveal card-border hover-effect delay-100">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center gap-4">
-                                    <span class="material-symbols-outlined text-primary text-2xl">storage</span>
-                                    <div>
-                                        <h3 class="font-bold text-lg">SQLite</h3>
-                                        <p class="text-sm text-gray-600 dark:text-gray-400">Base de datos ligera y eficiente</p>
-                                    </div>
-                                </div>
-                                <span class="text-xs px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-full">Database</span>
-                            </div>
-                        </div>
-                        
-                        <div class="scroll-reveal card-border hover-effect delay-200">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center gap-4">
-                                    <span class="material-symbols-outlined text-primary text-2xl">description</span>
-                                    <div>
-                                        <h3 class="font-bold text-lg">PDF.js</h3>
-                                        <p class="text-sm text-gray-600 dark:text-gray-400">Renderizado de documentos PDF</p>
-                                    </div>
-                                </div>
-                                <span class="text-xs px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-full">PDF</span>
-                            </div>
-                        </div>
-                        
-                        <div class="scroll-reveal card-border hover-effect delay-300">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center gap-4">
-                                    <span class="material-symbols-outlined text-primary text-2xl">volume_up</span>
-                                    <div>
-                                        <h3 class="font-bold text-lg">Web Speech API</h3>
-                                        <p class="text-sm text-gray-600 dark:text-gray-400">Síntesis de voz nativa del navegador</p>
-                                    </div>
-                                </div>
-                                <span class="text-xs px-3 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 rounded-full">Voice</span>
-                            </div>
-                        </div>
-                        
-                        <div class="scroll-reveal card-border hover-effect delay-400">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center gap-4">
-                                    <span class="material-symbols-outlined text-primary text-2xl">accessibility_new</span>
-                                    <div>
-                                        <h3 class="font-bold text-lg">HTML5 y ARIA</h3>
-                                        <p class="text-sm text-gray-600 dark:text-gray-400">Estándares de accesibilidad web</p>
-                                    </div>
-                                </div>
-                                <span class="text-xs px-3 py-1 bg-cyan-100 dark:bg-cyan-900/30 text-cyan-600 dark:text-cyan-400 rounded-full">A11y</span>
-                            </div>
-                        </div>
-                        
-                        <div class="scroll-reveal card-border hover-effect delay-500">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center gap-4">
-                                    <span class="material-symbols-outlined text-primary text-2xl">palette</span>
-                                    <div>
-                                        <h3 class="font-bold text-lg">Tailwind CSS</h3>
-                                        <p class="text-sm text-gray-600 dark:text-gray-400">Diseño moderno y responsive</p>
-                                    </div>
-                                </div>
-                                <span class="text-xs px-3 py-1 bg-pink-100 dark:bg-pink-900/30 text-pink-600 dark:text-pink-400 rounded-full">CSS</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-                </section>
-
-        <!-- Accesibilidad Section - Diseño Alternado -->
-        <section class="py-16">
-            <div class="container mx-auto px-6 max-w-6xl">
-                <div class="text-center mb-16 scroll-reveal">
-                    <div class="inline-flex items-center gap-3 mb-4">
-                        <div class="icon-wrapper bg-green-100 dark:bg-green-900/30">
-                            <span class="material-symbols-outlined text-green-600 dark:text-green-400 text-3xl">accessibility_new</span>
-                        </div>
-                        <h2 class="text-4xl md:text-5xl font-bold gradient-text">Accesibilidad</h2>
-                    </div>
-                    <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                        Implementamos las mejores prácticas de accesibilidad web
-                    </p>
-                </div>
-                
-                <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-                    <div class="scroll-reveal card-border hover-effect">
-                        <div class="flex items-center gap-3 mb-3">
-                            <span class="material-symbols-outlined text-green-600 dark:text-green-400 text-xl">check_circle</span>
-                            <h3 class="font-bold">Navegación por Teclado</h3>
-                        </div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Control completo sin necesidad de mouse</p>
-                    </div>
-                    
-                    <div class="scroll-reveal card-border hover-effect delay-100">
-                        <div class="flex items-center gap-3 mb-3">
-                            <span class="material-symbols-outlined text-green-600 dark:text-green-400 text-xl">check_circle</span>
-                            <h3 class="font-bold">Etiquetas ARIA</h3>
-                        </div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Descripciones apropiadas para lectores de pantalla</p>
-                    </div>
-                    
-                    <div class="scroll-reveal card-border hover-effect delay-200">
-                        <div class="flex items-center gap-3 mb-3">
-                            <span class="material-symbols-outlined text-green-600 dark:text-green-400 text-xl">check_circle</span>
-                            <h3 class="font-bold">Alto Contraste</h3>
-                        </div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Modo configurable para mejor visibilidad</p>
-                    </div>
-                    
-                    <div class="scroll-reveal card-border hover-effect delay-300">
-                        <div class="flex items-center gap-3 mb-3">
-                            <span class="material-symbols-outlined text-green-600 dark:text-green-400 text-xl">check_circle</span>
-                            <h3 class="font-bold">Tamaño de Fuente</h3>
-                        </div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Ajuste personalizable del texto</p>
-                    </div>
-                    
-                    <div class="scroll-reveal card-border hover-effect delay-400">
-                        <div class="flex items-center gap-3 mb-3">
-                            <span class="material-symbols-outlined text-green-600 dark:text-green-400 text-xl">check_circle</span>
-                            <h3 class="font-bold">Focus Visible</h3>
-                        </div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Indicadores claros en elementos interactivos</p>
-                    </div>
-                    
-                    <div class="scroll-reveal card-border hover-effect delay-500">
-                        <div class="flex items-center gap-3 mb-3">
-                            <span class="material-symbols-outlined text-green-600 dark:text-green-400 text-xl">check_circle</span>
-                            <h3 class="font-bold">Contenido Semántico</h3>
-                        </div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Estructura clara y bien organizada</p>
-                    </div>
-                </div>
-            </div>
-                </section>
-
-        <!-- Contacto Section - Minimalista -->
-        <section class="py-16 bg-gray-50 dark:bg-slate-800/50">
-            <div class="container mx-auto px-6 max-w-4xl">
-                <div class="text-center scroll-reveal">
-                    <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-blue-100 dark:bg-blue-900/30 mb-6 float-animation">
-                        <span class="material-symbols-outlined text-primary text-4xl">mail</span>
-                    </div>
-                    <h2 class="text-4xl md:text-5xl font-bold mb-6 gradient-text">Contacto</h2>
-                    <p class="text-lg text-gray-700 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed mb-12">
-                        Si tienes preguntas, sugerencias o necesitas soporte, no dudes en contactarnos. 
-                        Estamos comprometidos con <strong class="text-primary">mejorar continuamente</strong> la plataforma para servir mejor a nuestra comunidad.
-                    </p>
-                </div>
-                
-                <!-- Desarrolladores -->
-                <div class="scroll-reveal delay-200">
-                    <h3 class="text-2xl font-bold text-center mb-8 text-gray-900 dark:text-white">
-                        Equipo de Desarrollo
-                    </h3>
-                    <div class="grid md:grid-cols-2 gap-4 max-w-3xl mx-auto">
-                        <a href="mailto:jhonatan.yepes@unisimon.edu.co" class="card-border hover-effect flex items-center gap-4 p-4 group">
-                            <div class="w-12 h-12 rounded-full bg-primary/10 dark:bg-primary/20 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 dark:group-hover:bg-primary/30 transition-colors">
-                                <span class="material-symbols-outlined text-primary">person</span>
-                            </div>
-                            <div class="flex-1 min-w-0">
-                                <p class="font-medium text-gray-900 dark:text-white truncate group-hover:text-primary transition-colors">
-                                    Jhonatan Yepes
-                                </p>
-                                <p class="text-sm text-gray-600 dark:text-gray-400 truncate">
-                                    jhonatan.yepes@unisimon.edu.co
-                                </p>
-                            </div>
-                            <span class="material-symbols-outlined text-gray-400 group-hover:text-primary transition-colors flex-shrink-0">mail</span>
-                        </a>
-                        
-                        <a href="mailto:juan.edna@unisimon.edu.co" class="card-border hover-effect flex items-center gap-4 p-4 group">
-                            <div class="w-12 h-12 rounded-full bg-primary/10 dark:bg-primary/20 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 dark:group-hover:bg-primary/30 transition-colors">
-                                <span class="material-symbols-outlined text-primary">person</span>
-                            </div>
-                            <div class="flex-1 min-w-0">
-                                <p class="font-medium text-gray-900 dark:text-white truncate group-hover:text-primary transition-colors">
-                                    Juan Edna
-                                </p>
-                                <p class="text-sm text-gray-600 dark:text-gray-400 truncate">
-                                    juan.edna@unisimon.edu.co
-                                </p>
-                            </div>
-                            <span class="material-symbols-outlined text-gray-400 group-hover:text-primary transition-colors flex-shrink-0">mail</span>
-                        </a>
-                        
-                        <a href="mailto:jhon.perezc@unisimon.edu.co" class="card-border hover-effect flex items-center gap-4 p-4 group">
-                            <div class="w-12 h-12 rounded-full bg-primary/10 dark:bg-primary/20 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 dark:group-hover:bg-primary/30 transition-colors">
-                                <span class="material-symbols-outlined text-primary">person</span>
-                            </div>
-                            <div class="flex-1 min-w-0">
-                                <p class="font-medium text-gray-900 dark:text-white truncate group-hover:text-primary transition-colors">
-                                    Jhon Pérez
-                                </p>
-                                <p class="text-sm text-gray-600 dark:text-gray-400 truncate">
-                                    jhon.perezc@unisimon.edu.co
-                                </p>
-                            </div>
-                            <span class="material-symbols-outlined text-gray-400 group-hover:text-primary transition-colors flex-shrink-0">mail</span>
-                        </a>
-                        
-                        <a href="mailto:samuel.hernandezp@unisimon.edu.co" class="card-border hover-effect flex items-center gap-4 p-4 group">
-                            <div class="w-12 h-12 rounded-full bg-primary/10 dark:bg-primary/20 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 dark:group-hover:bg-primary/30 transition-colors">
-                                <span class="material-symbols-outlined text-primary">person</span>
-                            </div>
-                            <div class="flex-1 min-w-0">
-                                <p class="font-medium text-gray-900 dark:text-white truncate group-hover:text-primary transition-colors">
-                                    Samuel Hernández
-                                </p>
-                                <p class="text-sm text-gray-600 dark:text-gray-400 truncate">
-                                    samuel.hernandezp@unisimon.edu.co
-                                </p>
-                            </div>
-                            <span class="material-symbols-outlined text-gray-400 group-hover:text-primary transition-colors flex-shrink-0">mail</span>
-                        </a>
-                        
-                        <a href="mailto:bayron.barrios@unisimon.edu.co" class="card-border hover-effect flex items-center gap-4 p-4 group md:col-span-2 max-w-md mx-auto">
-                            <div class="w-12 h-12 rounded-full bg-primary/10 dark:bg-primary/20 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 dark:group-hover:bg-primary/30 transition-colors">
-                                <span class="material-symbols-outlined text-primary">person</span>
-                            </div>
-                            <div class="flex-1 min-w-0">
-                                <p class="font-medium text-gray-900 dark:text-white truncate group-hover:text-primary transition-colors">
-                                    Bayron Barrios
-                                </p>
-                                <p class="text-sm text-gray-600 dark:text-gray-400 truncate">
-                                    bayron.barrios@unisimon.edu.co
-                                </p>
-                            </div>
-                            <span class="material-symbols-outlined text-gray-400 group-hover:text-primary transition-colors flex-shrink-0">mail</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer Minimalista -->
-    <footer class="bg-white dark:bg-slate-900 border-t border-gray-200 dark:border-slate-800 py-8">
-        <div class="container mx-auto px-6 text-center">
-            <p class="text-gray-600 dark:text-gray-400">© 2024 Sense-Tech. Plataforma de lectura accesible.</p>
+    <div id="aboutAmbientHost" class="about-ambient">
+        <canvas id="aboutTechCanvas" class="about-tech-canvas"></canvas>
+        <div class="about-flow-grid" aria-hidden="true"></div>
+        <div class="about-beam-sweep" aria-hidden="true"></div>
+        <div class="about-tech-vignette"></div>
+        <div class="about-tech-scanlines"></div>
+        <div id="aboutMouseGlow" class="about-mouse-glow"></div>
+        <div class="about-orbs" aria-hidden="true">
+            <div class="about-orb"></div>
+            <div class="about-orb"></div>
+            <div class="about-orb"></div>
         </div>
-    </footer>
+    </div>
 
-    <!-- Theme Toggle Button -->
-    <button id="themeToggle" class="fixed bottom-6 right-6 w-14 h-14 bg-primary text-white rounded-full shadow-lg hover:shadow-xl z-50 transition-all duration-300 hover:scale-110 flex items-center justify-center scale-in delay-700">
-        <span class="material-symbols-outlined text-2xl">light_mode</span>
-    </button>
+    <div class="about-shell relative z-10">
+        <header id="header" class="header-premium fixed top-0 left-0 right-0 z-50 transition-all duration-500">
+            <div class="header-premium-inner">
+            <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-16 md:h-[4.25rem]">
+                    <div class="header-logo-wrap flex items-center gap-3">
+                        <div class="header-logo-glow" aria-hidden="true"></div>
+                        <img id="logoImg" src="images/logo.png" alt="Sense-Tech" class="h-9 md:h-10 w-auto dark:hidden relative z-10" onerror="this.style.display='none'">
+                        <img id="logoImgDark" src="images/logo2.png" alt="Sense-Tech" class="h-9 md:h-10 w-auto hidden dark:block relative z-10" onerror="this.style.display='none'">
+                        <span class="header-logo-type text-xl md:text-2xl font-extrabold tracking-tight text-primary">Sense-Tech</span>
+                    </div>
 
-    <script>
-        // Theme toggle
-        const themeToggle = document.getElementById('themeToggle');
-        const currentTheme = localStorage.getItem('theme') || 'light';
-        
-        if (currentTheme === 'dark') {
-            document.documentElement.classList.add('dark');
-            themeToggle.innerHTML = '<span class="material-symbols-outlined text-2xl">dark_mode</span>';
-        }
+                    <div class="hidden md:flex items-center gap-1 lg:gap-2">
+                        <a href="index.html?view=home" class="nav-pill nav-link">Inicio</a>
+                        <a href="about.html" class="nav-pill nav-link nav-pill-active" aria-current="page">Acerca de</a>
+                        <a href="index.html?view=login" id="loginLink" class="nav-pill nav-link">Iniciar Sesión</a>
+                        <a href="index.html?view=register" id="registerLink" class="nav-pill nav-link">Registrarse</a>
+                        <a href="index.html" id="dashboardLink" class="nav-pill nav-link hidden">Panel</a>
+                        <a href="index.html" id="adminLink" class="nav-pill nav-link hidden">Admin</a>
 
-        themeToggle.addEventListener('click', () => {
-            document.documentElement.classList.toggle('dark');
-            const isDark = document.documentElement.classList.contains('dark');
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
-            themeToggle.innerHTML = isDark 
-                ? '<span class="material-symbols-outlined text-2xl">dark_mode</span>'
-                : '<span class="material-symbols-outlined text-2xl">light_mode</span>';
-        });
-        
-        // Scroll reveal
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('revealed');
-                }
-            });
-        }, observerOptions);
-        
-        document.querySelectorAll('.scroll-reveal').forEach(el => {
-            observer.observe(el);
-        });
-        
-        // Animate on load
-        window.addEventListener('load', () => {
-            document.querySelectorAll('.slide-up, .slide-down, .scale-in').forEach((el, index) => {
-                setTimeout(() => {
-                    el.style.opacity = '1';
-                }, index * 100);
-            });
-        });
-    </script>
+                        <div class="relative hidden" id="profileMenuContainer">
+                            <button type="button" id="profileMenuBtn" class="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
+                                <img id="profileAvatar" src="https://ui-avatars.com/api/?name=User&background=137fec&color=fff" alt="Avatar" class="w-8 h-8 rounded-full ring-2 ring-primary/30">
+                                <span id="profileUsername" class="text-sm font-medium"></span>
+                                <span class="material-symbols-outlined text-sm">expand_more</span>
+                            </button>
+                            <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl rounded-xl shadow-2xl border border-slate-200/80 dark:border-slate-700 py-2 z-50">
+                                <a href="index.html?view=preferences" id="preferencesLink" class="block px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">Preferencias</a>
+                                <a href="index.html?view=progress" id="progressLink" class="block px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">Mi Progreso</a>
+                                <hr class="my-2 border-slate-200 dark:border-slate-700">
+                                <a href="#" id="logoutLink" class="block px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">Cerrar Sesión</a>
+                            </div>
+                        </div>
+
+                        <button id="themeToggle" type="button" class="nav-theme-btn p-2.5 rounded-xl hover:bg-black/5 dark:hover:bg-white/5 transition-colors" aria-label="Cambiar tema">
+                            <span class="material-symbols-outlined text-xl">light_mode</span>
+                        </button>
+                    </div>
+
+                    <button id="mobileMenuBtn" type="button" class="md:hidden p-2.5 rounded-xl hover:bg-black/5 dark:hover:bg-white/5" aria-expanded="false" aria-label="Abrir menú">
+                        <span class="material-symbols-outlined text-2xl">menu</span>
+                    </button>
+                </div>
+
+                <div id="mobileMenu" class="hidden md:hidden mt-3 pb-4 border-t border-slate-200/60 dark:border-slate-700/60 pt-4">
+                    <div class="flex flex-col gap-1">
+                        <a href="index.html?view=home" class="nav-link mobile-nav-link py-3 px-3 rounded-xl">Inicio</a>
+                        <a href="about.html" class="nav-link mobile-nav-link py-3 px-3 rounded-xl font-semibold text-primary dark:text-sky-300" aria-current="page">Acerca de</a>
+                        <a href="index.html?view=login" id="mobileLoginLink" class="nav-link mobile-nav-link py-3 px-3 rounded-xl">Iniciar Sesión</a>
+                        <a href="index.html?view=register" id="mobileRegisterLink" class="nav-link mobile-nav-link py-3 px-3 rounded-xl">Registrarse</a>
+                        <a href="index.html" id="mobileDashboardLink" class="nav-link mobile-nav-link py-3 px-3 rounded-xl hidden">Panel</a>
+                        <a href="index.html" id="mobileAdminLink" class="nav-link mobile-nav-link py-3 px-3 rounded-xl hidden">Admin</a>
+                        <a href="index.html?view=preferences" id="mobilePreferencesLink" class="nav-link mobile-nav-link py-3 px-3 rounded-xl hidden">Preferencias</a>
+                        <a href="index.html?view=progress" id="mobileProgressLink" class="nav-link mobile-nav-link py-3 px-3 rounded-xl hidden">Mi Progreso</a>
+                        <a href="#" id="mobileLogoutLink" class="nav-link mobile-nav-link py-3 px-3 rounded-xl text-red-600 dark:text-red-400 hidden">Cerrar Sesión</a>
+                    </div>
+                </div>
+            </nav>
+            </div>
+        </header>
+
+        <main id="main-content" tabindex="-1" class="about-page-main min-h-screen relative focus:outline-none pt-24 md:pt-28">
+            <!-- Hero -->
+            <section class="about-hero about-reveal">
+                <div class="about-hero-mesh" aria-hidden="true"></div>
+                <div class="about-hero-grid relative z-[1]">
+                    <div>
+                        <p class="about-eyebrow mb-3 inline-flex items-center gap-2.5 rounded-full border border-sky-400/35 bg-white/55 px-3.5 py-1.5 backdrop-blur-md dark:bg-slate-900/45">
+                            <span class="about-chip-live" aria-hidden="true">
+                                <span class="about-chip-live-spinner"></span>
+                                <span class="about-chip-live-core"></span>
+                            </span>
+                            Propósito · Tecnología · Inclusión
+                        </p>
+                        <h1 class="about-gradient-title">
+                            Transformando la educación con tecnología accesible e inteligente
+                        </h1>
+                        <p class="about-hero-deck mt-5">
+                            Sense-Tech une <strong class="text-sky-700 dark:text-sky-300">IA</strong>, lectura asistida y un diseño pensado para la accesibilidad real—no como un añadido, sino como el centro de la experiencia.
+                        </p>
+                        <div class="about-hero-cta-row">
+                            <a href="index.html?view=register" class="about-btn-primary">
+                                <span class="material-symbols-outlined text-lg">person_add</span>
+                                Crear cuenta
+                            </a>
+                            <a href="index.html?view=login" class="about-btn-ghost">
+                                <span class="material-symbols-outlined text-lg">login</span>
+                                Iniciar sesión
+                            </a>
+                        </div>
+                    </div>
+                    <div class="about-hero-visual">
+                        <div class="about-visual-cluster">
+                        <div class="about-visual-frame">
+                            <div class="about-v-orbit about-v-orbit--1"></div>
+                            <div class="about-v-orbit about-v-orbit--2"></div>
+                            <div class="about-v-orbit about-v-orbit--3"></div>
+                            <div class="about-v-core">
+                                <svg class="st-blackhole" viewBox="0 0 120 120" role="img" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+                                    <defs>
+                                        <radialGradient id="stBhVoidAbout" cx="38%" cy="36%" r="58%">
+                                            <stop offset="0%" stop-color="#334155"/>
+                                            <stop offset="50%" stop-color="#0f172a"/>
+                                            <stop offset="100%" stop-color="#000"/>
+                                        </radialGradient>
+                                        <radialGradient id="stBhGlowAbout" cx="50%" cy="52%" r="62%">
+                                            <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.55"/>
+                                            <stop offset="40%" stop-color="#0284c7" stop-opacity="0.28"/>
+                                            <stop offset="100%" stop-color="#020617" stop-opacity="0"/>
+                                        </radialGradient>
+                                        <linearGradient id="stBhRimAbout" x1="0%" y1="50%" x2="100%" y2="50%">
+                                            <stop offset="0%" stop-color="#22d3ee"/>
+                                            <stop offset="40%" stop-color="#fbbf24"/>
+                                            <stop offset="100%" stop-color="#22d3ee"/>
+                                        </linearGradient>
+                                    </defs>
+                                    <g class="st-blackhole__precess">
+                                        <ellipse class="st-blackhole__aura" cx="60" cy="60" rx="52" ry="22" fill="url(#stBhGlowAbout)"/>
+                                        <g class="st-blackhole__spin-fast">
+                                            <ellipse
+                                                class="st-blackhole__disk"
+                                                cx="60"
+                                                cy="60"
+                                                rx="46"
+                                                ry="17"
+                                                fill="none"
+                                                stroke="url(#stBhRimAbout)"
+                                                stroke-width="3.2"
+                                                stroke-linecap="round"
+                                                pathLength="100"
+                                            />
+                                        </g>
+                                        <g class="st-blackhole__spin-slow">
+                                            <ellipse
+                                                class="st-blackhole__stream"
+                                                cx="60"
+                                                cy="60"
+                                                rx="37"
+                                                ry="11.5"
+                                                fill="none"
+                                                stroke="#7dd3fc"
+                                                stroke-width="1.35"
+                                                stroke-dasharray="5 12"
+                                                stroke-linecap="round"
+                                                pathLength="100"
+                                            />
+                                        </g>
+                                        <circle class="st-blackhole__lensing" cx="60" cy="60" r="20.5" fill="none" stroke="#bae6fd" stroke-width="0.9" stroke-dasharray="3 8" pathLength="100"/>
+                                        <circle class="st-blackhole__void" cx="60" cy="60" r="13.5" fill="url(#stBhVoidAbout)"/>
+                                    </g>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="about-visual-side" aria-hidden="true">
+                            <div class="about-side-nodes">
+                                <span class="about-side-node"></span>
+                                <span class="about-side-node"></span>
+                                <span class="about-side-node"></span>
+                            </div>
+                            <div class="about-spectrum">
+                                <span class="about-spectrum__bar"></span>
+                                <span class="about-spectrum__bar"></span>
+                                <span class="about-spectrum__bar"></span>
+                                <span class="about-spectrum__bar"></span>
+                                <span class="about-spectrum__bar"></span>
+                            </div>
+                            <div class="about-side-scan"></div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quiénes somos -->
+            <section class="about-section" id="quienes-somos" aria-labelledby="about-who-heading">
+                <div class="about-section-head about-reveal">
+                    <p class="about-eyebrow">Quiénes somos</p>
+                    <h2 id="about-who-heading" class="about-h2 mt-2">Un equipo obsesionado con el <span class="about-gradient-title">impacto real</span></h2>
+                    <p class="about-lead mx-auto mt-3">Cuatro pilares guían cada decisión de producto: claridad, confianza, inclusión y excelencia técnica.</p>
+                </div>
+                <div class="about-bento">
+                    <article class="about-glass about-reveal">
+                        <div class="about-icon-ring"><span class="material-symbols-outlined">flag</span></div>
+                        <h3>Misión</h3>
+                        <p>Democratizar el acceso a materiales de ingeniería con herramientas accesibles, voz inteligente y una experiencia que respeta el ritmo de cada persona.</p>
+                    </article>
+                    <article class="about-glass about-reveal">
+                        <div class="about-icon-ring"><span class="material-symbols-outlined">visibility</span></div>
+                        <h3>Visión</h3>
+                        <p>Ser el referente latino de plataformas educativas técnicas donde la accesibilidad y la IA trabajan juntas, sin fricción.</p>
+                    </article>
+                    <article class="about-glass about-reveal">
+                        <div class="about-icon-ring"><span class="material-symbols-outlined">favorite</span></div>
+                        <h3>Propósito</h3>
+                        <p>Reducir la brecha entre talento y oportunidad: que la baja visión no defina el techo académico de ningún estudiante.</p>
+                    </article>
+                    <article class="about-glass about-reveal">
+                        <div class="about-icon-ring"><span class="material-symbols-outlined">public</span></div>
+                        <h3>Impacto</h3>
+                        <p>Cada mejora en lectura, contraste y navegación se traduce en horas recuperadas para estudiar y más autonomía en el aula y en casa.</p>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Misión y visión destacadas -->
+            <section class="about-section bg-white/40 dark:bg-slate-900/20" aria-labelledby="mv-heading">
+                <div class="about-section-head about-reveal">
+                    <p class="about-eyebrow">Declaración</p>
+                    <h2 id="mv-heading" class="about-h2 mt-2">Misión y visión</h2>
+                </div>
+                <div class="about-mv-grid">
+                    <article class="about-glass about-mv-card about-reveal">
+                        <div class="flex items-center gap-3">
+                            <div class="about-icon-ring"><span class="material-symbols-outlined">track_changes</span></div>
+                            <h3 class="text-xl font-bold text-slate-800 dark:text-white">Misión</h3>
+                        </div>
+                        <p>Construir un ecosistema digital donde el PDF técnico, la diapositiva densa y la documentación de ingeniería se vuelvan <strong>legibles, navegables y escuchables</strong> para estudiantes con baja visión—con controles serios de voz, foco y contraste.</p>
+                    </article>
+                    <article class="about-glass about-mv-card about-reveal">
+                        <div class="flex items-center gap-3">
+                            <div class="about-icon-ring"><span class="material-symbols-outlined">auto_awesome</span></div>
+                            <h3 class="text-xl font-bold text-slate-800 dark:text-white">Visión</h3>
+                        </div>
+                        <p>Un futuro donde la <strong>educación STEM accesible</strong> sea el estándar: interfaces que piensan en voz, teclado y lectores de pantalla desde el primer píxel—potenciadas por IA responsable.</p>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Impacto — estadísticas -->
+            <section class="about-section" id="impacto" aria-labelledby="impact-heading">
+                <div class="about-section-head about-reveal">
+                    <p class="about-eyebrow">Impacto medible</p>
+                    <h2 id="impact-heading" class="about-h2 mt-2">La comunidad, en números</h2>
+                    <p class="about-lead mx-auto mt-3">Indicadores orientativos de crecimiento y valor entregado—actualizamos la plataforma con la misma frecuencia que escuchamos a nuestros usuarios.</p>
+                </div>
+                <div id="aboutStats" class="about-stats-grid">
+                    <article class="about-glass about-stat-card about-reveal">
+                        <div class="about-stat-value"><span data-count="1200" data-suffix="+" data-decimal="0">0</span></div>
+                        <p class="about-stat-label">Estudiantes alcanzados</p>
+                        <svg class="about-spark" viewBox="0 0 120 40" preserveAspectRatio="none" aria-hidden="true">
+                            <path d="M0,35 L20,28 L40,32 L60,18 L80,22 L100,8 L120,14"/>
+                        </svg>
+                    </article>
+                    <article class="about-glass about-stat-card about-reveal">
+                        <div class="about-stat-value"><span data-count="85" data-suffix="+" data-decimal="0">0</span></div>
+                        <p class="about-stat-label">Recursos en biblioteca</p>
+                        <svg class="about-spark" viewBox="0 0 120 40" preserveAspectRatio="none" aria-hidden="true">
+                            <path d="M0,22 L24,26 L48,14 L72,20 L96,10 L120,6"/>
+                        </svg>
+                    </article>
+                    <article class="about-glass about-stat-card about-reveal">
+                        <div class="about-stat-value"><span data-count="12" data-suffix="+" data-decimal="0">0</span></div>
+                        <p class="about-stat-label">Ajustes de accesibilidad</p>
+                        <svg class="about-spark" viewBox="0 0 120 40" preserveAspectRatio="none" aria-hidden="true">
+                            <path d="M0,30 L30,24 L60,28 L90,12 L120,18"/>
+                        </svg>
+                    </article>
+                    <article class="about-glass about-stat-card about-reveal">
+                        <div class="about-stat-value"><span data-count="3.2" data-suffix="K+" data-decimal="1">0</span></div>
+                        <p class="about-stat-label">Sesiones activas (comunidad)</p>
+                        <svg class="about-spark" viewBox="0 0 120 40" preserveAspectRatio="none" aria-hidden="true">
+                            <path d="M0,28 L25,30 L50,16 L75,22 L100,8 L120,4"/>
+                        </svg>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Tecnología -->
+            <section class="about-section bg-white/40 dark:bg-slate-900/20" aria-labelledby="tech-heading">
+                <div class="about-section-head about-reveal">
+                    <p class="about-eyebrow">Stack</p>
+                    <h2 id="tech-heading" class="about-h2 mt-2">Tecnología con intención</h2>
+                    <p class="about-lead mx-auto mt-3">Una base moderna, segura y optimizada para lectura, voz y accesibilidad en el navegador.</p>
+                </div>
+                <div class="about-tech-grid">
+                    <article class="about-glass about-tech-card about-reveal"><span class="tag">IA · Voz</span><strong>Web Speech API</strong><span class="desc">Síntesis de voz en el cliente, baja latencia y control fino del estudiante.</span></article>
+                    <article class="about-glass about-tech-card about-reveal"><span class="tag">PDF</span><strong>PDF.js</strong><span class="desc">Renderizado y navegación por documentos técnicos directamente en la web.</span></article>
+                    <article class="about-glass about-tech-card about-reveal"><span class="tag">Backend</span><strong>Node.js · Express</strong><span class="desc">APIs claras, sesión y contenidos con enfoque en rendimiento.</span></article>
+                    <article class="about-glass about-tech-card about-reveal"><span class="tag">Datos</span><strong>SQLite</strong><span class="desc">Persistencia ligera y portable, ideal para despliegues ágiles.</span></article>
+                    <article class="about-glass about-tech-card about-reveal"><span class="tag">A11y</span><strong>HTML5 · ARIA</strong><span class="desc">Roles, foco y lectores de pantalla como requisitos, no extras.</span></article>
+                    <article class="about-glass about-tech-card about-reveal"><span class="tag">UI</span><strong>Tailwind CSS</strong><span class="desc">Sistemas de diseño consistentes, responsive y temáticos.</span></article>
+                </div>
+            </section>
+
+            <!-- Valores -->
+            <section class="about-section" aria-labelledby="values-heading">
+                <div class="about-section-head about-reveal">
+                    <p class="about-eyebrow">Cultura</p>
+                    <h2 id="values-heading" class="about-h2 mt-2">Valores</h2>
+                </div>
+                <div class="about-values-grid">
+                    <article class="about-glass about-value-card about-reveal">
+                        <div class="about-icon-ring"><span class="material-symbols-outlined">lightbulb</span></div>
+                        <h3 class="font-bold text-slate-800 dark:text-slate-100">Innovación</h3>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 mt-1">Experimentación responsable con IA y UX inclusiva.</p>
+                    </article>
+                    <article class="about-glass about-value-card about-reveal">
+                        <div class="about-icon-ring"><span class="material-symbols-outlined">accessible_forward</span></div>
+                        <h3 class="font-bold text-slate-800 dark:text-slate-100">Accesibilidad</h3>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 mt-1">WCAG como brújula, no como checklist olvidado.</p>
+                    </article>
+                    <article class="about-glass about-value-card about-reveal">
+                        <div class="about-icon-ring"><span class="material-symbols-outlined">diversity_3</span></div>
+                        <h3 class="font-bold text-slate-800 dark:text-slate-100">Inclusión</h3>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 mt-1">Diseño que honra la diversidad funcional y cognitiva.</p>
+                    </article>
+                    <article class="about-glass about-value-card about-reveal">
+                        <div class="about-icon-ring"><span class="material-symbols-outlined">school</span></div>
+                        <h3 class="font-bold text-slate-800 dark:text-slate-100">Educación</h3>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 mt-1">Aprendizaje riguroso, sin barreras innecesarias.</p>
+                    </article>
+                    <article class="about-glass about-value-card about-reveal">
+                        <div class="about-icon-ring"><span class="material-symbols-outlined">memory</span></div>
+                        <h3 class="font-bold text-slate-800 dark:text-slate-100">Tecnología</h3>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 mt-1">Herramientas actuales, mantenibles y transparentes.</p>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Historia -->
+            <section class="about-section bg-white/40 dark:bg-slate-900/20" aria-labelledby="story-heading">
+                <div class="about-section-head about-reveal">
+                    <p class="about-eyebrow">Historia</p>
+                    <h2 id="story-heading" class="about-h2 mt-2">De la idea al futuro</h2>
+                </div>
+                <div class="about-timeline">
+                    <div class="about-tl-item about-reveal">
+                        <div class="about-tl-marker-wrap">
+                            <div class="about-tl-marker"><span>23</span></div>
+                        </div>
+                        <article class="about-glass about-tl-card">
+                            <time datetime="2023">2023 — Origen</time>
+                            <h3>Semilla del proyecto</h3>
+                            <p>Nace como respuesta académica y humana: hacer viable el estudio de sistemas con lectura asistida y apoyo real a la baja visión.</p>
+                        </article>
+                    </div>
+                    <div class="about-tl-item about-reveal">
+                        <div class="about-tl-marker-wrap">
+                            <div class="about-tl-marker"><span>24</span></div>
+                        </div>
+                        <article class="about-glass about-tl-card">
+                            <time datetime="2024">2024 — Primer relé</time>
+                            <h3>Primera versión pública</h3>
+                            <p>Biblioteca, PDF y voz conectados en un flujo continuo; primeras métricas de uso y retroalimentación directa de estudiantes.</p>
+                        </article>
+                    </div>
+                    <div class="about-tl-item about-reveal">
+                        <div class="about-tl-marker-wrap">
+                            <div class="about-tl-marker"><span>25</span></div>
+                        </div>
+                        <article class="about-glass about-tl-card">
+                            <time datetime="2025">2025 — Escala</time>
+                            <h3>Producto maduro</h3>
+                            <p>Refinamos experiencia premium, rendimiento, diapositivas accesibles y una identidad visual al nivel de una startup tecnológica seria.</p>
+                        </article>
+                    </div>
+                    <div class="about-tl-item about-reveal">
+                        <div class="about-tl-marker-wrap">
+                            <div class="about-tl-marker"><span>→</span></div>
+                        </div>
+                        <article class="about-glass about-tl-card">
+                            <time>Próximo capítulo</time>
+                            <h3>Más IA, más alcance</h3>
+                            <p>Modelos de asistencia lectura-contexto, comunidad regional y alianzas educativas para multiplicar el impacto social.</p>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Equipo -->
+            <section class="about-section about-team-showcase px-3 sm:px-4" aria-labelledby="team-heading">
+                <div class="about-team-showcase-panel relative overflow-hidden rounded-[1.75rem] border border-sky-400/15 bg-gradient-to-b from-white/70 via-slate-50/40 to-white/80 p-6 sm:p-8 md:p-10 shadow-[0_20px_60px_-15px_rgba(14,165,233,0.12)] backdrop-blur-md dark:border-sky-500/10 dark:from-slate-900/60 dark:via-slate-900/40 dark:to-slate-900/50">
+                    <div class="about-team-showcase-gridfx pointer-events-none absolute inset-0 opacity-[0.35] dark:opacity-[0.22]" aria-hidden="true"></div>
+                    <div class="about-team-showcase-glow pointer-events-none absolute -top-24 left-1/2 h-48 w-[min(90%,42rem)] -translate-x-1/2 rounded-full bg-gradient-to-r from-cyan-400/20 via-sky-500/15 to-blue-500/20 blur-3xl dark:from-cyan-500/10 dark:via-sky-600/10 dark:to-blue-600/10" aria-hidden="true"></div>
+
+                    <div class="about-section-head about-reveal relative z-[1]">
+                        <p class="about-eyebrow">Equipo</p>
+                        <h2 id="team-heading" class="about-h2 mt-2">Personas detrás del producto</h2>
+                        <p class="about-lead mx-auto mt-3">Perfiles del equipo de desarrollo y operación—un solo clic separa tu mensaje de quien construye Sense-Tech.</p>
+                    </div>
+
+                    <div class="about-team-grid relative z-[1] mt-10 md:mt-12">
+                        <a href="mailto:diego.tovar@unisimon.edu.co" class="about-team-card about-reveal">
+                            <span class="about-team-card__shimmer" aria-hidden="true"></span>
+                            <div class="about-team-card__inner">
+                                <div class="about-team-avatar-wrap">
+                                    <span class="about-team-avatar-ring" aria-hidden="true"></span>
+                                    <img class="about-team-avatar" src="https://ui-avatars.com/api/?name=Diego+Tovar&background=0369a1&color=fff&size=128" alt="Diego Tovar">
+                                </div>
+                                <div class="about-team-body">
+                                    <span class="about-team-role">Desarrollo &amp; producto</span>
+                                    <strong class="about-team-name">Diego Tovar</strong>
+                                    <span class="about-team-mail">diego.tovar@unisimon.edu.co</span>
+                                </div>
+                            </div>
+                            <span class="about-team-icon material-symbols-outlined" aria-hidden="true">forward_to_inbox</span>
+                        </a>
+                        <a href="mailto:jhon.perezc@unisimon.edu.co" class="about-team-card about-reveal">
+                            <span class="about-team-card__shimmer" aria-hidden="true"></span>
+                            <div class="about-team-card__inner">
+                                <div class="about-team-avatar-wrap">
+                                    <span class="about-team-avatar-ring" aria-hidden="true"></span>
+                                    <img class="about-team-avatar" src="https://ui-avatars.com/api/?name=Jhon+Perez&background=0e7490&color=fff&size=128" alt="Jhon Pérez">
+                                </div>
+                                <div class="about-team-body">
+                                    <span class="about-team-role">Desarrollo &amp; producto</span>
+                                    <strong class="about-team-name">Jhon Pérez</strong>
+                                    <span class="about-team-mail">jhon.perezc@unisimon.edu.co</span>
+                                </div>
+                            </div>
+                            <span class="about-team-icon material-symbols-outlined" aria-hidden="true">forward_to_inbox</span>
+                        </a>
+                        <a href="mailto:samuel.hernandezp@unisimon.edu.co" class="about-team-card about-reveal">
+                            <span class="about-team-card__shimmer" aria-hidden="true"></span>
+                            <div class="about-team-card__inner">
+                                <div class="about-team-avatar-wrap">
+                                    <span class="about-team-avatar-ring" aria-hidden="true"></span>
+                                    <img class="about-team-avatar" src="https://ui-avatars.com/api/?name=Samuel+Hernandez&background=075985&color=fff&size=128" alt="Samuel Hernández">
+                                </div>
+                                <div class="about-team-body">
+                                    <span class="about-team-role">Desarrollo &amp; producto</span>
+                                    <strong class="about-team-name">Samuel Hernández</strong>
+                                    <span class="about-team-mail">samuel.hernandezp@unisimon.edu.co</span>
+                                </div>
+                            </div>
+                            <span class="about-team-icon material-symbols-outlined" aria-hidden="true">forward_to_inbox</span>
+                        </a>
+                        <a href="mailto:bayron.barrios@unisimon.edu.co" class="about-team-card about-reveal">
+                            <span class="about-team-card__shimmer" aria-hidden="true"></span>
+                            <div class="about-team-card__inner">
+                                <div class="about-team-avatar-wrap">
+                                    <span class="about-team-avatar-ring" aria-hidden="true"></span>
+                                    <img class="about-team-avatar" src="https://ui-avatars.com/api/?name=Bayron+Barrios&background=155e75&color=fff&size=128" alt="Bayron Barrios">
+                                </div>
+                                <div class="about-team-body">
+                                    <span class="about-team-role">Desarrollo &amp; producto</span>
+                                    <strong class="about-team-name">Bayron Barrios</strong>
+                                    <span class="about-team-mail">bayron.barrios@unisimon.edu.co</span>
+                                </div>
+                            </div>
+                            <span class="about-team-icon material-symbols-outlined" aria-hidden="true">forward_to_inbox</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Mensaje emocional -->
+            <section class="about-section" aria-labelledby="quote-heading">
+                <h2 id="quote-heading" class="sr-only">Nuestra promesa</h2>
+                <div class="about-glass about-quote-block about-reveal">
+                    <div class="inner">
+                        <blockquote>
+                            “Cuando la educación técnica se vuelve accesible, el talento deja de competir con las barreras y empieza a competir con las ideas.”
+                        </blockquote>
+                        <cite>Sense-Tech · inclusión educativa</cite>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CTA -->
+            <section class="about-cta" aria-labelledby="cta-heading">
+                <div class="about-cta-panel about-reveal">
+                    <div class="inner">
+                        <h2 id="cta-heading">Únete al futuro de la educación accesible</h2>
+                        <p>Regístrate, explora la biblioteca y descubre una forma más humana de estudiar ingeniería—con la tecnología a tu favor.</p>
+                        <a href="index.html?view=register" class="about-btn-primary mt-8 inline-flex">
+                            <span class="material-symbols-outlined text-lg">rocket_launch</span>
+                            Empezar gratis
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="about-footer about-reveal">
+            <p>© <span id="aboutYear"></span> Sense-Tech · Educación accesible con propósito.</p>
+        </footer>
+    </div>
+
+    <script src="about-navbar.js" defer></script>
+    <script src="about-ambient.js" defer></script>
+    <script src="about-page.js" defer></script>
 </body>
 </html>

@@ -951,7 +951,12 @@ function formatDateLabel(dateStr, period) {
 // ==================== ENDPOINTS DE PDFs ====================
 
 app.get('/api/pdfs', requireAuth, (req, res) => {
-    db.all('SELECT * FROM pdfs ORDER BY upload_date DESC', [], (err, rows) => {
+    const limit = parseInt(req.query.limit, 10);
+    const hasLimit = Number.isInteger(limit) && limit > 0;
+    const query = `SELECT * FROM pdfs ORDER BY upload_date DESC${hasLimit ? ' LIMIT ?' : ''}`;
+    const params = hasLimit ? [limit] : [];
+
+    db.all(query, params, (err, rows) => {
         if (err) {
             return res.status(500).json({ success: false, error: 'Error del servidor' });
         }
@@ -960,7 +965,12 @@ app.get('/api/pdfs', requireAuth, (req, res) => {
 });
 
 app.get('/api/pdfs/popular', requireAuth, (req, res) => {
-    db.all('SELECT * FROM pdfs ORDER BY views DESC LIMIT 10', [], (err, rows) => {
+    const limit = parseInt(req.query.limit, 10);
+    const hasLimit = Number.isInteger(limit) && limit > 0;
+    const query = `SELECT * FROM pdfs ORDER BY views DESC${hasLimit ? ' LIMIT ?' : ''}`;
+    const params = hasLimit ? [limit] : [];
+
+    db.all(query, params, (err, rows) => {
         if (err) {
             return res.status(500).json({ success: false, error: 'Error del servidor' });
         }
@@ -1167,6 +1177,9 @@ app.get('/api/admin/stats', requireAdmin, (req, res) => {
 });
 
 app.get('/api/admin/users', requireAdmin, (req, res) => {
+    const limit = parseInt(req.query.limit, 10);
+    const hasLimit = Number.isInteger(limit) && limit > 0;
+
     db.all(`SELECT u.id, u.username, u.is_admin, u.created_at, u.last_login, 
             u.total_time_minutes, u.last_activity,
             COUNT(DISTINCT rp.pdf_id) as books_read,
@@ -1176,8 +1189,8 @@ app.get('/api/admin/users', requireAdmin, (req, res) => {
             FROM users u
             LEFT JOIN reading_progress rp ON u.id = rp.user_id
             GROUP BY u.id
-            ORDER BY u.created_at DESC`,
-        [], (err, rows) => {
+            ORDER BY u.created_at DESC${hasLimit ? ' LIMIT ?' : ''}`,
+        hasLimit ? [limit] : [], (err, rows) => {
             if (err) {
                 return res.status(500).json({ success: false, error: 'Error del servidor' });
             }
